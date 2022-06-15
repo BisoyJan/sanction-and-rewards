@@ -5,7 +5,7 @@
     </div>
     <ul class="nav-links">
         <li>
-            <a href="#">
+            <a href="../views/index.php">
                 <i class="fa-solid fa-chart-simple"></i>
                 <span class="link_name">Dashboard</span>
             </a>
@@ -82,7 +82,7 @@
 
 
                     <div class="profile_name"><?= $_SESSION['first_name']; ?></div>
-                    <div class="job"><?= $_SESSION['type']; ?></div>
+                    <div class="job">User Type: <?= $_SESSION['type']; ?></div>
 
                 </div>
                 <a href="../php/logout.php"><i class="logoutBtn fa-solid fa-arrow-right-from-bracket"></i></a>
