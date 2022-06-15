@@ -3,7 +3,6 @@ session_start();
 ?>
 
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - youtube.com/codingnepal -->
 <html lang="en" dir="ltr">
 
 <head>
@@ -60,8 +59,7 @@ session_start();
                         console.log(res.console);
                     } else if (res.status == 200) {
                         console.log(res.console);
-                        window.location = "views/index.php"
-                        ;
+                        window.location = "views/index.php";
 
 
                     } else if (res.status == 401) {
