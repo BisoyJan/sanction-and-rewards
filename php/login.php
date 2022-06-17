@@ -40,7 +40,13 @@ if (isset($_POST['login_user'])) {
                     return;
                 } else {
                     //return false;  
-                    echo '<script>alert("Wrong User Details")</script>';
+                    $res = [
+                        'status' => 401,
+                        'message' => 'Invalid Credentials',
+                        'console' => $row
+                    ];
+                    echo json_encode($res);
+                    return;
                 }
             }
         } else {
@@ -48,7 +54,6 @@ if (isset($_POST['login_user'])) {
             $res = [
                 'status' => 401,
                 'message' => 'Invalid Credentials',
-                'console' => $row
             ];
             echo json_encode($res);
             return;

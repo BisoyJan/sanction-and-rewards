@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require '../database/database.php';
 if (empty($_SESSION['id'])) :
     header('Location: ../../../index.php');
 endif;
