@@ -7,8 +7,7 @@ include('../includes/navbar.php');
     <div class="row">
         <div class="col-auto">
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+                <h3>Accounts Table</h3>
             </div>
         </div>
         <div class="col">
@@ -18,53 +17,23 @@ include('../includes/navbar.php');
         </div>
     </div>
 
-    <div class="table-responsive">
+    <div>
         <table id="accountTable" class="table" style="text-align: center;">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Type</th>
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-                    <th>Last Name</th>
-                    <th>Actions</th>
-                </tr>
+
+                <th>ID</th>
+                <th>Username</th>
+                <th>Type</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Actions</th>
+
             </thead>
             <tbody class="table-group-divider">
-                <?php
-                $query = "SELECT * FROM `users`";
-                $query_run = mysqli_query($con, $query);
-
-                if (mysqli_num_rows($query_run) > 0) {
-                    foreach ($query_run as $accounts) {
-                ?>
-                        <tr class="align-middle">
-                            <td><?= $accounts['id'] ?></td>
-                            <td><?= $accounts['username'] ?></td>
-                            <td><?= $accounts['type'] ?></td>
-                            <td><?= $accounts['first_name'] ?></td>
-                            <td><?= $accounts['middle_name'] ?></td>
-                            <td><?= $accounts['last_name'] ?></td>
-                            <td>
-                                <button class="accountEditButton btn btn-success" value="<?= $accounts['id'] ?>" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#AccountModal">Edit Button</button>
-                                <button class="accountDeleteButton btn btn-danger" value="<?= $accounts['id'] ?>" type="button" data-bs-toggle="modal" data-bs-target="#AccountDeleteModal">Delete Button</button>
-                            </td>
-                        </tr>
-
-                <?php }
-                } ?>
             </tbody>
         </table>
-        <nav class="d-flex flex-row-reverse bd-highlight pe-1" aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
+
     </div>
 </div>
 
@@ -244,13 +213,35 @@ include('../includes/navbar.php');
         });
     })();
 
+    $(document).ready(function() {
+        $('#accountTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
+            },
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../php/datatable/fetch_account.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [6]
+                },
+
+            ]
+        });
+    });
+
     // CRUD function 
     $(document).on('click', '.accountEditButton', function() {
         var account_id = $(this).val();
 
         $.ajax({
             type: "GET",
-            url: "../php/account.php?account_id=" + account_id,
+            url: "../php/store/account.php?account_id=" + account_id,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response);
@@ -258,6 +249,8 @@ include('../includes/navbar.php');
 
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
+
+                    table = $('#accountTable').DataTable();
 
                     $('#account_id').val(res.data.id);
                     $('#userName').val(res.data.username);
@@ -276,7 +269,7 @@ include('../includes/navbar.php');
 
         $.ajax({
             type: "GET",
-            url: "../php/account.php?account_id=" + account_id,
+            url: "../php/store/account.php?account_id=" + account_id,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response);
@@ -300,7 +293,7 @@ include('../includes/navbar.php');
 
         $.ajax({
             type: "POST",
-            url: "../php/account.php",
+            url: "../php/store/account.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -314,8 +307,9 @@ include('../includes/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    $('#accountTable').load(location.href + " #accountTable");
                     $('#AccountModal').modal('hide');
+                    table = $('#accountTable').DataTable();
+                    table.draw();
                     toastr.success(res.message, res.status);
                     console.log(res.console);
 
@@ -341,7 +335,7 @@ include('../includes/navbar.php');
 
         $.ajax({
             type: "POST",
-            url: "../php/account.php",
+            url: "../php/store/account.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -354,7 +348,8 @@ include('../includes/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    $('#accountTable').load(location.href + " #accountTable");
+                    table = $('#accountTable').DataTable();
+                    table.draw();
                     toastr.success(res.message, res.status);
                     console.log(res.console);
 
@@ -375,7 +370,7 @@ include('../includes/navbar.php');
 
         $.ajax({
             type: "POST",
-            url: "../php/account.php",
+            url: "../php/store/account.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -384,7 +379,8 @@ include('../includes/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
-                    $('#accountTable').load(location.href + " #accountTable");
+                    table = $('#accountTable').DataTable();
+                    table.draw();
                     $('#AccountDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
                     console.log(res.console);
