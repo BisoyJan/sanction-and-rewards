@@ -85,7 +85,7 @@
                     <div class="job">User Type: <?= $_SESSION['type']; ?></div>
 
                 </div>
-                <a href="../php/logout.php"><i class="logoutBtn fa-solid fa-arrow-right-from-bracket"></i></a>
+                <a href="../php/store/logout.php"><i class="logoutBtn fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
         </li>
     </ul>
