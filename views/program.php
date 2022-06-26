@@ -4,7 +4,7 @@ include('../includes/navbar.php');
 ?>
 
 
-<div class="container-fluid pt-5 ps-5 pe-5">
+<div class="container-fluid pt-3 ps-5 pe-5">
     <div class="row justify-content-between">
         <div class="col-auto">
             <div class="input-group mb-3">
