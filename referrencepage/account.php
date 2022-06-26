@@ -14,7 +14,7 @@ include('../includes/navbar.php');
     <div class="row">
         <div class="col-auto">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" ame="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
+                <input type="text" class="form-control" id="search" onkeyup="myFunction()" placeholder="Search" aria-describedby="basic-addon2">
             </div>
         </div>
         <div class="col">
@@ -24,13 +24,82 @@ include('../includes/navbar.php');
         </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/accountTable.php -->
+    <div>
+        <table id="accountTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Type</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <?php
+                if (isset($_GET['pageno'])) {
+                    $pageno = $_GET['pageno'];
+                } else {
+                    $pageno = 1;
+                }
+                $no_of_records_per_page = 10;
+                $offset = ($pageno - 1) * $no_of_records_per_page;
 
+                $total_pages_sql = "SELECT COUNT(*) FROM users";
+                $result = mysqli_query($con, $total_pages_sql);
+                $total_rows = mysqli_fetch_array($result)[0];
+                $total_pages = ceil($total_rows / $no_of_records_per_page);
+
+                $sql = "SELECT * FROM users LIMIT $offset, $no_of_records_per_page";
+                $res_data = mysqli_query($con, $sql);
+                while ($row = mysqli_fetch_array($res_data)) { ?>
+
+                    <tr>
+                        <td><?= $row['id'] ?></td>
+                        <td><?= $row['username'] ?></td>
+                        <td><?= $row['type'] ?></td>
+                        <td><?= $row['first_name'] ?></td>
+                        <td><?= $row['middle_name'] ?></td>
+                        <td><?= $row['last_name'] ?></td>
+                        <td><button class="accountEditButton btn btn-success" value="<?= $row['id'] ?>" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#AccountModal">Edit Button</button>
+                            <button class="accountDeleteButton btn btn-danger" value="<?= $row['id'] ?>" type="button" data-bs-toggle="modal" data-bs-target="#AccountDeleteModal">Delete Button</button>
+                        </td>
+                    </tr>
+
+                <?php } ?>
+
+            </tbody>
+        </table>
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="?pageno=1">First</a></li>
+            <li class=" <?php if ($pageno <= 1) {
+                            echo 'disabled';
+                        } ?> page-item">
+                <a class="page-link" href="<?php if ($pageno <= 1) {
+                                                echo '#';
+                                            } else {
+                                                echo "?pageno=" . ($pageno - 1);
+                                            } ?>">Prev</a>
+            </li>
+            
+            <li class="<?php if ($pageno >= $total_pages) {
+                            echo 'disabled';
+                        } ?> page-item">
+                <a class="page-link" href="<?php if ($pageno >= $total_pages) {
+                                                echo '#';
+                                            } else {
+                                                echo "?pageno=" . ($pageno + 1);
+                                            } ?>">Next</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+        </ul>
     </div>
 </div>
 
 <!-- Modal -->
+
 <div class="modal fade" id="AccountModal" tabindex="-1" aria-labelledby="AccountLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -139,12 +208,12 @@ include('../includes/navbar.php');
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Are you sure to delete this Account?</h6>
+                    <h6>Are you sure to delete this account?</h6>
                     <input type="hidden" name="delete_account_id" id="delete_account_id">
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary " type="submit">Confirm</button>
+                    <button type="submit" data-bs-dismiss="modal" class="confirmDeleteAccount btn btn-primary " type="submit">Confirm</button>
                 </div>
             </form>
         </div>
@@ -153,34 +222,27 @@ include('../includes/navbar.php');
 
 
 <script>
-    $(document).ready(function() {
-        load_data(1);
-    });
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("accountTable");
+        tr = table.getElementsByTagName("tr");
 
-    function load_data(page, query = '') {
-        $.ajax({
-            url: "../php/fetchPaginate/accountTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
-            },
-            success: function(data) {
-                $('#dynamicTable').html(data);
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
-        });
+        }
     }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
-    });
 
     //PasswordShow
     const togglePassword = document.querySelector("#togglePassword");
@@ -308,8 +370,7 @@ include('../includes/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    load_data(1);
-                    $('#Account')[0].reset();
+                    $('#accountTable').load(location.href + " #accountTable");
                     $('#AccountModal').modal('hide');
                     toastr.success(res.message, res.status);
                     console.log(res.console);
@@ -350,9 +411,7 @@ include('../includes/navbar.php');
                 } else if (res.status == 200) {
 
 
-                    load_data(1);
-                    $('#Account')[0].reset();
-                    $('#AccountModal').modal('hide');
+                    $('#accountTable').load(location.href + " #accountTable");
                     toastr.success(res.message, res.status);
                     console.log(res.console);
 
@@ -383,9 +442,10 @@ include('../includes/navbar.php');
                 if (res.status == 200) {
 
 
-                    load_data(1);
+                    $('#accountTable').DataTable();
                     $('#AccountDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
+                    console.log(res.console);
 
                 } else if (res.status == 500) {
                     toastr.error(res.message, res.status);

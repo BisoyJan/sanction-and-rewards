@@ -47,7 +47,7 @@ session_start();
 
             $.ajax({
                 type: "POST",
-                url: "php/store/login.php",
+                url: "php/authentication/login.php",
                 data: formData,
                 processData: false,
                 contentType: false,

@@ -17,7 +17,7 @@
             </a>
         </li>
         <li>
-            <a href="../views/student.php">
+            <a href="../views/program.php">
                 <i class="fa-solid fa-book"></i>
                 <span class="link_name">Programs</span>
             </a>
@@ -85,7 +85,7 @@
                     <div class="job">User Type: <?= $_SESSION['type']; ?></div>
 
                 </div>
-                <a href="../php/store/logout.php"><i class="logoutBtn fa-solid fa-arrow-right-from-bracket"></i></a>
+                <a href="../php/authentication/logout.php"><i class="logoutBtn fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
         </li>
     </ul>
@@ -95,4 +95,3 @@
     <div class="home-content">
         <i class="fa-solid fa-bars bx-menu"></i>
         <!-- <span class="text">Drop Down Sidebar</span> -->
-    </div>

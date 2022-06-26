@@ -14,7 +14,7 @@ include('../includes/navbar.php');
     <div class="row">
         <div class="col-auto">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" ame="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
+                <input type="text" class="form-control" id="search" onkeyup="myFunction()" placeholder="Search" aria-describedby="basic-addon2">
             </div>
         </div>
         <div class="col">
@@ -24,13 +24,30 @@ include('../includes/navbar.php');
         </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/accountTable.php -->
+    <!-- <button class="accountEditButton btn btn-success" value="<?= $row['id'] ?>" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#AccountModal">Edit Button</button>
+                            <button class="accountDeleteButton btn btn-danger" value="<?= $row['id'] ?>" type="button" data-bs-toggle="modal" data-bs-target="#AccountDeleteModal">Delete Button</button> -->
 
+    <div>
+        <table id="accountTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Type</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            </tbody>
+        </table>
     </div>
 </div>
 
 <!-- Modal -->
+
 <div class="modal fade" id="AccountModal" tabindex="-1" aria-labelledby="AccountLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -139,12 +156,12 @@ include('../includes/navbar.php');
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Are you sure to delete this Account?</h6>
+                    <h6>Are you sure to delete this account?</h6>
                     <input type="hidden" name="delete_account_id" id="delete_account_id">
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary " type="submit">Confirm</button>
+                    <button type="submit" data-bs-dismiss="modal" class="confirmDeleteAccount btn btn-primary " type="submit">Confirm</button>
                 </div>
             </form>
         </div>
@@ -154,34 +171,26 @@ include('../includes/navbar.php');
 
 <script>
     $(document).ready(function() {
-        load_data(1);
-    });
-
-    function load_data(page, query = '') {
-        $.ajax({
-            url: "../php/fetchPaginate/accountTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
+        $('#accountTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../php/datatable/fetch_account.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [6]
+                },
+
+            ]
         });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
     });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
-    });
-
     //PasswordShow
     const togglePassword = document.querySelector("#togglePassword");
     const password = document.querySelector("#Password");
@@ -308,8 +317,7 @@ include('../includes/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    load_data(1);
-                    $('#Account')[0].reset();
+                    $('#accountTable').load(location.href + " #accountTable");
                     $('#AccountModal').modal('hide');
                     toastr.success(res.message, res.status);
                     console.log(res.console);
@@ -350,9 +358,7 @@ include('../includes/navbar.php');
                 } else if (res.status == 200) {
 
 
-                    load_data(1);
-                    $('#Account')[0].reset();
-                    $('#AccountModal').modal('hide');
+                    $('#accountTable').load(location.href + " #accountTable");
                     toastr.success(res.message, res.status);
                     console.log(res.console);
 
@@ -383,9 +389,10 @@ include('../includes/navbar.php');
                 if (res.status == 200) {
 
 
-                    load_data(1);
+                    $('#accountTable').DataTable();
                     $('#AccountDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
+                    console.log(res.console);
 
                 } else if (res.status == 500) {
                     toastr.error(res.message, res.status);
