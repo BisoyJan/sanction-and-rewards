@@ -81,7 +81,7 @@ if (isset($_POST['create_Program'])) {
     }
 }
 
-if (isset($_POST['update_account'])) {
+if (isset($_POST['update_Account'])) {
     $id = mysqli_real_escape_string($con, $_POST['program_id']);
     $abbreviation = mysqli_real_escape_string($con, $_POST['abbreviation']);
     $college_id = mysqli_real_escape_string($con, $_POST['college']);
@@ -118,7 +118,7 @@ if (isset($_POST['update_account'])) {
     }
 }
 
-if (isset($_POST['delete_program'])) {
+if (isset($_POST['delete_Program'])) {
     $program_id = mysqli_real_escape_string($con, $_POST['delete_program_id']);
 
     $query = "DELETE FROM `programs` WHERE id = '$program_id'";

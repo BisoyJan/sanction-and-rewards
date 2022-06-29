@@ -151,8 +151,8 @@ include('../includes/navbar.php');
     </div>
 </div>
 
-
 <script>
+    //To inject the table in fetchPaginate folder
     $(document).ready(function() {
         load_data(1);
     });
@@ -332,7 +332,7 @@ include('../includes/navbar.php');
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("update_account", true);
+        formData.append("update_Account", true);
 
         $.ajax({
             type: "POST",
@@ -369,7 +369,7 @@ include('../includes/navbar.php');
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("delete_account", true);
+        formData.append("delete_Account", true);
 
         $.ajax({
             type: "POST",

@@ -16,7 +16,7 @@ SELECT
     colleges.abbreviation as collegeAbbreviation
 FROM
     programs
-LEFT JOIN colleges ON programs.college_id = colleges.id
+JOIN colleges ON programs.college_id = colleges.id
 ";
 
 if ($_POST['query'] != '') {
@@ -41,7 +41,7 @@ $result = $statement->fetchAll();
 $total_filter_data = $statement->rowCount();
 
 $output = '
-<table id="programTable" class="table table-hover" style="text-align: center;">
+<table id="programTable" class="table table-hover table-responsive" style="text-align: center;">
 <thead >
     <tr>
         <th>ID</th>

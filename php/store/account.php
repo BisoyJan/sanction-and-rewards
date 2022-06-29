@@ -86,7 +86,7 @@ if (isset($_POST['create_Account'])) {
     }
 }
 
-if (isset($_POST['update_account'])) {
+if (isset($_POST['update_Account'])) {
     $firstName = mysqli_real_escape_string($con, $_POST['firstName']);
     $middleName = mysqli_real_escape_string($con, $_POST['middleName']);
     $lastName = mysqli_real_escape_string($con, $_POST['lastName']);
@@ -127,7 +127,7 @@ if (isset($_POST['update_account'])) {
     }
 }
 
-if (isset($_POST['delete_account'])) {
+if (isset($_POST['delete_Account'])) {
     $account_id = mysqli_real_escape_string($con, $_POST['delete_account_id']);
 
     $query = "DELETE FROM `users` WHERE id = '$account_id'";

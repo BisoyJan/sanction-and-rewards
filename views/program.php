@@ -97,7 +97,7 @@ include('../includes/navbar.php');
         </div>
         <div class="col-8">
 
-            <div class="table-responsive" id="dynamicTable">
+            <div id="dynamicTable">
                 <!-- The contents of  the tables at the ../php/fetchPaginate/programTable.php -->
             </div>
         </div>
@@ -124,8 +124,8 @@ include('../includes/navbar.php');
     </div>
 </div>
 
-
 <script>
+    //To inject the table in fetchPaginate folder
     $(document).ready(function() {
         load_data(1);
     });
@@ -282,7 +282,7 @@ include('../includes/navbar.php');
         } else {
 
             var formData = new FormData(this);
-            formData.append("update_account", true);
+            formData.append("update_Account", true);
 
             $.ajax({
                 type: "POST",
@@ -319,7 +319,7 @@ include('../includes/navbar.php');
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("delete_program", true);
+        formData.append("delete_Program", true);
 
         $.ajax({
             type: "POST",

@@ -11,16 +11,27 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT * FROM users 
+SELECT
+    students.*,
+    programs.abbreviation,
+    programs.program_name as program,
+    programs.abbreviation,
+    colleges.abbreviation as college
+FROM
+    students
+JOIN programs ON students.program_id = programs.id
+JOIN colleges on programs.college_id = colleges.id
+
 ";
 
 if ($_POST['query'] != '') {
     $query .= '
-  WHERE username LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR type LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  OR programs.abbreviation LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  OR colleges.abbreviation LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   ';
 }
 
@@ -38,16 +49,18 @@ $result = $statement->fetchAll();
 $total_filter_data = $statement->rowCount();
 
 $output = '
-<table id="accountTable" class="table table-hover table-responsive" style="text-align: center;">
+<table id="programTable" class="table table-hover table-responsive" style="text-align: center;">
 <thead >
     <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Type</th>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Last Name</th>
-            <th>Actions</th>
+        <th>ID</th>
+        <th>Student Number</th>
+        <th>Full Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Section</th>
+        <th>Program</th>
+        <th>College</th>
+        <th>Actions</th>
     </tr>
 </thead>
 
@@ -57,14 +70,16 @@ if ($total_data > 0) {
         $output .= '
         <tr>
             <td>' . $row["id"] . '</td>
-            <td>' . $row["username"] . '</td>
-            <td>' . $row["type"] . '</td>
-            <td>' . $row["first_name"] . '</td>
-            <td>' . $row["middle_name"] . '</td>
-            <td>' . $row["last_name"] . '</td>
+            <td>' . $row["student_no"] . '</td>
+            <td>' . $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"] . '</td>
+            <td>' . $row["age"] . '</td>
+            <td>' . $row["gender"] . '</td>
+            <td>' . $row["section"] . '</td>
+            <td>' . $row["program"] . '</td>
+            <td>' . $row["college"] . '</td>
             <td>
-                <button class="accountEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#AccountModal">Edit Button</button>
-                <button class="accountDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#AccountDeleteModal">Delete Button</button>
+                <button class="studentEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#StudentModal">Edit Button</button>
+                <button class="studentDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#StudentDeleteModal">Delete Button</button>
             </td>
         </tr>
    ';
