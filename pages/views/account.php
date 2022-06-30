@@ -2,11 +2,12 @@
 include('../includes/header.php');
 include('../includes/navbar.php');
 ?>
+
 <div class="container-fluid pt-3 ps-5 pe-5">
     <div class="row">
         <div class="col-auto">
             <div class="input-group mb-3">
-                <h3>Students Table</h3>
+                <h3>Accounts Table</h3>
             </div>
         </div>
     </div>
@@ -18,49 +19,39 @@ include('../includes/navbar.php');
         </div>
         <div class="col">
             <div class="d-grid gap-2 d-flex justify-content-end">
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="studentAddButton" onclick="formIDChangeAdd()" data-bs-target="#StudentModal">Add Button</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="accountAddButton" onclick="formIDChangeAdd()" data-bs-target="#AccountModal">Add Button</button>
             </div>
         </div>
     </div>
 
     <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/studentTable.php -->
+        <!-- The contents of  the tables at the ../php/fetchPaginate/accountTable.php -->
 
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="StudentModal" tabindex="-1" aria-labelledby="StudentLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+<div class="modal fade" id="AccountModal" tabindex="-1" aria-labelledby="AccountLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Add Student</h5>
+                <h5 class="modal-title" id="ModalLabel">Add Account</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <form class="row g-3 requires-validation" id="Student" novalidate>
+                    <form class="row g-3 requires-validation" id="Account" novalidate>
                         <div class="row justify-content-center pt-3">
                             <div class="col-md-4">
-                                <input type="hidden" name="student_id" id="student_id">
+                                <input type="hidden" name="account_id" id="account_id">
 
-                                <label for="studentNo" class="form-label">Student ID</label>
-                                <input type="number" class="form-control" id="studentNo" name="studentNo" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please provide Student ID.
-                                </div>
-                            </div>
-                            <div class="col-md-4">
                                 <label for="firstName" class="form-label">First name</label>
                                 <input type="text" class="form-control" id="firstName" name="firstName" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please provide First Name.
+                                    Please provide First name.
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -70,97 +61,67 @@ include('../includes/navbar.php');
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please provide Middle Name.
+                                    Please provide Middle name.
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row justify-content- pt-3">
                             <div class="col-md-4">
-                                <label for="lastName" class="form-label">Last Name</label>
+                                <label for="lastName" class="form-label">Last name</label>
                                 <input type="text" class="form-control" id="lastName" name="lastName" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please provide Last Name.
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="age" class="form-label">Age</label>
-                                <input type="number" min="1" max="100" class="form-control" id="age" name="age" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please provide Age / Age limit 100
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="gender" class="form-label">Gender</label>
-                                <select class="form-select" id="gender" name="gender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please select a Gender.
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please provide Email.
+                                    Please provide Last name.
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row justify-content pt-3">
-                            <div class="col-md-2">
-                                <label for="section" class="form-label">Section</label>
-                                <input type="text" class="form-control" id="section" name="section" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please provide Age.
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label for="program" class="form-label">Program</label>
-                                <select class="form-select" id="program" name="program" required>
-                                    <option selected disabled value="">Select Program</option>
-
-                                    <?php
-                                    $query = "SELECT * FROM `programs`";
-                                    $result = $con->query($query);
-                                    if ($result->num_rows > 0) {
-                                        while ($optionData = $result->fetch_assoc()) {
-                                            $option = $optionData['program_name'];
-                                            $id = $optionData['id'];
-                                    ?>
-                                            <option value="<?php echo $id; ?>"><?php echo $option; ?></option>
-                                    <?php }
-                                    } ?>
+                        <div class="row pt-3 justify-content-center">
+                            <div class="col-md-4">
+                                <label for="userType" class="form-label">User Type</label>
+                                <select class="form-select" id="userType" name="userType" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="User">User</option>
 
                                 </select>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please select a College.
+                                    Please select a User Type.
                                 </div>
                             </div>
-
-                            <div class="d-flex flex-row-reverse bd-highlight pt-3">
-                                <button class="btn btn-primary" type="submit">Submit form</button>
+                            <div class="col-md-4">
+                                <label for="userName" class="form-label">Username</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                    <input type="text" class="form-control" id="userName" name="userName" aria-describedby="inputGroupPrepend" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please choose a Username.
+                                    </div>
+                                </div>
                             </div>
+                            <div class="col-md-4">
+                                <label for="Password" class="form-label">Password</label>
+                                <div class="input-group">
+
+                                    <input class="form-control" id="Password" name="password" type="password" required />
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-eye" id="togglePassword" style="cursor: pointer"></i>
+                                    </span>
+                                    <div class="invalid-feedback">
+                                        Please provide your Password.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row-reverse bd-highlight pt-3">
+                            <button class="btn btn-primary" type="submit">Submit form</button>
                         </div>
                     </form>
                 </div>
@@ -169,17 +130,17 @@ include('../includes/navbar.php');
     </div>
 </div>
 
-<div class="modal fade" id="StudentDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="AccountDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="deleteStudent">
+            <form id="deleteAccount">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <h6>Are you sure to delete this Account?</h6>
-                    <input type="hidden" name="delete_student_id" id="delete_student_id">
+                    <input type="hidden" name="delete_account_id" id="delete_account_id">
 
                 </div>
                 <div class="modal-footer">
@@ -198,7 +159,7 @@ include('../includes/navbar.php');
 
     function load_data(page, query = '') {
         $.ajax({
-            url: "../php/fetchPaginate/studentTable.php",
+            url: "../../php/fetchPaginate/accountTable.php",
             method: "POST",
             data: {
                 page: page,
@@ -221,19 +182,37 @@ include('../includes/navbar.php');
         load_data(1, query);
     });
 
+    //PasswordShow
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#Password");
+
+    togglePassword.addEventListener("click", function(e) {
+
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+
+        password.setAttribute("type", type);
+        this.classList.toggle("fa-eye-slash");
+    });
+
     //Form ID Change click of the button
     function formIDChangeAdd() {
-        $("form").attr('id', 'Student')
-        $('#Student')[0].reset();
+        $("form").attr('id', 'Account')
         var label = document.getElementById('ModalLabel');
-        label.innerHTML = "Add Student";
+        label.innerHTML = "Add Account";
     };
 
     function formIDChangeEdit() {
-        $("form").attr('id', 'EditStudent')
+        $("form").attr('id', 'EditAccount')
         var label = document.getElementById('ModalLabel');
-        label.innerHTML = "Edit Student";
+        label.innerHTML = "Edit Account";
     }
+
+
+    //Function to use same button but button has Different ID to show the modal
+    $('#accountModal').on('shown.bs.modal', function(e) {
+        const buttonId = e.relatedTarget.id;
+        $(this).find('.modal-body').text(`Button id = ${buttonId}`);
+    });
 
     //Bootstrap input validation 5 Validation
     (function() {
@@ -257,13 +236,14 @@ include('../includes/navbar.php');
         });
     })();
 
-    //CRUD Function
-    $(document).on('click', '.studentEditButton', function() {
-        var student_id = $(this).val();
+
+    // CRUD function 
+    $(document).on('click', '.accountEditButton', function() {
+        var account_id = $(this).val();
 
         $.ajax({
             type: "GET",
-            url: "../php/store/student.php?student_id=" + student_id,
+            url: "../../php/store/account.php?account_id=" + account_id,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response);
@@ -272,30 +252,25 @@ include('../includes/navbar.php');
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
 
-                    console.log(res.data)
 
-                    $('#student_id').val(res.data.id);
-                    $('#studentNo').val(res.data.student_no);
+                    $('#account_id').val(res.data.id);
+                    $('#userName').val(res.data.username);
+                    $('#userType').val(res.data.type);
                     $('#firstName').val(res.data.first_name);
                     $('#middleName').val(res.data.middle_name);
                     $('#lastName').val(res.data.last_name);
-                    $('#age').val(res.data.age);
-                    $('#gender').val(res.data.gender);
-                    $('#email').val(res.data.email);
-                    $('#section').val(res.data.section);
-                    $('#program').val(res.data.program_id);
                 }
             }
         });
 
     });
 
-    $(document).on('click', '.studentDeleteButton', function() {
-        var student_id = $(this).val();
+    $(document).on('click', '.accountDeleteButton', function() {
+        var account_id = $(this).val();
 
         $.ajax({
             type: "GET",
-            url: "../php/store/student.php?student_id=" + student_id,
+            url: "../../php/store/account.php?account_id=" + account_id,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response);
@@ -304,23 +279,22 @@ include('../includes/navbar.php');
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
 
-                    console.log(res.data)
-                    $('#delete_student_id').val(res.data.id);
+                    $('#delete_account_id').val(res.data.id);
                 }
             }
         });
 
     });
 
-    $(document).on('submit', '#Student', function(e) {
+    $(document).on('submit', '#Account', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("create_Student", true)
+        formData.append("create_Account", true)
 
         $.ajax({
             type: "POST",
-            url: "../php/store/student.php",
+            url: "../../php/store/account.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -330,41 +304,39 @@ include('../includes/navbar.php');
                 if (res.status == 422) {
 
                     toastr.warning(res.message, res.status);
+                    console.log(res.console);
+
+                } else if (res.status == 200) {
+
+                    load_data(1);
+                    $('#Account')[0].reset();
+                    $('#AccountModal').modal('hide');
+                    toastr.success(res.message, res.status);
+                    console.log(res.console);
+
+                } else if (res.status == 500) {
+
+                    toastr.error(res.message, res.status);
                     console.log(res.console);
 
                 } else if (res.status == 401) {
 
                     toastr.error(res.message, res.status);
-
-                } else if (res.status == 200) {
-
-                    load_data(1);
-                    $('#Student')[0].reset();
-                    $('#StudentModal').modal('hide');
-
-                    toastr.success(res.message, res.status);
-                    console.log(res.console);
-
-                } else if (res.status == 500) {
-
-                    toastr.error(res.message, res.status);
-                    console.log(res.console);
-
                 }
             }
         });
 
     });
 
-    $(document).on('submit', '#EditStudent', function(e) {
+    $(document).on('submit', '#EditAccount', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("update_Student", true);
+        formData.append("update_Account", true);
 
         $.ajax({
             type: "POST",
-            url: "../php/store/student.php",
+            url: "../../php/store/account.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -372,32 +344,36 @@ include('../includes/navbar.php');
 
                 var res = jQuery.parseJSON(response)
                 if (res.status == 422) {
+
                     toastr.warning(res.message, res.status);
+
                 } else if (res.status == 200) {
 
-                    load_data(1);
-                    $('#EditStudent')[0].reset();
-                    $('#StudentModal').modal('hide');
 
+                    load_data(1);
+                    $('#Account')[0].reset();
+                    $('#AccountModal').modal('hide');
                     toastr.success(res.message, res.status);
                     console.log(res.console);
 
                 } else if (res.status == 500) {
+
                     toastr.error(res.message, res.status);
+
                 }
             }
         });
     });
 
-    $(document).on('submit', '#deleteStudent', function(e) {
+    $(document).on('submit', '#deleteAccount', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("delete_Student", true);
+        formData.append("delete_Account", true);
 
         $.ajax({
             type: "POST",
-            url: "../php/store/student.php",
+            url: "../../php/store/account.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -408,7 +384,7 @@ include('../includes/navbar.php');
 
 
                     load_data(1);
-                    $('#StudentDeleteModal').modal('hide');
+                    $('#AccountDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 
                 } else if (res.status == 500) {

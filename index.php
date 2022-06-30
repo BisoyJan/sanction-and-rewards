@@ -59,7 +59,7 @@ session_start();
                         console.log(res.console);
                     } else if (res.status == 200) {
                         console.log(res.console);
-                        window.location = "views/index.php";
+                        window.location = "pages/views/index.php";
 
 
                     } else if (res.status == 401) {

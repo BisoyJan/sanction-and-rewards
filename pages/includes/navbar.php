@@ -44,7 +44,7 @@
             </ul>
         </li>
         <li>
-            <a href="#">
+            <a href="../views/lost-found.php">
                 <i class="fa-solid fa-person"></i>
                 <span class="link_name">Lost and Found</span>
             </a>
@@ -75,17 +75,15 @@
         <li>
             <div class="profile-details">
                 <div class="profile-content">
-                    <img src="../assets/images/profile.jpg" alt="profileImg">
+                    <img src="../../assets/images/profile.jpg" alt="profileImg">
                 </div>
                 <div class="name-job">
-
-
 
                     <div class="profile_name"><?= $_SESSION['first_name']; ?></div>
                     <div class="job">User Type: <?= $_SESSION['type']; ?></div>
 
                 </div>
-                <a href="../php/authentication/logout.php"><i class="logoutBtn fa-solid fa-arrow-right-from-bracket"></i></a>
+                <a href="../../php/authentication/logout.php"><i class="logoutBtn fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
         </li>
     </ul>
