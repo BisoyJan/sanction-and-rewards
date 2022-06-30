@@ -103,7 +103,7 @@ if (isset($_POST['update_Offense'])) {
         echo json_encode($res);
         return;
     } else {
-        $query = "UPDATE `violations` SET ``offenses_id`='$offenseType',`code`='$$offenseCode',`violation`='$offenseDescription' WHERE id = '$id'";
+        $query = "UPDATE `violations` SET `offenses_id`='$offenseType',`code`='$offenseCode',`violation`='$offenseDescription' WHERE id = '$id'";
         $query_run = mysqli_query($con, $query);
 
         if ($query_run) {

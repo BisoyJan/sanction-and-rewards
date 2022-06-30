@@ -257,6 +257,7 @@ include('../includes/navbar.php');
 
                     } else if (res.status == 200) {
 
+                        $('#Offense')[0].reset();
                         load_data(1);
                         toastr.success(res.message, res.status);
                         console.log(res.console);
@@ -280,7 +281,7 @@ include('../includes/navbar.php');
 
             $.ajax({
                 type: "POST",
-                url: "../../php/store/program.php",
+                url: "../../php/store/offense.php",
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -293,6 +294,7 @@ include('../includes/navbar.php');
 
                     } else if (res.status == 200) {
 
+                        $('#Offense')[0].reset();
                         btn.innerText = "Add Offense";
                         load_data(1);
                         toastr.success(res.message, res.status);

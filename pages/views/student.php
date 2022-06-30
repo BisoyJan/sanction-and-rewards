@@ -183,7 +183,7 @@ include('../includes/navbar.php');
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary " type="submit">Confirm</button>
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary deleteStudent" type="submit">Confirm</button>
                 </div>
             </form>
         </div>
@@ -389,18 +389,18 @@ include('../includes/navbar.php');
         });
     });
 
-    $(document).on('submit', '#deleteStudent', function(e) {
+    $(document).on('click', '.deleteStudent', function(e) {
         e.preventDefault();
 
-        var formData = new FormData(this);
-        formData.append("delete_Student", true);
+        var formData = $("#delete_student_id").val()
 
         $.ajax({
             type: "POST",
             url: "../../php/store/student.php",
-            data: formData,
-            processData: false,
-            contentType: false,
+            data: {
+                'delete_Student': true,
+                'delete_student_id': formData
+            },
             success: function(response) {
 
                 var res = jQuery.parseJSON(response)

@@ -133,7 +133,7 @@ include('../includes/navbar.php');
 <div class="modal fade" id="AccountDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="deleteAccount">
+            <form id="DeleteAccount">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -144,7 +144,7 @@ include('../includes/navbar.php');
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary " type="submit">Confirm</button>
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary DeleteAccount" type="submit">Confirm</button>
                 </div>
             </form>
         </div>
@@ -279,6 +279,7 @@ include('../includes/navbar.php');
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
 
+                    console.log(res.data.id);
                     $('#delete_account_id').val(res.data.id);
                 }
             }
@@ -309,10 +310,9 @@ include('../includes/navbar.php');
                 } else if (res.status == 200) {
 
                     load_data(1);
-                    $('#Account')[0].reset();
+
                     $('#AccountModal').modal('hide');
                     toastr.success(res.message, res.status);
-                    console.log(res.console);
 
                 } else if (res.status == 500) {
 
@@ -349,12 +349,10 @@ include('../includes/navbar.php');
 
                 } else if (res.status == 200) {
 
-
                     load_data(1);
-                    $('#Account')[0].reset();
+
                     $('#AccountModal').modal('hide');
                     toastr.success(res.message, res.status);
-                    console.log(res.console);
 
                 } else if (res.status == 500) {
 
@@ -365,23 +363,23 @@ include('../includes/navbar.php');
         });
     });
 
-    $(document).on('submit', '#deleteAccount', function(e) {
+    $(document).on('click', '.DeleteAccount', function(e) {
         e.preventDefault();
 
-        var formData = new FormData(this);
-        formData.append("delete_Account", true);
+        //var formData = new FormData(this);  
+        var formData = $("#delete_account_id").val()
 
         $.ajax({
             type: "POST",
             url: "../../php/store/account.php",
-            data: formData,
-            processData: false,
-            contentType: false,
+            data: {
+                'delete_Account': true,
+                'delete_account_id': formData
+            },
             success: function(response) {
 
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
-
 
                     load_data(1);
                     $('#AccountDeleteModal').modal('hide');

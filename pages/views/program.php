@@ -80,12 +80,12 @@ include('../includes/navbar.php');
                 <div class="row justify-content-end pt-3 ">
                     <div class="col-3">
                         <div class="bd-highlight pt-3">
-                            <button class="btn btn-secondary me-3" type="reset">Clear</button>
+                            <button class="btn btn-secondary me-3" type="reset" onclick="buttonIDChange()">Clear</button>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="bd-highlight pt-3">
-                            <button class="btn btn-primary" type="submit" id="offenseButton">Add Offense</button>
+                            <button class="btn btn-primary" type="submit" id="programButton">Add Program</button>
                         </div>
                     </div>
                 </div>
@@ -259,6 +259,7 @@ include('../includes/navbar.php');
 
                     } else if (res.status == 200) {
 
+                        $('#Program')[0].reset();
                         load_data(1);
                         toastr.success(res.message, res.status);
                         console.log(res.console);
@@ -295,6 +296,7 @@ include('../includes/navbar.php');
 
                     } else if (res.status == 200) {
 
+                        $('#Program')[0].reset();
                         btn.innerText = "Add Program";
                         load_data(1);
                         toastr.success(res.message, res.status);
