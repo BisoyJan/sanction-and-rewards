@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="../views/student.php">
+            <a href="../views/offense.php">
                 <i class="fa-solid fa-book-skull"></i>
                 <span class="link_name">List of Offenses</span>
             </a>

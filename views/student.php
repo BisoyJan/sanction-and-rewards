@@ -133,9 +133,6 @@ include('../includes/navbar.php');
                                 </div>
                             </div>
                             <div class="col">
-                                <?php $sql = "SELECT * FROM `colleges`";
-                                $all_categories = mysqli_query($con, $sql); ?>
-
                                 <label for="program" class="form-label">Program</label>
                                 <select class="form-select" id="program" name="program" required>
                                     <option selected disabled value="">Select Program</option>
