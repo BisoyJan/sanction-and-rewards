@@ -2,6 +2,7 @@
 include('../includes/main/header.php');
 include('../includes/main/navbar.php');
 ?>
+
 <div class="container-fluid pt-3 ps-5 pe-5">
     <div class="row">
         <div class="col-auto">
@@ -13,7 +14,7 @@ include('../includes/main/navbar.php');
     <div class="row">
         <div class="col-auto">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" ame="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
+                <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
             </div>
         </div>
         <div class="col">

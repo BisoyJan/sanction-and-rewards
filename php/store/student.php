@@ -158,14 +158,14 @@ if (isset($_POST['update_Student'])) {
         if ($query_run) {
             $res = [
                 'status' => 200,
-                'message' => 'Program Successfully Updated'
+                'message' => 'Student Successfully Updated'
             ];
             echo json_encode($res);
             return;
         } else {
             $res = [
                 'status' => 500,
-                'message' => 'Program is not Been Updated'
+                'message' => 'Student is not Been Updated'
             ];
             echo json_encode($res);
             return;
