@@ -344,5 +344,5 @@ include('../includes/main/navbar.php');
 
 
 <?php
-include('../includes/footer.php')
+include('../includes/main/footer.php')
 ?>

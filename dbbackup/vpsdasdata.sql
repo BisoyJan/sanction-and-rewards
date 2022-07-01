@@ -41,6 +41,18 @@ CREATE TABLE `cases` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `colleges`
+--
+
+CREATE TABLE `colleges` (
+  `id` int(11) NOT NULL,
+  `abbreviation` varchar(40) NOT NULL,
+  `college` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cum_laudes`
 --
 
@@ -200,6 +212,16 @@ CREATE TABLE `programs` (
   `program_name` varchar(45) DEFAULT NULL,
   `college_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `colleges`
+--
+
+INSERT INTO `colleges` (`id`, `abbreviation`, `college`) VALUES
+(1, 'CAS', 'College of Arts and Sciences'),
+(2, 'COE', 'College of Education'),
+(3, 'CME', 'College of Management and Entrepreneurship'),
+(4, 'GS', 'Graduate School');
 
 --
 -- Dumping data for table `programs`
@@ -364,6 +386,13 @@ INSERT INTO `violations` (`id`, `offenses_id`, `code`, `violation`) VALUES
 --
 
 --
+-- Indexes for table `colleges`
+--
+ALTER TABLE `colleges`
+  ADD PRIMARY KEY (`id`);
+
+
+--
 -- Indexes for table `cases`
 --
 ALTER TABLE `cases`
@@ -498,6 +527,12 @@ ALTER TABLE `violations`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `colleges`
+--
+ALTER TABLE `colleges`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  
 --
 -- AUTO_INCREMENT for table `cases`
 --
