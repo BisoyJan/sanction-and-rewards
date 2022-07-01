@@ -1,6 +1,6 @@
 <?php
-include('../includes/header.php');
-include('../includes/navbar.php');
+include('../includes/main/header.php');
+include('../includes/main/navbar.php');
 ?>
 <div class="container-fluid pt-3 ps-5 pe-5">
     <div class="row">
@@ -420,5 +420,5 @@ include('../includes/navbar.php');
 </script>
 
 <?php
-include('../includes/footer.php')
+include('../includes/main/footer.php')
 ?>

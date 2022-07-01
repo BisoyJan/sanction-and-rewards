@@ -1,13 +1,13 @@
 <?php
-include('../includes/header.php');
-include('../includes/navbar.php');
+include('../includes/main/header.php');
+include('../includes/main/navbar.php');
 ?>
 
 <div class="container-fluid pt-3 ps-5 pe-5">
     <div class="row justify-content-between">
         <div class="col-auto">
             <div class="input-group mb-3">
-                <h3>Programs Table</h3>
+                <h3>Offenses Table</h3>
             </div>
         </div>
         <div class="col-auto">

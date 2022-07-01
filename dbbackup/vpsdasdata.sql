@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 19, 2022 at 02:37 PM
+-- Generation Time: Jul 01, 2022 at 07:11 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -197,16 +197,20 @@ CREATE TABLE `performers` (
 CREATE TABLE `programs` (
   `id` int(11) NOT NULL,
   `abbreviation` varchar(45) DEFAULT NULL,
-  `program_name` varchar(45) DEFAULT NULL
+  `program_name` varchar(45) DEFAULT NULL,
+  `college_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `programs`
 --
 
-INSERT INTO `programs` (`id`, `abbreviation`, `program_name`) VALUES
-(1, 'BSIT', 'Bachelor of Science in Information Technology'),
-(2, 'BSED', 'Bachelor of Secondary Education');
+INSERT INTO `programs` (`id`, `abbreviation`, `program_name`, `college_id`) VALUES
+(1, 'BSIT', 'Bachelor of Science in Information Technology', 1),
+(2, 'wadwd', 'wadwadawdaws', 3),
+(4, 'wadwa', 'awdawdaw', 4),
+(5, 'awdad', 'awdwadaws', 1),
+(7, 'dwadwadadw', 'wadawdwadwad', 1);
 
 -- --------------------------------------------------------
 
@@ -223,7 +227,7 @@ CREATE TABLE `properties` (
   `date_surrendered` date DEFAULT NULL,
   `type` varchar(45) NOT NULL,
   `description` varchar(200) NOT NULL,
-  `picture` longblob NOT NULL,
+  `picture` varchar(255) NOT NULL,
   `remarks` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -267,9 +271,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `student_no`, `first_name`, `middle_name`, `last_name`, `age`, `gender`, `section`, `email`, `program_id`) VALUES
-(1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 21, 'Male', 'A|34', 'bisoyjan@gmail.com', 1),
-(2, 1800674, 'John Paul Ken', 'Go', 'Vinegas', 22, 'Male', 'AI41', 'janbisoy@gmail.com', 1),
-(3, 1800891, 'Raplh', 'Delda', 'Amistoso', 22, 'Male', 'A|43', 'amistosoralph31@gmail.com', 1);
+(1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 22, 'Male', 'AI42', 'bisoyjan@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -320,9 +322,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `type`, `first_name`, `middle_name`, `last_name`) VALUES
-(1, 'Admin', '$2y$10$OXNB7HOmz.cd6n3TOFloRes1SRvNhUDx2f5mHqYoz39gK9h8eJpc.', 'Admin', 'aAdmin', 'Admin', 'Admin'),
-(2, 'aaaa', '$2y$10$Up.QJo3MOC2tHn2Q8HmpluJcgUTcZNicz22NiWEeICmEErcAbaZbi', 'Admin', 'awadwa', 'dwadawd', 'wadawd'),
-(3, 'ssssss', '$2y$10$tQXDLyW.dfL4FBjPoYTD2uYmCefsBrAUi3gdJbQx8dv9mqfduV3ZO', 'Admin', 'awadwa', 'dwadawd', 'wadawd');
+(1, 'Admin', '$2y$10$j91BGsxmOVPESpirJseRc.BnYrUJ1VHlCmBFRC1TP4gSPHp.LRLpC', 'Admin', 'Admin', 'Admin', 'Admin'),
+(2, 'User', '$2y$10$F6TjYEA3d4qrOfDVY9OFr.14W5O2uIJ9Gw0Mtk0s8OWJ4XQQ78Jsi', 'User', 'User', 'User', 'User');
 
 -- --------------------------------------------------------
 
@@ -334,7 +335,7 @@ CREATE TABLE `violations` (
   `id` int(11) NOT NULL,
   `offenses_id` int(11) NOT NULL,
   `code` varchar(40) NOT NULL,
-  `violation` varchar(150) NOT NULL
+  `violation` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -442,7 +443,8 @@ ALTER TABLE `performers`
 -- Indexes for table `programs`
 --
 ALTER TABLE `programs`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `college_id` (`college_id`);
 
 --
 -- Indexes for table `properties`
@@ -566,7 +568,7 @@ ALTER TABLE `performers`
 -- AUTO_INCREMENT for table `programs`
 --
 ALTER TABLE `programs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `properties`
@@ -584,7 +586,7 @@ ALTER TABLE `referrals`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `themeplate_filepath`
@@ -596,13 +598,13 @@ ALTER TABLE `themeplate_filepath`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `violations`
 --
 ALTER TABLE `violations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
@@ -667,6 +669,12 @@ ALTER TABLE `outstanding_athlete`
 --
 ALTER TABLE `performers`
   ADD CONSTRAINT `performers_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `programs`
+--
+ALTER TABLE `programs`
+  ADD CONSTRAINT `college_id` FOREIGN KEY (`college_id`) REFERENCES `colleges` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `referrals`
