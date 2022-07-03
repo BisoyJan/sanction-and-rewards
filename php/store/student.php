@@ -9,7 +9,6 @@ if (isset($_GET['student_id'])) {
 
     $query = "SELECT
         students.*,
-        programs.abbreviation,
         programs.program_name as program,
         programs.abbreviation,
         colleges.abbreviation as college
