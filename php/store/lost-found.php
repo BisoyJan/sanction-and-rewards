@@ -234,7 +234,7 @@ if (isset($_POST['update_Lost-Found'])) {
 
 if (isset($_POST['delete_LostFound'])) {
     $lostFound_id = mysqli_real_escape_string($con, $_POST['delete_LostFound_id']);
-    $image = mysqli_real_escape_string($con, $_POST['delete_image']);
+    $image = mysqli_real_escape_string($con, $_POST['delete_image_path']);
 
     unlink($image);
 

@@ -159,20 +159,18 @@ include('../includes/main/navbar.php');
         });
     });
 
-    $(document).on('click', '.deleteLostFound', function(e) {
+    $(document).on('submit', '#deleteLostFound', function(e) {
         e.preventDefault();
 
-        var formData = $("#delete_LostFound_id").val()
-        var image = $("#delete_image_path").val()
+        var formData = new FormData(this);
+        formData.append("delete_LostFound", true)
 
         $.ajax({
             type: "POST",
             url: "../../php/store/lost-found.php",
-            data: {
-                'delete_LostFound': true,
-                'delete_LostFound_id': formData,
-                'delete_image': image
-            },
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response)
