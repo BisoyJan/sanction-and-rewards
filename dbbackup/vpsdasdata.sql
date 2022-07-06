@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 01, 2022 at 07:11 AM
+-- Generation Time: Jul 06, 2022 at 10:34 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -49,6 +49,16 @@ CREATE TABLE `colleges` (
   `abbreviation` varchar(40) NOT NULL,
   `college` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `colleges`
+--
+
+INSERT INTO `colleges` (`id`, `abbreviation`, `college`) VALUES
+(1, 'CAS', 'College of Arts and Sciences'),
+(2, 'COE', 'College of Education'),
+(3, 'CME', 'College of Management and Entrepreneurship'),
+(4, 'GS', 'Graduate School');
 
 -- --------------------------------------------------------
 
@@ -214,16 +224,6 @@ CREATE TABLE `programs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `colleges`
---
-
-INSERT INTO `colleges` (`id`, `abbreviation`, `college`) VALUES
-(1, 'CAS', 'College of Arts and Sciences'),
-(2, 'COE', 'College of Education'),
-(3, 'CME', 'College of Management and Entrepreneurship'),
-(4, 'GS', 'Graduate School');
-
---
 -- Dumping data for table `programs`
 --
 
@@ -252,6 +252,13 @@ CREATE TABLE `properties` (
   `picture` varchar(255) NOT NULL,
   `remarks` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `properties`
+--
+
+INSERT INTO `properties` (`id`, `student_id`, `retrieval_id`, `date_found`, `date_retrieved`, `date_surrendered`, `type`, `description`, `picture`, `remarks`) VALUES
+(14, 1800771, 1800763, '2022-07-06', NULL, '2022-07-06', 'wadwa', 'dawdawdaw', '../../assets/images/uploads/653013screenshot from 2022-07-05 16-58-42.png', 'Surrendered');
 
 -- --------------------------------------------------------
 
@@ -293,7 +300,8 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `student_no`, `first_name`, `middle_name`, `last_name`, `age`, `gender`, `section`, `email`, `program_id`) VALUES
-(1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 22, 'Male', 'AI42', 'bisoyjan@gmail.com', 1);
+(1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 22, 'Male', 'AI42', 'bisoyjan@gmail.com', 1),
+(2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1);
 
 -- --------------------------------------------------------
 
@@ -386,18 +394,17 @@ INSERT INTO `violations` (`id`, `offenses_id`, `code`, `violation`) VALUES
 --
 
 --
--- Indexes for table `colleges`
---
-ALTER TABLE `colleges`
-  ADD PRIMARY KEY (`id`);
-
-
---
 -- Indexes for table `cases`
 --
 ALTER TABLE `cases`
   ADD PRIMARY KEY (`id`),
   ADD KEY `case_disciplinary_id` (`disciplinary_action_id`);
+
+--
+-- Indexes for table `colleges`
+--
+ALTER TABLE `colleges`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cum_laudes`
@@ -528,16 +535,16 @@ ALTER TABLE `violations`
 --
 
 --
--- AUTO_INCREMENT for table `colleges`
---
-ALTER TABLE `colleges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-  
---
 -- AUTO_INCREMENT for table `cases`
 --
 ALTER TABLE `cases`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `colleges`
+--
+ALTER TABLE `colleges`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cum_laudes`
@@ -609,7 +616,7 @@ ALTER TABLE `programs`
 -- AUTO_INCREMENT for table `properties`
 --
 ALTER TABLE `properties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `referrals`
@@ -621,7 +628,7 @@ ALTER TABLE `referrals`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `themeplate_filepath`
@@ -709,7 +716,7 @@ ALTER TABLE `performers`
 -- Constraints for table `programs`
 --
 ALTER TABLE `programs`
-  ADD CONSTRAINT `college_id` FOREIGN KEY (`college_id`) REFERENCES `colleges` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `college_id` FOREIGN KEY (`college_id`) REFERENCES `colleges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `referrals`

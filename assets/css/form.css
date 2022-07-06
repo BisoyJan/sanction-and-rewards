@@ -1,0 +1,71 @@
+.Absolute-Center {
+    height: 90%;
+    /* Set your own height: percents, ems, whatever! */
+    width: 90%;
+    /* Set your own width: percents, ems, whatever! */
+    overflow: auto;
+    /* Recommended in case content is larger than the container */
+    margin: auto;
+    /* Center the item vertically & horizontally */
+    position: absolute;
+    /* Break it out of the regular flow */
+    top: 20%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    /* Set the bounds in which to center it, relative to its parent/container */
+}
+
+/* //////////////////////////////////////// */
+/* Make sure our center blocks stay in their container! */
+.Center-Container {
+    position: relative;
+}
+
+/* //////////////////////////////////////// */
+/* Fixed floating element within viewport */
+.Absolute-Center.is-Fixed {
+    position: fixed;
+    z-index: 999;
+}
+
+@media only screen and (max-width: 1000px) {
+    .Absolute-Center {
+        height: 100%;
+        /* Set your own height: percents, ems, whatever! */
+        width: 100%;
+        /* Set your own width: percents, ems, whatever! */
+        overflow: auto;
+        /* Recommended in case content is larger than the container */
+        margin: auto;
+        /* Center the item vertically & horizontally */
+        position: absolute;
+        /* Break it out of the regular flow */
+        top: 5%;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        /* Set the bounds in which to center it, relative to its parent/container */
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .Absolute-Center {
+        height: 100%;
+        /* Set your own height: percents, ems, whatever! */
+        width: 100%;
+        /* Set your own width: percents, ems, whatever! */
+        overflow: auto;
+        /* Recommended in case content is larger than the container */
+        margin: auto;
+        /* Center the item vertically & horizontally */
+        position: absolute;
+        /* Break it out of the regular flow */
+        top: 5%;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        /* Set the bounds in which to center it, relative to its parent/container */
+
+    }
+}
