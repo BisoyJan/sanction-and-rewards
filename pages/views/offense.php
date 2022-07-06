@@ -74,13 +74,13 @@ include('../includes/main/navbar.php');
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-end pt-3 ">
+                <div class="row pt-3 ">
                     <div class="col-3">
                         <div class="bd-highlight pt-3">
                             <button class="btn btn-secondary me-3" type="reset">Clear</button>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-5">
                         <div class="bd-highlight pt-3">
                             <button class="btn btn-primary" type="submit" id="offenseButton">Add Offense</button>
                         </div>
