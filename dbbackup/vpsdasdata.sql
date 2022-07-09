@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2022 at 10:34 AM
+-- Generation Time: Jul 10, 2022 at 01:50 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,23 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `vpsdasdata`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cases`
---
-
-CREATE TABLE `cases` (
-  `id` int(11) NOT NULL,
-  `disciplinary_action_id` int(11) NOT NULL,
-  `report` varchar(200) NOT NULL,
-  `resolution` varchar(200) NOT NULL,
-  `recommend` varchar(200) NOT NULL,
-  `chairman` varchar(70) NOT NULL,
-  `members` varchar(70) NOT NULL,
-  `date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -71,23 +54,6 @@ CREATE TABLE `cum_laudes` (
   `student_id` int(11) NOT NULL,
   `date_issued` varchar(20) NOT NULL,
   `school_year` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `disciplinary_action`
---
-
-CREATE TABLE `disciplinary_action` (
-  `id` int(11) NOT NULL,
-  `referral_id` int(11) NOT NULL,
-  `committed_date` date NOT NULL,
-  `committed_time` time NOT NULL,
-  `counselling_date` date NOT NULL,
-  `counselling_time` time NOT NULL,
-  `issual_date` date NOT NULL,
-  `remarks` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -258,23 +224,64 @@ CREATE TABLE `properties` (
 --
 
 INSERT INTO `properties` (`id`, `student_id`, `retrieval_id`, `date_found`, `date_retrieved`, `date_surrendered`, `type`, `description`, `picture`, `remarks`) VALUES
-(14, 1800771, 1800763, '2022-07-06', NULL, '2022-07-06', 'wadwa', 'dawdawdaw', '../../assets/images/uploads/653013screenshot from 2022-07-05 16-58-42.png', 'Surrendered');
+(19, 1800771, 1800763, '2022-07-09', NULL, '2022-07-09', 'awdadas', 'adwadssadsa', '../../assets/images/uploads/879778screenshot_2.png', 'Surrendered');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `referrals`
+-- Table structure for table `sanction_cases`
 --
 
-CREATE TABLE `referrals` (
+CREATE TABLE `sanction_cases` (
+  `id` int(11) NOT NULL,
+  `disciplinary_action_id` int(11) NOT NULL,
+  `report` varchar(200) NOT NULL,
+  `resolution` varchar(200) NOT NULL,
+  `recommend` varchar(200) NOT NULL,
+  `chairman` varchar(70) NOT NULL,
+  `members` varchar(70) NOT NULL,
+  `date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sanction_disciplinary_action`
+--
+
+CREATE TABLE `sanction_disciplinary_action` (
+  `id` int(11) NOT NULL,
+  `referral_id` int(11) NOT NULL,
+  `committed_date` date NOT NULL,
+  `committed_time` time NOT NULL,
+  `counselling_date` date NOT NULL,
+  `counselling_time` time NOT NULL,
+  `issual_date` date NOT NULL,
+  `remarks` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sanction_referrals`
+--
+
+CREATE TABLE `sanction_referrals` (
   `id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `violation_id` int(11) NOT NULL,
-  `employee_name` varchar(150) NOT NULL,
+  `complainer_name` varchar(150) NOT NULL,
   `referred` varchar(45) NOT NULL,
   `date` date NOT NULL,
-  `remark` varchar(45) NOT NULL
+  `remark` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sanction_referrals`
+--
+
+INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`) VALUES
+(12, 1, 3, 'Melvin Copioso', 'Ken Vinegas', '2022-07-09', NULL);
 
 -- --------------------------------------------------------
 
@@ -394,13 +401,6 @@ INSERT INTO `violations` (`id`, `offenses_id`, `code`, `violation`) VALUES
 --
 
 --
--- Indexes for table `cases`
---
-ALTER TABLE `cases`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `case_disciplinary_id` (`disciplinary_action_id`);
-
---
 -- Indexes for table `colleges`
 --
 ALTER TABLE `colleges`
@@ -412,13 +412,6 @@ ALTER TABLE `colleges`
 ALTER TABLE `cum_laudes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cumlaude_student_id` (`student_id`);
-
---
--- Indexes for table `disciplinary_action`
---
-ALTER TABLE `disciplinary_action`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `disciplinary_action_referral_id` (`referral_id`);
 
 --
 -- Indexes for table `document_filepath`
@@ -491,9 +484,23 @@ ALTER TABLE `properties`
   ADD KEY `properties_returnee_id` (`retrieval_id`);
 
 --
--- Indexes for table `referrals`
+-- Indexes for table `sanction_cases`
 --
-ALTER TABLE `referrals`
+ALTER TABLE `sanction_cases`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `case_disciplinary_id` (`disciplinary_action_id`);
+
+--
+-- Indexes for table `sanction_disciplinary_action`
+--
+ALTER TABLE `sanction_disciplinary_action`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `disciplinary_action_referral_id` (`referral_id`);
+
+--
+-- Indexes for table `sanction_referrals`
+--
+ALTER TABLE `sanction_referrals`
   ADD PRIMARY KEY (`id`),
   ADD KEY `student_id` (`student_id`),
   ADD KEY `referral_violation_id` (`violation_id`);
@@ -535,12 +542,6 @@ ALTER TABLE `violations`
 --
 
 --
--- AUTO_INCREMENT for table `cases`
---
-ALTER TABLE `cases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `colleges`
 --
 ALTER TABLE `colleges`
@@ -551,12 +552,6 @@ ALTER TABLE `colleges`
 --
 ALTER TABLE `cum_laudes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `disciplinary_action`
---
-ALTER TABLE `disciplinary_action`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `document_filepath`
@@ -616,13 +611,25 @@ ALTER TABLE `programs`
 -- AUTO_INCREMENT for table `properties`
 --
 ALTER TABLE `properties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `referrals`
+-- AUTO_INCREMENT for table `sanction_cases`
 --
-ALTER TABLE `referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `sanction_cases`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sanction_disciplinary_action`
+--
+ALTER TABLE `sanction_disciplinary_action`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `sanction_referrals`
+--
+ALTER TABLE `sanction_referrals`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -646,29 +653,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `violations`
 --
 ALTER TABLE `violations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `cases`
---
-ALTER TABLE `cases`
-  ADD CONSTRAINT `case_disciplinary_id` FOREIGN KEY (`disciplinary_action_id`) REFERENCES `disciplinary_action` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `cum_laudes`
 --
 ALTER TABLE `cum_laudes`
   ADD CONSTRAINT `cumlaude_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `disciplinary_action`
---
-ALTER TABLE `disciplinary_action`
-  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`referral_id`) REFERENCES `referrals` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `document_filepath`
@@ -719,9 +714,21 @@ ALTER TABLE `programs`
   ADD CONSTRAINT `college_id` FOREIGN KEY (`college_id`) REFERENCES `colleges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `referrals`
+-- Constraints for table `sanction_cases`
 --
-ALTER TABLE `referrals`
+ALTER TABLE `sanction_cases`
+  ADD CONSTRAINT `case_disciplinary_id` FOREIGN KEY (`disciplinary_action_id`) REFERENCES `sanction_disciplinary_action` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sanction_disciplinary_action`
+--
+ALTER TABLE `sanction_disciplinary_action`
+  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`referral_id`) REFERENCES `sanction_referrals` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sanction_referrals`
+--
+ALTER TABLE `sanction_referrals`
   ADD CONSTRAINT `referral_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `referral_violation_id` FOREIGN KEY (`violation_id`) REFERENCES `violations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
