@@ -14,26 +14,34 @@ if ($_POST['page'] > 1) {
 
 $query = "
 SELECT
-    students.*,
+    sanction_referrals.*,
+    students.student_no,
+    students.first_name,
+    students.middle_name,
+    students.last_name,
+    students.section,
     programs.abbreviation,
-    programs.program_name as program,
-    programs.abbreviation,
-    colleges.abbreviation as college
+    programs.program_name,
+    offenses.offense,
+    violations.code,
+    violations.violation
+    
 FROM
-    students
+    sanction_referrals
+JOIN students ON sanction_referrals.student_id = students.id
+JOIN violations on sanction_referrals.violation_id = violations.id
+JOIN offenses ON violations.offenses_id = offenses.id
 JOIN programs ON students.program_id = programs.id
-JOIN colleges on programs.college_id = colleges.id
-
 ";
 
 if ($_POST['query'] != '') {
     $query .= '
-  WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR programs.abbreviation LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR colleges.abbreviation LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   ';
 }
 
@@ -59,13 +67,15 @@ if ($statement->rowCount() == 0) {
 <thead >
     <tr>
         <th>ID</th>
-        <th>Student Number</th>
-        <th>Full Name</th>
-        <th>Age</th>
-        <th>Gender</th>
+        <th>Student ID</th>
+        <th>Student Name</th>
         <th>Section</th>
-        <th>Program</th>
-        <th>College</th>
+        <th>Course</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Complainer</th>
+        <th>Date Issued</th>
+        <th>Remarks</th>
         <th>Actions</th>
     </tr>
 </thead>
@@ -78,14 +88,16 @@ if ($statement->rowCount() == 0) {
             <td>' . $row["id"] . '</td>
             <td>' . $row["student_no"] . '</td>
             <td>' . $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"] . '</td>
-            <td>' . $row["age"] . '</td>
-            <td>' . $row["gender"] . '</td>
             <td>' . $row["section"] . '</td>
-            <td>' . $row["program"] . '</td>
-            <td>' . $row["college"] . '</td>
+            <td>' . $row["abbreviation"] . '</td>
+            <td>' . $row["offense"] . '</td>
+            <td style="width:15%;">' . $row["violation"] . '</td>
+            <td>' . $row["complainer_name"] . '</td>
+            <td>' . $row["date"] . '</td>
+            <td>' . $row["remark"] . '</td>
             <td>
-                <button class="studentEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#StudentModal">Edit Button</button>
-                <button class="studentDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#StudentDeleteModal">Delete Button</button>
+                <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-success" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
+                <button class="referralDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete Button</button>
             </td>
         </tr>
    ';
@@ -193,6 +205,7 @@ if ($statement->rowCount() == 0) {
   </ul>
 
 ';
+
 
     echo $output;
 }

@@ -137,7 +137,7 @@ include('../includes/main/navbar.php');
 
     });
 
-    $(document).on('click', '.studentDeleteButton', function() {
+    $(document).on('click', '.lost-foundDeleteButton', function() {
         var found_id = $(this).val();
 
         $.ajax({
