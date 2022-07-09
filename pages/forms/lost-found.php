@@ -1,171 +1,247 @@
 <?php
 include('../includes/forms/header.php');
 ?>
+<style>
+    .Absolute-Center {
+        height: 90%;
+        /* Set your own height: percents, ems, whatever! */
+        width: 90%;
+        /* Set your own width: percents, ems, whatever! */
+        overflow: auto;
+        /* Recommended in case content is larger than the container */
+        margin: auto;
+        /* Center the item vertically & horizontally */
+        position: absolute;
+        /* Break it out of the regular flow */
+        top: 15%;
+        left: 0;
+        bottom: 0%;
+        right: 0;
+        /* Set the bounds in which to center it, relative to its parent/container */
+    }
+
+    /* //////////////////////////////////////// */
+    /* Make sure our center blocks stay in their container! */
+    .Center-Container {
+        position: relative;
+    }
+
+    /* //////////////////////////////////////// */
+    /* Fixed floating element within viewport */
+    .Absolute-Center.is-Fixed {
+        position: fixed;
+        z-index: 999;
+    }
+
+    @media only screen and (max-width: 1000px) {
+        .Absolute-Center {
+            height: 100%;
+            /* Set your own height: percents, ems, whatever! */
+            width: 100%;
+            /* Set your own width: percents, ems, whatever! */
+            overflow: auto;
+            /* Recommended in case content is larger than the container */
+            margin: auto;
+            /* Center the item vertically & horizontally */
+            position: absolute;
+            /* Break it out of the regular flow */
+            top: 10%;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            /* Set the bounds in which to center it, relative to its parent/container */
+
+        }
+    }
+
+    @media only screen and (max-width: 720px) {
+        .Absolute-Center {
+            height: 100%;
+            /* Set your own height: percents, ems, whatever! */
+            width: 100%;
+            /* Set your own width: percents, ems, whatever! */
+            overflow: auto;
+            /* Recommended in case content is larger than the container */
+            margin: auto;
+            /* Center the item vertically & horizontally */
+            position: absolute;
+            /* Break it out of the regular flow */
+            top: 5%;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            /* Set the bounds in which to center it, relative to its parent/container */
+
+        }
+    }
+</style>
 
 <div class="Center-Container">
     <div class="Absolute-Center is-Fixed">
-        <div class="container-sm shadow-lg p-3 mb-5 bg-body rounded-3 border border-1">
+        <div class="container-fluid">
+            <div class="container-sm shadow p-3 mb-5 bg-body rounded-3 border border-2">
 
-            <a href="../views/lost-found.php">
-                <button class="btn btn-primary" type="submit" onclick="sessionStorage.clear('Found_id');">Return</button>
-            </a>
+                <a href="../views/lost-found.php">
+                    <button class="btn btn-primary" type="submit" onclick="sessionStorage.clear('Found_id');">Return</button>
+                </a>
 
-            <form class="row g-3 requires-validation" id="lost-found" novalidate>
-                <div class="pt-2 d-flex justify-content-center">
-                    <h5>Returnee Information</h5>
-                </div>
-                <div class="row ">
-                    <div class="col-lg-3">
-                        <label for="returnee" class="form-label">Returnee Student No.</label>
-                        <input type="number" class="form-control" id="returnee" name="returnee" placeholder="Student Number">
-                        <input type="hidden" name="returnee_id" id="returnee_id">
-                        <input type="hidden" name="lost-foundID" id="lost-foundID">
+                <form class="row g-3 requires-validation  d-flex justify-content-center"" id=" lost-found" novalidate>
+                    <div class="pt-2 d-flex justify-content-center">
+                        <h5>Returnee Information</h5>
                     </div>
-                    <div class="col-lg-3">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" readonly="readonly" id="returneeFullName" name="returneeFullName">
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="form-label">Section</label>
-                        <input type="text" class="form-control" readonly="readonly" id="returneeSection" name="returneeSection">
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="form-label">Course</label>
-                        <input type="text" class="form-control" readonly="readonly" id="returneeCourse" name="returneeCourse">
-                    </div>
-                </div>
-
-                <div class="pt-2 d-flex justify-content-center">
-                    <h5>Retrieval Information</h5>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-lg-3">
-                        <label for="returnee" class="form-label">Retrieval Student No.</label>
-                        <input type="number" class="form-control" id="retrieval" placeholder="Student Number">
-                        <input type="hidden" name="retrieval_id" id="retrieval_id">
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" readonly="readonly" id="retrievalFullName" name="retrievalFullName">
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="form-label">Section</label>
-                        <input type="text" class="form-control" readonly="readonly" id="retrievalSection" name="retrievalSection">
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="form-label">Course</label>
-                        <input type="text" class="form-control" readonly="readonly" id="retrievalCourse" name="retrievalCourse">
-                    </div>
-                </div>
-
-                <div class="pt-2 d-flex justify-content-center">
-                    <h5>Item Information</h5>
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-lg-4">
-                        <label for="itemImage" class="form-label">Select Item Image</label>
-                        <div class="input-group">
-                            <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#viewImage">View</button>
-                            <input type="file" class="form-control" id="itemImage" name="itemImage" accept=".jpg,.jpeg,.png" onChange="img_pathUrl(this);" required>
-                            <input type="hidden" name="oldImage" id="oldImage">
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Please Select File.
-                            </div>
+                    <div class="row ">
+                        <div class="col-lg-3">
+                            <label for="returnee" class="form-label">Returnee Student No.</label>
+                            <input type="number" class="form-control" id="returnee" name="returnee" placeholder="Student Number">
+                            <input type="hidden" name="returnee_id" id="returnee_id">
+                            <input type="hidden" name="lost-foundID" id="lost-foundID">
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" readonly="readonly" id="returneeFullName" name="returneeFullName">
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="form-label">Section</label>
+                            <input type="text" class="form-control" readonly="readonly" id="returneeSection" name="returneeSection">
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="form-label">Course</label>
+                            <input type="text" class="form-control" readonly="readonly" id="returneeCourse" name="returneeCourse">
                         </div>
                     </div>
-                    <div class="col-lg-2">
-                        <label for="itemType" class="form-label">Item Type</label>
-                        <input type="text" class="form-control" id="itemType" name="itemType" required>
-                        <div class="valid-feedback">
-                            Looks good!
+
+                    <div class="pt-2 d-flex justify-content-center">
+                        <h5>Retrieval Information</h5>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3">
+                            <label for="returnee" class="form-label">Retrieval Student No.</label>
+                            <input type="number" class="form-control" id="retrieval" placeholder="Student Number">
+                            <input type="hidden" name="retrieval_id" id="retrieval_id">
                         </div>
-                        <div class="invalid-feedback">
-                            Please provide Item Type.
+                        <div class="col-lg-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" readonly="readonly" id="retrievalFullName" name="retrievalFullName">
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="form-label">Section</label>
+                            <input type="text" class="form-control" readonly="readonly" id="retrievalSection" name="retrievalSection">
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="form-label">Course</label>
+                            <input type="text" class="form-control" readonly="readonly" id="retrievalCourse" name="retrievalCourse">
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <label for="itemDescription" class="form-label">Description</label>
-                        <div class="input-group has-validation">
-                            <textarea class="form-control" aria-label="With textarea" id="itemDescription" name="itemDescription" placeholder="Described the Item color, brand" aria-describedby="inputGroupPrepend" required></textarea>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Please Type Description.
-                            </div>
-                        </div>
+
+                    <div class="pt-2 d-flex justify-content-center">
+                        <h5>Item Information</h5>
                     </div>
-                    <div class="col-lg-2">
-                        <label for="status" class="form-label">Status</label>
-                        <div class="input-group has-validation">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="surrenderedRadio" value="Surrendered" required>
-                                <label class="form-check-label" for="Surrendered">Surrendered</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="retrievedRadio" value="Retrieved" required>
-                                <label class="form-check-label" for="Retrieved">Retrieved</label>
+
+                    <div class="row pt-3">
+                        <div class="col-lg-4">
+                            <label for="itemImage" class="form-label">Select Item Image</label>
+                            <div class="input-group">
+                                <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#viewImage">View</button>
+                                <input type="file" class="form-control" id="itemImage" name="itemImage" accept=".jpg,.jpeg,.png" onChange="img_pathUrl(this);" required>
+                                <input type="hidden" name="oldImage" id="oldImage">
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please Select Status.
+                                    Please Select File.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="itemType" class="form-label">Item Type</label>
+                            <input type="text" class="form-control" id="itemType" name="itemType" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide Item Type.
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="itemDescription" class="form-label">Description</label>
+                            <div class="input-group has-validation">
+                                <textarea class="form-control" aria-label="With textarea" id="itemDescription" name="itemDescription" placeholder="Described the Item color, brand" aria-describedby="inputGroupPrepend" required></textarea>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please Type Description.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="status" class="form-label">Status</label>
+                            <div class="input-group has-validation">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="surrenderedRadio" value="Surrendered" required>
+                                    <label class="form-check-label" for="Surrendered">Surrendered</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="retrievedRadio" value="Retrieved" required>
+                                    <label class="form-check-label" for="Retrieved">Retrieved</label>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please Select Status.
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="pt-2 d-flex justify-content-center">
-                    <h5>Dates</h5>
-                </div>
+                    <div class="pt-2 d-flex justify-content-center">
+                        <h5>Dates</h5>
+                    </div>
 
-                <div class="row pt-3 d-flex justify-content-center">
-                    <div class="col-md-2">
-                        <label for="surrenderedDate" class="form-label">Surrendered Date</label>
-                        <div class="input-group">
-                            <input type="date" class="form-control" name="surrenderedDate" id="surrenderedDate" required>
-                            <div class="valid-feedback">
-                                Looks good!
+                    <div class="row pt-3 d-flex justify-content-center">
+                        <div class="col-md-2">
+                            <label for="surrenderedDate" class="form-label">Surrendered Date</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" name="surrenderedDate" id="surrenderedDate" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please Select Date.
+                                </div>
                             </div>
-                            <div class="invalid-feedback">
-                                Please Select Date.
+                        </div>
+                        <div class="col-md-2">
+                            <label for="userName" class="form-label">Found Date</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" name="foundDate" id="foundDate" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please Select Date.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="userName" class="form-label">Retrieval Date</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" name="retrievalDate" id="retrievalDate">
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <label for="userName" class="form-label">Found Date</label>
-                        <div class="input-group">
-                            <input type="date" class="form-control" name="foundDate" id="foundDate" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Please Select Date.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="userName" class="form-label">Retrieval Date</label>
-                        <div class="input-group">
-                            <input type="date" class="form-control" name="retrievalDate" id="retrievalDate">
-                        </div>
-                    </div>
-                </div>
 
-                <div class=" bd-highlight pt-3">
-                    <div class="row">
-                        <div class="col d-flex flex-row-reverse">
-                            <button class="btn btn-primary" type="submit">Submit form</button>
+                    <div class=" bd-highlight pt-3">
+                        <div class="row">
+                            <div class="col d-flex flex-row-reverse">
+                                <button class="btn btn-primary" type="submit">Submit form</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

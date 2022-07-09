@@ -40,7 +40,7 @@
                 <li><a class="link_name" href="#">Disciplinary</a></li>
                 <li><a href="#">Counselling Report</a></li>
                 <li><a href="#">Action Report</a></li>
-                <li><a href="#">Referral Report</a></li>
+                <li><a href="../views/sanction-referral.php">Referral Report</a></li>
             </ul>
         </li>
         <li>

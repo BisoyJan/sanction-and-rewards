@@ -9,9 +9,9 @@
     /* Center the item vertically & horizontally */
     position: absolute;
     /* Break it out of the regular flow */
-    top: 20%;
+    top: 15%;
     left: 0;
-    bottom: 0;
+    bottom: 0%;
     right: 0;
     /* Set the bounds in which to center it, relative to its parent/container */
 }
@@ -26,8 +26,12 @@
 /* Fixed floating element within viewport */
 .Absolute-Center.is-Fixed {
     position: fixed;
-    z-index: 999;
+    z-index: 1;
 }
+
+
+
+
 
 @media only screen and (max-width: 1000px) {
     .Absolute-Center {
@@ -41,11 +45,12 @@
         /* Center the item vertically & horizontally */
         position: absolute;
         /* Break it out of the regular flow */
-        top: 5%;
+        top: 0%;
         left: 0;
         bottom: 0;
         right: 0;
         /* Set the bounds in which to center it, relative to its parent/container */
+
     }
 }
 
