@@ -1,6 +1,6 @@
 <?php
 
-use Classes\GeneratePDF;
+use Classes\generatePDF;
 
 require '../../database/database.php';
 
@@ -257,7 +257,7 @@ if (isset($_POST['update_Referral'])) {
         $query = "UPDATE `sanction_referrals` SET `student_id`='$student_id',`violation_id`='$violation_id',`complainer_name`='$complainerName',`referred`='$referredTo',`date`='$dateIssued' WHERE id = '$referral_id'";
         $query_run = mysqli_query($con, $query);
 
-        $pdf = new GeneratePDF;
+        $pdf = new generatePDF;
         $response = $pdf->generateReferral($data);
 
         if ($response && $query_run) {

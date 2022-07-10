@@ -4,7 +4,7 @@ namespace Classes;
 
 use mikehaertl\pdftk\Pdf;
 
-class GeneratePDF
+class generatePDF
 {
     public function generateReferral($data)
     {
