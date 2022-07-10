@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'vpsdas/pdftk',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'ed2f3822d5d6e2e1f05689b32d12b0ab2e679697',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -38,9 +38,9 @@
             'dev_requirement' => false,
         ),
         'vpsdas/pdftk' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'ed2f3822d5d6e2e1f05689b32d12b0ab2e679697',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
