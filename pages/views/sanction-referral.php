@@ -42,6 +42,7 @@ include('../includes/main/navbar.php');
                     <div class="modal-body">
                         <h6>Are you sure to delete this Account?</h6>
                         <input type="hidden" name="delete_referral_id" id="delete_referral_id">
+                        <input type="hidden" name="delete_student_no" id="delete_student_no">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal" class="btn btn-primary deleteLostFound" type="submit">Confirm</button>
@@ -106,6 +107,7 @@ include('../includes/main/navbar.php');
                 } else if (res.status == 200) {
 
                     $('#delete_referral_id').val(res.data.id);
+                    $('#delete_student_no').val(res.data.student_no);
                 }
             }
         });

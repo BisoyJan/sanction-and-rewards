@@ -1,5 +1,11 @@
 <?php
+
+use Classes\GeneratePDF;
+
 require '../../database/database.php';
+
+require_once '../../vendor/autoload.php';
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -48,7 +54,7 @@ if (isset($_GET['violation_code'])) {
         violations
     JOIN offenses ON violations.offenses_id = offenses.id
     WHERE
-        violations.code LIKE '$violation_code%'";
+        violations.code LIKE '%$violation_code'";
 
     $query_run = mysqli_query($con, $query);
 
@@ -127,7 +133,13 @@ if (isset($_GET['referral_id'])) {
 
 if (isset($_POST['create_Referral'])) {
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
+    $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
+
+    $studentName = mysqli_real_escape_string($con, $_POST['StudentFullName']);
+
     $violation_id = mysqli_real_escape_string($con, $_POST['violation_id']);
+    $violation = mysqli_real_escape_string($con, $_POST['violationDescription']);
+
     $complainerName = mysqli_real_escape_string($con, $_POST['complainerName']);
     $referredTo = mysqli_real_escape_string($con, $_POST['referredTo']);
     $dateIssued = mysqli_real_escape_string($con, $_POST['dateIssued']);
@@ -143,7 +155,7 @@ if (isset($_POST['create_Referral'])) {
         return;
     } else {
 
-        $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id' AND violation_id = '$violation_id' AND date = '$dateIssued'";
+        $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id' AND violation_id = '$violation_id' AND date = '$dateIssued';";
 
         $select = mysqli_query($con, $query);
         if (mysqli_num_rows($select) === 1) {
@@ -169,14 +181,29 @@ if (isset($_POST['create_Referral'])) {
             '$complainerName',
             '$referredTo',
             '$dateIssued'
-        )";
-        $query_run = mysqli_query($con, $query);
+        );";
 
-        if ($query_run) {
+        $query_run = mysqli_query($con, $query);
+        $last_id = mysqli_insert_id($con);
+
+        $data = [
+            'date_field' => $dateIssued,
+            'referred_to_field' => $referredTo,
+            'student_name_field' => $studentName,
+            'violation_description_field' => $violation,
+            'complainer_name_field' => $complainerName,
+            'last_inserted_id' => $last_id,
+            'student_no' => $student_no
+        ];
+
+        $pdf = new GeneratePDF;
+        $response = $pdf->generateReferral($data);
+
+        if ($response && $query_run) {
             $res = [
                 'status' => 200,
                 'message' => 'Referral Created Successfully',
-                'console' => $query_run
+                'console' => $query_run,
             ];
             echo json_encode($res);
             return;
@@ -194,8 +221,15 @@ if (isset($_POST['create_Referral'])) {
 
 if (isset($_POST['update_Referral'])) {
     $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
+
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
+    $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
+
+    $studentName = mysqli_real_escape_string($con, $_POST['StudentFullName']);
+
     $violation_id = mysqli_real_escape_string($con, $_POST['violation_id']);
+    $violation = mysqli_real_escape_string($con, $_POST['violationDescription']);
+
     $complainerName = mysqli_real_escape_string($con, $_POST['complainerName']);
     $referredTo = mysqli_real_escape_string($con, $_POST['referredTo']);
     $dateIssued = mysqli_real_escape_string($con, $_POST['dateIssued']);
@@ -210,10 +244,23 @@ if (isset($_POST['update_Referral'])) {
         return;
     } else {
 
+        $data = [
+            'date_field' => $dateIssued,
+            'referred_to_field' => $referredTo,
+            'student_name_field' => $studentName,
+            'violation_description_field' => $violation,
+            'complainer_name_field' => $complainerName,
+            'last_inserted_id' => $referral_id,
+            'student_no' => $student_no
+        ];
+
         $query = "UPDATE `sanction_referrals` SET `student_id`='$student_id',`violation_id`='$violation_id',`complainer_name`='$complainerName',`referred`='$referredTo',`date`='$dateIssued' WHERE id = '$referral_id'";
         $query_run = mysqli_query($con, $query);
 
-        if ($query_run) {
+        $pdf = new GeneratePDF;
+        $response = $pdf->generateReferral($data);
+
+        if ($response && $query_run) {
             $res = [
                 'status' => 200,
                 'message' => 'Referral Successfully Updated'
@@ -233,7 +280,10 @@ if (isset($_POST['update_Referral'])) {
 
 if (isset($_POST['delete_Referral'])) {
     $referral_id = mysqli_real_escape_string($con, $_POST['delete_referral_id']);
+    $student_no = mysqli_real_escape_string($con, $_POST['delete_student_no']);
 
+    $filename =  $student_no . '_' . $referral_id . '.pdf';
+    unlink('../../assets/docs/processed/referrals/' . $filename);
 
     $query = "DELETE FROM `sanction_referrals` WHERE id = '$referral_id'";
     $query_run = mysqli_query($con, $query);

@@ -1,0 +1,14 @@
+Make MD file.
+
+Front end framework = Bootstrap 5
+
+Back end = php, ajax, jquery, javascript, mysql, Xampp.
+
+Other frameworks = toastr(Notification Effect), PDFtk(Manipulating pdf)
+
+Includes Database = vpsdasdata
+
+to run the PDFtk
+
+Composer install
+composer dump-autoload

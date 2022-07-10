@@ -95,6 +95,7 @@ include('../includes/forms/header.php');
                         <div class="col-lg-2">
                             <label for="returnee" class="form-label">Student ID</label>
                             <input type="number" class="form-control" id="Student" name="Student" placeholder="Student Number" required>
+                            <input type="hidden" name="student_no" id="student_no">
                             <input type="hidden" name="student_id" id="student_id">
                             <input type="hidden" name="referral_id" id="referral_id">
                             <div class="valid-feedback">
@@ -106,7 +107,7 @@ include('../includes/forms/header.php');
                         </div>
                         <div class="col-lg-3">
                             <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" readonly="readonly" id="studentFullName" name="StudentFullName">
+                            <input type="text" class="form-control" readonly="readonly" id="StudentFullName" name="StudentFullName">
                         </div>
                         <div class="col-sm-1">
                             <label class="form-label">Section</label>
@@ -252,7 +253,8 @@ include('../includes/forms/header.php');
                         fullName = firstName + middleName + lastName;
 
                         $('#student_id').val(res.data.id);
-                        $('#studentFullName').val(fullName);
+                        $('#student_no').val(res.data.student_no);
+                        $('#StudentFullName').val(fullName);
                         $('#Section').val(res.data.section);
                         $('#Age').val(res.data.age);
                         $('#Gender').val(res.data.gender);
@@ -308,7 +310,6 @@ include('../includes/forms/header.php');
                 if (res.status == 422) {
 
                     toastr.warning(res.message, res.status);
-                    console.log(res.console);
 
                 } else if (res.status == 401) {
 
@@ -317,12 +318,10 @@ include('../includes/forms/header.php');
                 } else if (res.status == 200) {
 
                     toastr.success(res.message, res.status);
-                    console.log(res.console);
 
                 } else if (res.status == 500) {
 
                     toastr.error(res.message, res.status);
-                    console.log(res.console);
 
                 }
             }
@@ -357,7 +356,9 @@ include('../includes/forms/header.php');
 
                         $('#student_id').val(res.data.student_id);
                         $('#Student').val(res.data.student_no);
-                        $('#studentFullName').val(fullName);
+                        $('#student_no').val(res.data.student_no);
+
+                        $('#StudentFullName').val(fullName);
                         $('#Section').val(res.data.section);
                         $('#Age').val(res.data.age);
                         $('#Gender').val(res.data.gender);
