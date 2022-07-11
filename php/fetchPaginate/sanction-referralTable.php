@@ -96,6 +96,7 @@ if ($statement->rowCount() == 0) {
             <td>' . $row["date"] . '</td>
             <td>' . $row["remark"] . '</td>
             <td>
+                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionAddButton btn btn-success" value="' . $row["id"] . '"  type="button">Action</button> </a>
                 <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-success" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
                 <button class="referralDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete Button</button>
             </td>

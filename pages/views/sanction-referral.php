@@ -30,28 +30,30 @@ include('../includes/main/navbar.php');
         <!-- The contents of  the tables at the ../php/fetchPaginate//sanction-referralTable.php -->
 
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="ReferralDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <form id="deleteReferral">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h6>Are you sure to delete this Account?</h6>
-                        <input type="hidden" name="delete_referral_id" id="delete_referral_id">
-                        <input type="hidden" name="delete_student_no" id="delete_student_no">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary deleteLostFound" type="submit">Confirm</button>
-                    </div>
-                </form>
-            </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ReferralDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="deleteReferral">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Are you sure to delete this Account?</h6>
+                    <input type="hidden" name="delete_referral_id" id="delete_referral_id">
+                    <input type="hidden" name="delete_student_no" id="delete_student_no">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary deleteLostFound" type="submit">Confirm</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
 
 <script>
     //To inject the table in fetchPaginate folder
@@ -88,6 +90,14 @@ include('../includes/main/navbar.php');
     $(document).on('click', '.sanction-referralEditButton', function() {
         var referral_id = $(this).val();
 
+        sessionStorage.setItem("sanction-referralID", referral_id);
+
+    });
+
+    $(document).on('click', '.sanction-actionAddButton', function() {
+        var referral_id = $(this).val();
+
+        sessionStorage.setItem('sanction-referralFunction', 'Add')
         sessionStorage.setItem("sanction-referralID", referral_id);
 
     });
