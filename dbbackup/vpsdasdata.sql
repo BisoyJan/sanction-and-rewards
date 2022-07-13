@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 10, 2022 at 01:50 AM
+-- Host: 127.0.0.1
+-- Generation Time: Jul 13, 2022 at 05:14 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -251,7 +251,7 @@ CREATE TABLE `sanction_cases` (
 
 CREATE TABLE `sanction_disciplinary_action` (
   `id` int(11) NOT NULL,
-  `referral_id` int(11) NOT NULL,
+  `sanction_referral_id` int(11) NOT NULL,
   `committed_date` date NOT NULL,
   `committed_time` time NOT NULL,
   `counselling_date` date NOT NULL,
@@ -259,6 +259,14 @@ CREATE TABLE `sanction_disciplinary_action` (
   `issual_date` date NOT NULL,
   `remarks` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sanction_disciplinary_action`
+--
+
+INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`) VALUES
+(14, 26, '2022-07-12', '10:26:00', '2022-07-13', '10:26:00', '2022-07-12', ''),
+(15, 27, '2022-07-13', '07:59:00', '2022-07-13', '10:02:00', '2022-07-13', '');
 
 -- --------------------------------------------------------
 
@@ -281,7 +289,8 @@ CREATE TABLE `sanction_referrals` (
 --
 
 INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`) VALUES
-(12, 1, 3, 'Melvin Copioso', 'Ken Vinegas', '2022-07-09', NULL);
+(26, 1, 2, 'wadawdawdawdwada', 'wadwadawa', '2022-07-12', 'Actioned'),
+(27, 1, 9, 'wadawd', 'awdawdawdawd', '2022-07-12', 'Actioned');
 
 -- --------------------------------------------------------
 
@@ -495,7 +504,7 @@ ALTER TABLE `sanction_cases`
 --
 ALTER TABLE `sanction_disciplinary_action`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `disciplinary_action_referral_id` (`referral_id`);
+  ADD KEY `disciplinary_action_referral_id` (`sanction_referral_id`);
 
 --
 -- Indexes for table `sanction_referrals`
@@ -623,13 +632,13 @@ ALTER TABLE `sanction_cases`
 -- AUTO_INCREMENT for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -723,7 +732,7 @@ ALTER TABLE `sanction_cases`
 -- Constraints for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
-  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`referral_id`) REFERENCES `sanction_referrals` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`sanction_referral_id`) REFERENCES `sanction_referrals` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sanction_referrals`

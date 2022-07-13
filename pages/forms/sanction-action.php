@@ -97,6 +97,8 @@ include('../includes/forms/header.php');
                         <div class="col-md-1">
                             <label for="returnee" class="form-label">Student ID</label>
                             <input type="text" class="form-control" id="Student" name="Student" readonly="readonly">
+                            <input type="hidden" name="student_no" id="student_no">
+                            <input type="hidden" name="student_id" id="student_id">
                             <input type="hidden" name="referral_id" id="referral_id">
 
                         </div>
@@ -106,6 +108,7 @@ include('../includes/forms/header.php');
                         </div>
                         <div class="col-md-1">
                             <label class="form-label">Section</label>
+                            <input type="hidden" name="course_Abbreviation" id="course_Abbreviation">
                             <input type="text" class="form-control" readonly="readonly" id="Section" name="Section">
                         </div>
                         <div class="col-md-1">
@@ -271,6 +274,7 @@ include('../includes/forms/header.php');
 
                         $('#StudentFullName').val(fullName);
                         $('#Section').val(res.data.section);
+                        $('#course_Abbreviation').val(res.data.abbreviation);
                         $('#Age').val(res.data.age);
                         $('#Gender').val(res.data.gender);
                         $('#Course').val(res.data.program);
@@ -315,6 +319,7 @@ include('../includes/forms/header.php');
 
                         $('#StudentFullName').val(fullName);
                         $('#Section').val(res.data.section);
+                        $('#course_Abbreviation').val(res.data.abbreviation);
                         $('#Age').val(res.data.age);
                         $('#Gender').val(res.data.gender);
                         $('#Course').val(res.data.program);
@@ -326,6 +331,8 @@ include('../includes/forms/header.php');
 
                         $('#complainerName').val(res.data.complainer_name);
                         $('#referredTo').val(res.data.referred);
+
+                        
 
                         $("form").attr('id', 'edit-action')
 
@@ -362,6 +369,8 @@ include('../includes/forms/header.php');
                 } else if (res.status == 200) {
 
                     toastr.success(res.message, res.status);
+                    sessionStorage.clear('sanction-referralID');
+                    sessionStorage.clear('sanction-referralFunction');
 
                 } else if (res.status == 500) {
 

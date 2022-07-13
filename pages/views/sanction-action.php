@@ -17,13 +17,6 @@ include('../includes/main/navbar.php');
                 <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
             </div>
         </div>
-        <div class="col">
-            <div class="d-grid gap-2 d-flex justify-content-end">
-                <a href="../forms/sanction-action.php" style="text-decoration: none;">
-                    <button class="btn btn-primary" type="button">Add Button</button>
-                </a>
-            </div>
-        </div>
     </div>
 
     <div id="dynamicTable">
@@ -33,8 +26,42 @@ include('../includes/main/navbar.php');
 </div>
 
 <script>
+    $(document).ready(function() {
+        load_data(1);
+    });
 
+    function load_data(page = 1, query = '') {
+        $.ajax({
+            url: "../../php/fetchPaginate/sanction-actionTable.php",
+            method: "POST",
+            data: {
+                page: page,
+                query: query
+            },
+            success: function(data) {
+                $('#dynamicTable').html(data);
+            }
+        });
+    }
 
+    $(document).on('click', '.page-link', function() {
+        var page = $(this).data('page_number');
+        var query = $('#search_box').val();
+        load_data(page, query);
+    });
+
+    $('#search_box').keyup(function() {
+        var query = $('#search_box').val();
+        load_data(1, query);
+    });
+
+    //CRUD Function
+    $(document).on('click', '.sanction-actionEditButton', function() {
+        var action_id = $(this).val();
+
+        sessionStorage.setItem("sanction-actionID", action_id);
+
+    });
 </script>
 
 <?php

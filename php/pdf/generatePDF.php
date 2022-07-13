@@ -18,4 +18,17 @@ class generatePDF
 
         return $filename;
     }
+
+    public function generateAction($data)
+    {
+        extract($data);
+
+        $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
+        $pdf = new Pdf('../../assets/docs/themeplates/DISCIPLINARY ACTION SLIP FORM.pdf');
+        $pdf->fillForm($data)
+            ->flatten()
+            ->saveAs('../../assets/docs/processed/action/' . $filename);
+            
+        return $filename;
+    }
 }
