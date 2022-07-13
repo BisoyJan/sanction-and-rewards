@@ -14,6 +14,7 @@ if ($_POST['page'] > 1) {
 
 $query = "
 SELECT
+    sanction_disciplinary_action.id AS action_id,
     sanction_referrals.*,
     students.student_no,
     students.first_name,
@@ -93,7 +94,7 @@ if ($statement->rowCount() == 0) {
             $output .= '
 
         <tr>
-            <td>' . $row["id"] . '</td>
+            <td>' . $row["action_id"] . '</td>
             <td>' . $row["student_no"] . '</td>
             <td>' . $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"] . '</td>
             <td>' . $row["section"] . '</td>
@@ -105,9 +106,9 @@ if ($statement->rowCount() == 0) {
             <td>' . $row["complainer_name"] . '</td>
             <td>' . $row["remarks"] . '</td>
             <td>
-                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button> </a>
-                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
-                <button class="referralDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete Button</button>
+                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["action_id"] . '"  type="button">Counsel</button> </a>
+                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["action_id"] . '"  type="button">Edit Button</button> </a>
+                <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["action_id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete Button</button>
             </td>
         </tr>
    ';

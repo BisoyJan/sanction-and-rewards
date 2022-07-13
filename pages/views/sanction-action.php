@@ -22,7 +22,31 @@ include('../includes/main/navbar.php');
     <div id="dynamicTable">
         <!-- The contents of  the tables at the ../php/fetchPaginate/sanction-actionTable.php -->
 
+
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ActionDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="deleteAction">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Are you sure to delete this?</h6>
+                        <input type="hidden" name="delete_action_id" id="delete_action_id">
+                        <input type="hidden" name="delete_student_no" id="delete_student_no">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary" type="submit">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -61,6 +85,55 @@ include('../includes/main/navbar.php');
 
         sessionStorage.setItem("sanction-actionID", action_id);
 
+    });
+
+    $(document).on('click', '.actionDeleteButton', function() {
+        var action_id = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/sanction-action.php?action_id=" + action_id,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response);
+                if (res.status == 404) {
+
+                    toastr.warning(res.message, res.status);
+                } else if (res.status == 200) {
+
+                    $('#delete_action_id').val(res.data.action_id);
+                    $('#delete_student_no').val(res.data.student_no);
+                }
+            }
+        });
+    });
+
+    $(document).on('submit', '#deleteAction', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append("delete_Action", true)
+
+        $.ajax({
+            type: "POST",
+            url: "../../php/store/sanction-action.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response)
+                if (res.status == 200) {
+
+                    load_data(1);
+                    $('#ActionDeleteModal').modal('hide');
+                    toastr.success(res.message, res.status);
+
+                } else if (res.status == 500) {
+                    toastr.error(res.message, res.status);
+                }
+            }
+        });
     });
 </script>
 

@@ -98,8 +98,8 @@ include('../includes/forms/header.php');
                             <label for="returnee" class="form-label">Student ID</label>
                             <input type="text" class="form-control" id="Student" name="Student" readonly="readonly">
                             <input type="hidden" name="student_no" id="student_no">
-                            <input type="hidden" name="student_id" id="student_id">
-                            <input type="hidden" name="referral_id" id="referral_id">
+                            <input type="hidden" name="referral_id" id="referral_id">'
+                            <input type="hidden" name="action_id" id="action_id">
 
                         </div>
                         <div class="col-lg-3">
@@ -121,7 +121,7 @@ include('../includes/forms/header.php');
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Course</label>
-                            <textarea class="form-control" aria-label="With textarea" readonly="readonly" id="Course" name="Course" aria-describedby="inputGroupPrepend" required></textarea>
+                            <textarea class="form-control" aria-label="With textarea" readonly="readonly" id="Course" name="Course" aria-describedby="inputGroupPrepend"></textarea>
                         </div>
 
                     </div>
@@ -142,7 +142,7 @@ include('../includes/forms/header.php');
                         </div>
                         <div class="col-lg-5">
                             <label class="form-label">Violation Description</label>
-                            <textarea class="form-control" aria-label="With textarea" readonly="readonly" id="violationDescription" name="violationDescription" aria-describedby="inputGroupPrepend" required></textarea>
+                            <textarea class="form-control" aria-label="With textarea" readonly="readonly" id="violationDescription" name="violationDescription" aria-describedby="inputGroupPrepend"></textarea>
                         </div>
                     </div>
 
@@ -240,9 +240,32 @@ include('../includes/forms/header.php');
 </div>
 
 <script>
+    //Bootstrap input validation 5 Validation
+    (function() {
+        'use strict';
+
+        const forms = document.querySelectorAll('.requires-validation');
+        Array.from(forms).forEach(function(form) {
+            form.addEventListener(
+                'submit',
+                function(event) {
+                    if (!form.checkValidity()) {
+
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                },
+                false
+            );
+        });
+    })();
+
     //CRUD Function
     $(document).ready(function() {
 
+        var action_id = sessionStorage.getItem("sanction-actionID");
         var referral_id = sessionStorage.getItem("sanction-referralID");
         var Function = sessionStorage.getItem('sanction-referralFunction');
 
@@ -279,7 +302,7 @@ include('../includes/forms/header.php');
                         $('#Gender').val(res.data.gender);
                         $('#Course').val(res.data.program);
 
-                        $('#violation_id').val(res.data.violation_id);
+
                         $('#violationCode').val(res.data.code);
                         $('#offenseType').val(res.data.offense);
                         $('#violationDescription').val(res.data.violation);
@@ -287,15 +310,19 @@ include('../includes/forms/header.php');
                         $('#complainerName').val(res.data.complainer_name);
                         $('#referredTo').val(res.data.referred);
 
+                        sessionStorage.clear('sanction-referralID');
+                        sessionStorage.clear('sanction-referralFunction');
+
                     }
                 }
             });
 
         } else {
 
+            console.log(action_id);
             $.ajax({
                 type: "GET",
-                url: "../../php/store/sanction-referral.php?referral_id=" + referral_id,
+                url: "../../php/store/sanction-action.php?action_id=" + action_id,
                 success: function(response) {
 
                     var res = jQuery.parseJSON(response);
@@ -312,6 +339,7 @@ include('../includes/forms/header.php');
                         fullName = firstName + middleName + lastName;
 
                         $('#referral_id').val(res.data.id);
+                        $('#action_id').val(res.data.action_id);
 
                         $('#student_id').val(res.data.student_id);
                         $('#Student').val(res.data.student_no);
@@ -322,9 +350,8 @@ include('../includes/forms/header.php');
                         $('#course_Abbreviation').val(res.data.abbreviation);
                         $('#Age').val(res.data.age);
                         $('#Gender').val(res.data.gender);
-                        $('#Course').val(res.data.program);
+                        $('#Course').val(res.data.program_name);
 
-                        $('#violation_id').val(res.data.violation_id);
                         $('#violationCode').val(res.data.code);
                         $('#offenseType').val(res.data.offense);
                         $('#violationDescription').val(res.data.violation);
@@ -332,10 +359,18 @@ include('../includes/forms/header.php');
                         $('#complainerName').val(res.data.complainer_name);
                         $('#referredTo').val(res.data.referred);
 
-                        
+                        $('#committedDate').val(res.data.committed_date);
+                        $('#committedTime').val(res.data.committed_time);
+                        $('#counsellingDate').val(res.data.counselling_date);
+                        $('#counsellingTime').val(res.data.counselling_time);
+                        $('#dateIssued').val(res.data.issual_date);
 
-                        $("form").attr('id', 'edit-action')
+                        sessionStorage.clear('sanction-actionID');
 
+                        $("form").attr('id', 'Edit-action')
+
+                    } else if (res.status == 404) {
+                        toastr.error(res.message, res.status);
                     }
                 }
             });
@@ -380,6 +415,37 @@ include('../includes/forms/header.php');
             }
         });
 
+    });
+
+    $(document).on('submit', '#Edit-action', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append("update_Action", true);
+
+        $.ajax({
+            type: "POST",
+            url: "../../php/store/sanction-action.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response)
+                if (res.status == 422) {
+                    toastr.warning(res.message, res.status);
+                } else if (res.status == 200) {
+
+                    toastr.success(res.message, res.status);
+
+                    //If button click submit, Found_id Session will be cleared
+                    sessionStorage.clear('sanction-referralID');
+
+                } else if (res.status == 500) {
+                    toastr.error(res.message, res.status);
+                }
+            }
+        });
     });
 </script>
 
