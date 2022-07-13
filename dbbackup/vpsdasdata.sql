@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 13, 2022 at 05:14 AM
+-- Host: localhost
+-- Generation Time: Jul 13, 2022 at 02:08 PM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -265,8 +265,7 @@ CREATE TABLE `sanction_disciplinary_action` (
 --
 
 INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`) VALUES
-(14, 26, '2022-07-12', '10:26:00', '2022-07-13', '10:26:00', '2022-07-12', ''),
-(15, 27, '2022-07-13', '07:59:00', '2022-07-13', '10:02:00', '2022-07-13', '');
+(14, 26, '2022-07-12', '10:26:00', '2022-07-13', '10:26:00', '2022-07-12', '');
 
 -- --------------------------------------------------------
 
