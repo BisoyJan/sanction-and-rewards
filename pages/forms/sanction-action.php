@@ -406,6 +406,9 @@ include('../includes/forms/header.php');
                     toastr.success(res.message, res.status);
                     sessionStorage.clear('sanction-referralID');
                     sessionStorage.clear('sanction-referralFunction');
+                    setTimeout(function() {
+                        window.location.href = '../views/sanction-action.php';
+                    }, 1000);
 
                 } else if (res.status == 500) {
 
@@ -440,6 +443,9 @@ include('../includes/forms/header.php');
 
                     //If button click submit, Found_id Session will be cleared
                     sessionStorage.clear('sanction-referralID');
+                    setTimeout(function() {
+                        window.location.href = '../views/sanction-action.php';
+                    }, 1000);
 
                 } else if (res.status == 500) {
                     toastr.error(res.message, res.status);
