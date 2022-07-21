@@ -45,17 +45,14 @@ $statement = $connect->prepare($query);
 $statement->execute();
 $total_data = $statement->rowCount();
 
-if ($statement->rowCount() == 0) {
-    echo '<h1>NO DATA</h1>';
-} else {
+$statement = $connect->prepare($filter_query);
+$statement->execute();
+$result = $statement->fetchAll();
+$total_filter_data = $statement->rowCount();
 
-    $statement = $connect->prepare($filter_query);
-    $statement->execute();
-    $result = $statement->fetchAll();
-    $total_filter_data = $statement->rowCount();
-
-    $output = '
-<table id="programTable" class="table table-hover table-responsive" style="text-align: center;">
+$output = '
+<div class="table-responsive">
+<table id="programTable" class="table table-hover" style="text-align: center;">
 <thead >
     <tr>
         <th>ID</th>
@@ -71,9 +68,9 @@ if ($statement->rowCount() == 0) {
 </thead>
 
    <tbody >';
-    if ($total_data > 0) {
-        foreach ($result as $row) {
-            $output .= '
+if ($total_data > 0) {
+    foreach ($result as $row) {
+        $output .= '
         <tr>
             <td>' . $row["id"] . '</td>
             <td>' . $row["student_no"] . '</td>
@@ -89,20 +86,12 @@ if ($statement->rowCount() == 0) {
             </td>
         </tr>
    ';
-        }
-        $output .= '</tbody>';
-    } else {
-        $output .= '
-    <tbody>
-        <tr>
-            <td colspan="2" align="center">No Data Found</td>
-        </tr>
-    </tbody>
-  ';
     }
 
     $output .= '
+</tbody>
 </table>
+</div>
 <label class="mb-2 ps-4">Total Records - ' . $total_data . '</label>
   <ul class="pagination">
 ';
@@ -193,6 +182,15 @@ if ($statement->rowCount() == 0) {
   </ul>
 
 ';
-
-    echo $output;
+} else {
+    $output .= '
+<tbody>
+    <tr>
+        <td colspan="12" align="center"><h1>No Data Found</h1></td>
+    </tr>
+</tbody>
+</table>
+';
 }
+
+echo $output;

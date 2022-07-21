@@ -49,6 +49,28 @@ include('../includes/main/navbar.php');
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="ActionDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="deleteAction">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Action</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Are you sure to delete this?</h6>
+                    <input type="hidden" name="delete_action_id" id="delete_action_id">
+                    <input type="hidden" name="delete_student_no" id="delete_student_no">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary deleteLostFound" type="submit">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         load_data(1);
@@ -87,6 +109,14 @@ include('../includes/main/navbar.php');
 
     });
 
+    $(document).on('click', '.sanction-counselAddButton', function() {
+        var action_id = $(this).val();
+
+        sessionStorage.setItem('sanction-counselFunction', 'Add');
+        sessionStorage.setItem("sanction-actionID", action_id);
+
+    });
+
     $(document).on('click', '.actionDeleteButton', function() {
         var action_id = $(this).val();
 
@@ -101,7 +131,7 @@ include('../includes/main/navbar.php');
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
 
-                    $('#delete_action_id').val(res.data.action_id);
+                    $('#delete_action_id').val(res.data.id);
                     $('#delete_student_no').val(res.data.student_no);
                 }
             }

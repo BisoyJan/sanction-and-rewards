@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 16, 2022 at 12:52 PM
+-- Host: 127.0.0.1
+-- Generation Time: Jul 21, 2022 at 04:38 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -207,6 +207,81 @@ INSERT INTO `properties` (`id`, `student_id`, `retrieval_id`, `date_found`, `dat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sanction_cases`
+--
+
+CREATE TABLE `sanction_cases` (
+  `id` int(11) NOT NULL,
+  `sanction_disciplinary_action_id` int(11) NOT NULL,
+  `report` varchar(200) NOT NULL,
+  `resolution` varchar(200) NOT NULL,
+  `recommend` varchar(200) NOT NULL,
+  `chairman` varchar(70) NOT NULL,
+  `members` varchar(70) NOT NULL,
+  `hearing_date` date DEFAULT NULL,
+  `date_issued` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sanction_cases`
+--
+
+INSERT INTO `sanction_cases` (`id`, `sanction_disciplinary_action_id`, `report`, `resolution`, `recommend`, `chairman`, `members`, `hearing_date`, `date_issued`) VALUES
+(38, 14, 'ss', 'ss', 'For Continuing Hearing', 'ss', 'ss', '2022-07-23', '2021-07-22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sanction_disciplinary_action`
+--
+
+CREATE TABLE `sanction_disciplinary_action` (
+  `id` int(11) NOT NULL,
+  `sanction_referral_id` int(11) NOT NULL,
+  `committed_date` date NOT NULL,
+  `committed_time` time NOT NULL,
+  `counselling_date` date NOT NULL,
+  `counselling_time` time NOT NULL,
+  `issual_date` date NOT NULL,
+  `remarks` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sanction_disciplinary_action`
+--
+
+INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`) VALUES
+(14, 26, '2022-07-19', '10:26:00', '2022-07-19', '10:26:00', '2022-07-19', 'Counselled'),
+(15, 27, '2022-07-14', '10:59:00', '2022-07-14', '10:59:00', '2022-07-14', 'Counselled');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sanction_referrals`
+--
+
+CREATE TABLE `sanction_referrals` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `violation_id` int(11) NOT NULL,
+  `complainer_name` varchar(150) NOT NULL,
+  `referred` varchar(45) NOT NULL,
+  `date` date NOT NULL,
+  `remark` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sanction_referrals`
+--
+
+INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`) VALUES
+(26, 1, 2, 'Melvin Copioso', 'Ken Vinegas', '2022-07-12', 'Actioned'),
+(27, 1, 9, 'wadawd', 'awdawdawdawd', '2022-07-12', 'Actioned'),
+(28, 2, 2, 'Jan Ramil Intong', 'Ken Vinegas', '2022-07-19', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students`
 --
 
@@ -399,6 +474,28 @@ ALTER TABLE `properties`
   ADD KEY `properties_returnee_id` (`retrieval_id`);
 
 --
+-- Indexes for table `sanction_cases`
+--
+ALTER TABLE `sanction_cases`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `case_disciplinary_id` (`sanction_disciplinary_action_id`);
+
+--
+-- Indexes for table `sanction_disciplinary_action`
+--
+ALTER TABLE `sanction_disciplinary_action`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `disciplinary_action_referral_id` (`sanction_referral_id`);
+
+--
+-- Indexes for table `sanction_referrals`
+--
+ALTER TABLE `sanction_referrals`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `referral_violation_id` (`violation_id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -501,6 +598,24 @@ ALTER TABLE `properties`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT for table `sanction_cases`
+--
+ALTER TABLE `sanction_cases`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT for table `sanction_disciplinary_action`
+--
+ALTER TABLE `sanction_disciplinary_action`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `sanction_referrals`
+--
+ALTER TABLE `sanction_referrals`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
@@ -581,6 +696,25 @@ ALTER TABLE `performers`
 --
 ALTER TABLE `programs`
   ADD CONSTRAINT `college_id` FOREIGN KEY (`college_id`) REFERENCES `colleges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sanction_cases`
+--
+ALTER TABLE `sanction_cases`
+  ADD CONSTRAINT `case_disciplinary_id` FOREIGN KEY (`sanction_disciplinary_action_id`) REFERENCES `sanction_disciplinary_action` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sanction_disciplinary_action`
+--
+ALTER TABLE `sanction_disciplinary_action`
+  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`sanction_referral_id`) REFERENCES `sanction_referrals` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sanction_referrals`
+--
+ALTER TABLE `sanction_referrals`
+  ADD CONSTRAINT `referral_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `referral_violation_id` FOREIGN KEY (`violation_id`) REFERENCES `violations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `students`

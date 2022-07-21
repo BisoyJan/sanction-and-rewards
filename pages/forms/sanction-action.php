@@ -83,7 +83,7 @@ include('../includes/forms/header.php');
             <div class="container-fluid shadow p-3 mb-5 bg-body rounded-3 border border-2">
 
                 <a href=" ../views/sanction-action.php">
-                    <button class="btn btn-primary" type="submit" onclick="sessionStorage.clear('Found_id');">Return</button>
+                    <button class="btn btn-primary" type="submit" onclick="sessionStorage.clear('sanction-referralID');">Return</button>
                 </a>
 
                 <form class="row g-3 requires-validation d-flex justify-content-center" id="action" novalidate>
@@ -98,7 +98,8 @@ include('../includes/forms/header.php');
                             <label for="returnee" class="form-label">Student ID</label>
                             <input type="text" class="form-control" id="Student" name="Student" readonly="readonly">
                             <input type="hidden" name="student_no" id="student_no">
-                            <input type="hidden" name="referral_id" id="referral_id">'
+                            <input type="hidden" name="student_id" id="student_id">
+                            <input type="hidden" name="referral_id" id="referral_id">
                             <input type="hidden" name="action_id" id="action_id">
 
                         </div>
@@ -154,12 +155,12 @@ include('../includes/forms/header.php');
 
                         <div class="col-lg-3">
                             <label class="form-label">Complainer Name</label>
-                            <input type="text" class="form-control" readonly="readonly" id="complainerName" name="complainerName">
+                            <input type="text" class="form-control" readonly="readonly" id="complainerName" name="complainerName" required>
 
                         </div>
                         <div class="col-lg-3">
                             <label class="form-label">Referred To</label>
-                            <input type="text" class="form-control" readonly="readonly" id="referredTo" name="referredTo">
+                            <input type="text" class="form-control" readonly="readonly" id="referredTo" name="referredTo" required>
                         </div>
 
                     </div>
@@ -265,8 +266,8 @@ include('../includes/forms/header.php');
     //CRUD Function
     $(document).ready(function() {
 
-        var action_id = sessionStorage.getItem("sanction-actionID");
-        var referral_id = sessionStorage.getItem("sanction-referralID");
+        var action_id = sessionStorage.getItem('sanction-actionID');
+        var referral_id = sessionStorage.getItem('sanction-referralID');
         var Function = sessionStorage.getItem('sanction-referralFunction');
 
         if (referral_id != null && Function == "Add") {
@@ -338,8 +339,8 @@ include('../includes/forms/header.php');
 
                         fullName = firstName + middleName + lastName;
 
-                        $('#referral_id').val(res.data.id);
-                        $('#action_id').val(res.data.action_id);
+                        $('#referral_id').val(res.data.sanction_referral_id);
+                        $('#action_id').val(res.data.id);
 
                         $('#student_id').val(res.data.student_id);
                         $('#Student').val(res.data.student_no);
@@ -404,7 +405,7 @@ include('../includes/forms/header.php');
                 } else if (res.status == 200) {
 
                     toastr.success(res.message, res.status);
-                    sessionStorage.clear('sanction-referralID');
+                    sessionStorage.clear('sanction-actionID');
                     sessionStorage.clear('sanction-referralFunction');
                     setTimeout(function() {
                         window.location.href = '../views/sanction-action.php';
@@ -420,11 +421,11 @@ include('../includes/forms/header.php');
 
     });
 
-    $(document).on('submit', '#Edit-action', function(e) {
+    $(document).on('submit', '#edit-action', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("update_Action", true);
+        formData.append("update_Action", true)
 
         $.ajax({
             type: "POST",
@@ -436,22 +437,31 @@ include('../includes/forms/header.php');
 
                 var res = jQuery.parseJSON(response)
                 if (res.status == 422) {
+
                     toastr.warning(res.message, res.status);
+
+                } else if (res.status == 401) {
+
+                    toastr.error(res.message, res.status);
+
                 } else if (res.status == 200) {
 
                     toastr.success(res.message, res.status);
-
+                    sessionStorage.clear('sanction-actionID');
+                    sessionStorage.clear('sanction-counselFunction');
                     //If button click submit, Found_id Session will be cleared
-                    sessionStorage.clear('sanction-referralID');
                     setTimeout(function() {
                         window.location.href = '../views/sanction-action.php';
                     }, 1000);
 
                 } else if (res.status == 500) {
+
                     toastr.error(res.message, res.status);
+
                 }
             }
         });
+
     });
 </script>
 

@@ -84,7 +84,7 @@ include('../includes/forms/header.php');
             <div class="container-sm shadow p-3 mb-5 bg-body rounded-3 border border-2">
 
                 <a href=" ../views/sanction-referral.php">
-                    <button class="btn btn-primary" type="submit" onclick="sessionStorage.clear('Found_id');">Return</button>
+                    <button class="btn btn-primary" type="submit" onclick="sessionStorage.clear('sanction-referralID');">Return</button>
                 </a>
 
                 <form class="row g-3 requires-validation d-flex justify-content-center" id="referral" novalidate>

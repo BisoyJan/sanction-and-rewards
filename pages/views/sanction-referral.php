@@ -33,12 +33,12 @@ include('../includes/main/navbar.php');
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="ReferralDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ReferralDeleteModal" tabindex="-1" aria-labelledby="ReferralDeleteModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form id="deleteReferral">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <h5 class="modal-title">Delete Account</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -143,6 +143,7 @@ include('../includes/main/navbar.php');
                     load_data(1);
                     $('#ReferralDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
+                    
 
                 } else if (res.status == 500) {
                     toastr.error(res.message, res.status);

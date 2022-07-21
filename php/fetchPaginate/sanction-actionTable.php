@@ -14,8 +14,9 @@ if ($_POST['page'] > 1) {
 
 $query = "
 SELECT
-    sanction_disciplinary_action.id AS action_id,
-    sanction_referrals.*,
+    sanction_disciplinary_action.*,
+    sanction_referrals.id AS referrals_id,
+    sanction_referrals.complainer_name,
     students.student_no,
     students.first_name,
     students.middle_name,
@@ -60,17 +61,15 @@ $statement = $connect->prepare($query);
 $statement->execute();
 $total_data = $statement->rowCount();
 
-if ($statement->rowCount() == 0) {
-    echo '<h1>NO DATA</h1>';
-} else {
 
-    $statement = $connect->prepare($filter_query);
-    $statement->execute();
-    $result = $statement->fetchAll();
-    $total_filter_data = $statement->rowCount();
+$statement = $connect->prepare($filter_query);
+$statement->execute();
+$result = $statement->fetchAll();
+$total_filter_data = $statement->rowCount();
 
-    $output = '
-<table id="programTable" class="table table-hover table-responsive" style="text-align: center;">
+$output = '
+<div class="table-responsive">
+<table id="programTable" class="table  table-hover" style="text-align: center;">
 <thead>
     <tr>
         <th>ID</th>
@@ -89,9 +88,9 @@ if ($statement->rowCount() == 0) {
 </thead>
 
    <tbody >';
-    if ($total_data > 0) {
-        foreach ($result as $row) {
-            $output .= '
+if ($total_data > 0) {
+    foreach ($result as $row) {
+        $output .= '
 
         <tr>
             <td>' . $row["action_id"] . '</td>
@@ -106,29 +105,20 @@ if ($statement->rowCount() == 0) {
             <td>' . $row["complainer_name"] . '</td>
             <td>' . $row["remarks"] . '</td>
             <td>
-                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["action_id"] . '"  type="button">Counsel</button> </a>
-                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["action_id"] . '"  type="button">Edit Button</button> </a>
-                <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["action_id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete Button</button>
+                <a href="../forms/sanction-counselling.php" style="text-decoration: none;"> <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button> </a>
+                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
+                <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete Button</button>
             </td>
         </tr>
    ';
-        }
-        $output .= '</tbody>';
-    } else {
-        $output .= '
-    <tbody>
-        <tr>
-            <td colspan="2" align="center">No Data Found</td>
-        </tr>
-    </tbody>
-  ';
     }
-
     $output .= '
-</table>
-<label class="mb-2 ps-4">Total Records - ' . $total_data . '</label>
-  <ul class="pagination">
-';
+    </tbody>
+    </table>
+    </div>
+    <label class="mb-2 ps-4">Total Records - ' . $total_data . '</label>
+      <ul class="pagination">
+    ';
 
     $total_links = ceil($total_data / $limit);
     $previous_link = '';
@@ -171,52 +161,61 @@ if ($statement->rowCount() == 0) {
     for ($count = 0; $count < count($page_array); $count++) {
         if ($page == $page_array[$count]) {
             $page_link .= '
-    <li class="page-item active">
-      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
-    </li>
-    ';
+        <li class="page-item active">
+          <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
+        </li>
+        ';
 
             $previous_id = $page_array[$count] - 1;
             if ($previous_id > 0) {
                 $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">Previous</a></li>';
             } else {
                 $previous_link = '
-      <li class="page-item disabled">
-        <a class="page-link" href="#">Previous</a>
-      </li>
-      ';
+          <li class="page-item disabled">
+            <a class="page-link" href="#">Previous</a>
+          </li>
+          ';
             }
             $next_id = $page_array[$count] + 1;
             if ($next_id >= $total_links) {
                 $next_link = '
-      <li class="page-item disabled">
-        <a class="page-link" href="#">Next</a>
-      </li>
-        ';
+          <li class="page-item disabled">
+            <a class="page-link" href="#">Next</a>
+          </li>
+            ';
             } else {
                 $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">Next</a></li>';
             }
         } else {
             if ($page_array[$count] == '...') {
                 $page_link .= '
-      <li class="page-item disabled">
-          <a class="page-link" href="#">...</a>
-      </li>
-      ';
+          <li class="page-item disabled">
+              <a class="page-link" href="#">...</a>
+          </li>
+          ';
             } else {
                 $page_link .= '
-      <li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $page_array[$count] . '">' . $page_array[$count] . '</a></li>
-      ';
+          <li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $page_array[$count] . '">' . $page_array[$count] . '</a></li>
+          ';
             }
         }
     }
 
     $output .= $previous_link . $page_link . $next_link;
     $output .= '
-  </ul>
-
-';
-
-
-    echo $output;
+      </ul>
+    
+    ';
+} else {
+    $output .= '
+    <tbody>
+        <tr>
+            <td colspan="12" align="center"><h1>No Data Found</h1></td>
+        </tr>
+    </tbody>
+    </table>
+  ';
 }
+
+
+echo $output;

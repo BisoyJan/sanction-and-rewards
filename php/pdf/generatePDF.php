@@ -28,7 +28,20 @@ class generatePDF
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/action/' . $filename);
-            
+
+        return $filename;
+    }
+
+    public function generateCounselling($data)
+    {
+        extract($data);
+
+        $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
+        $pdf = new Pdf('../../assets/docs/themeplates/DISCIPLINARY CASE SLIP FORM.pdf');
+        $pdf->fillForm($data)
+            ->flatten()
+            ->saveAs('../../assets/docs/processed/counselling/' . $filename);
+
         return $filename;
     }
 }

@@ -9,39 +9,39 @@ require_once '../../vendor/autoload.php';
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-
 if (isset($_GET['action_id'])) {
     $action_id = mysqli_real_escape_string($con, $_GET['action_id']);
 
     $query = "SELECT
-        sanction_referrals.*,
+        sanction_disciplinary_action.*,
+        students.id AS student_id,
         students.student_no,
         students.first_name,
         students.middle_name,
         students.last_name,
         students.section,
-        students.section,
         students.age,
         students.gender,
+        programs.program_name AS program,
         programs.abbreviation,
-        programs.program_name,
-        sanction_disciplinary_action.id AS action_id,
-        sanction_disciplinary_action.committed_date,
-        sanction_disciplinary_action.committed_time,
-        sanction_disciplinary_action.counselling_date,
-        sanction_disciplinary_action.counselling_time,
-        sanction_disciplinary_action.issual_date,
-        sanction_disciplinary_action.remarks,
         offenses.offense,
+        violations.id AS violation_id,
         violations.code,
-        violations.violation
+        violations.violation,
+        sanction_referrals.complainer_name,
+        sanction_referrals.referred,
+        sanction_referrals.date
+        
     FROM
         sanction_disciplinary_action
     JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
     JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN violations on sanction_referrals.violation_id = violations.id
     JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id WHERE sanction_disciplinary_action.id = '$action_id'";
+    JOIN programs ON students.program_id = programs.id
+    WHERE
+    sanction_disciplinary_action.id = '$action_id'";
+
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) == 1) {
@@ -168,9 +168,10 @@ if (isset($_POST['create_Action'])) {
 }
 
 if (isset($_POST['update_Action'])) {
-    $action_id =  mysqli_real_escape_string($con, $_POST['action_id']);
     $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
+    $action_id  = mysqli_real_escape_string($con, $_POST['action_id']);
 
+    $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
 
     $studentName = mysqli_real_escape_string($con, $_POST['StudentFullName']);
@@ -208,19 +209,22 @@ if (isset($_POST['update_Action'])) {
         return;
     } else {
 
+        $query = "UPDATE `sanction_referrals` SET `remark`='Actioned' WHERE id = '$referral_id'";
+        $query_run = mysqli_query($con, $query);
 
         $query = "UPDATE
             `sanction_disciplinary_action`
         SET
-            `sanction_referral_id` = ' $referral_id',
             `committed_date` = '$committedDate',
             `committed_time` = '$committedTime',
             `counselling_date` = '$counsellingDate',
             `counselling_time` = '$counsellingTime',
-            `issual_date` = '$dateIssued '
-        WHERE id = '$action_id'";
+            `issual_date` = '$dateIssued'
+        WHERE
+            id = '$action_id'";
 
         $query_run = mysqli_query($con, $query);
+
 
         $data = [
             'student_name_field' => $studentName,
@@ -243,7 +247,7 @@ if (isset($_POST['update_Action'])) {
         if ($response && $query_run) {
             $res = [
                 'status' => 200,
-                'message' => 'Action Created Successfully',
+                'message' => 'Action Updated Successfully',
                 'console' => $query_run,
             ];
             echo json_encode($res);
@@ -251,7 +255,7 @@ if (isset($_POST['update_Action'])) {
         } else {
             $res = [
                 'status' => 500,
-                'message' => 'Action Not Created',
+                'message' => 'Action Not Updated',
                 'console' => $query_run
             ];
             echo json_encode($res);
@@ -273,14 +277,14 @@ if (isset($_POST['delete_Action'])) {
     if ($query_run) {
         $res = [
             'status' => 200,
-            'message' => 'Lost and Found Successfully Delete',
+            'message' => 'Action Successfully Delete',
         ];
         echo json_encode($res);
         return;
     } else {
         $res = [
             'status' => 500,
-            'message' => 'Lost and Found is not Been Delete'
+            'message' => 'Action is not Been Delete'
         ];
         echo json_encode($res);
         return;

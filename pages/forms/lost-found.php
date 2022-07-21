@@ -247,7 +247,6 @@ include('../includes/forms/header.php');
 </div>
 
 
-
 <!-- Modal -->
 <div class="modal fade" id="viewImage" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
