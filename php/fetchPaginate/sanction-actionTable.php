@@ -93,7 +93,7 @@ if ($total_data > 0) {
         $output .= '
 
         <tr>
-            <td>' . $row["action_id"] . '</td>
+            <td>' . $row["id"] . '</td>
             <td>' . $row["student_no"] . '</td>
             <td>' . $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"] . '</td>
             <td>' . $row["section"] . '</td>

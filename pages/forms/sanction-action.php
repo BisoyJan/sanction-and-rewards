@@ -122,7 +122,7 @@ include('../includes/forms/header.php');
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Course</label>
-                            <textarea class="form-control" aria-label="With textarea" readonly="readonly" id="Course" name="Course" aria-describedby="inputGroupPrepend"></textarea>
+                            <textarea class="form-control" aria-label="With textarea" readonly="readonly" id="Course" name="Course"></textarea>
                         </div>
 
                     </div>
@@ -351,7 +351,7 @@ include('../includes/forms/header.php');
                         $('#course_Abbreviation').val(res.data.abbreviation);
                         $('#Age').val(res.data.age);
                         $('#Gender').val(res.data.gender);
-                        $('#Course').val(res.data.program_name);
+                        $('#Course').val(res.data.program);
 
                         $('#violationCode').val(res.data.code);
                         $('#offenseType').val(res.data.offense);
