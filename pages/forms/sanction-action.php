@@ -101,6 +101,7 @@ include('../includes/forms/header.php');
                             <input type="hidden" name="student_id" id="student_id">
                             <input type="hidden" name="referral_id" id="referral_id">
                             <input type="hidden" name="action_id" id="action_id">
+                            <input type="hidden" name="email_student" id="email_student">
 
                         </div>
                         <div class="col-lg-3">
@@ -295,6 +296,7 @@ include('../includes/forms/header.php');
                         $('#student_id').val(res.data.student_id);
                         $('#Student').val(res.data.student_no);
                         $('#student_no').val(res.data.student_no);
+                        $('#email_student').val(res.data.email);
 
                         $('#StudentFullName').val(fullName);
                         $('#Section').val(res.data.section);
@@ -345,6 +347,7 @@ include('../includes/forms/header.php');
                         $('#student_id').val(res.data.student_id);
                         $('#Student').val(res.data.student_no);
                         $('#student_no').val(res.data.student_no);
+                        $('#email_student').val(res.data.email);
 
                         $('#StudentFullName').val(fullName);
                         $('#Section').val(res.data.section);

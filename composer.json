@@ -8,11 +8,13 @@
 
         "psr-4": {
 
-            "Classes\\": "php/pdf"
+            "Classes\\": ["php/pdf", "php/email"]
 
         }
     },
     "require": {
-        "mikehaertl/php-pdftk": "^0.12.1"
+        "mikehaertl/php-pdftk": "^0.12.1",
+        "phpmailer/phpmailer": "^6.6",
+        "league/oauth2-google": "^4.0"
     }
 }

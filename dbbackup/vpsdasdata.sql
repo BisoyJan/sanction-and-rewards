@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2022 at 04:38 PM
+-- Generation Time: Jul 24, 2022 at 05:48 PM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `vpsdasdata`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `colleges`
+--
+
+CREATE TABLE `colleges` (
+  `id` int(11) NOT NULL,
+  `abbreviation` varchar(40) NOT NULL,
+  `college` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `colleges`
+--
+
+INSERT INTO `colleges` (`id`, `abbreviation`, `college`) VALUES
+(1, 'CAS', 'College of Arts and Sciences'),
+(2, 'COE', 'College of Education'),
+(3, 'CME', 'College of Management and Entrepreneurship'),
+(4, 'GS', 'Graduate School');
 
 -- --------------------------------------------------------
 
@@ -252,7 +274,9 @@ CREATE TABLE `sanction_disciplinary_action` (
 
 INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`) VALUES
 (14, 26, '2022-07-19', '10:26:00', '2022-07-19', '10:26:00', '2022-07-19', 'Counselled'),
-(15, 27, '2022-07-14', '10:59:00', '2022-07-14', '10:59:00', '2022-07-14', 'Counselled');
+(15, 27, '2022-07-14', '10:59:00', '2022-07-14', '10:59:00', '2022-07-14', 'Counselled'),
+(77, 32, '2022-07-24', '23:49:00', '2022-07-24', '23:49:00', '2022-07-24', ''),
+(78, 31, '2022-07-24', '23:49:00', '2022-07-24', '23:49:00', '2022-07-24', '');
 
 -- --------------------------------------------------------
 
@@ -277,7 +301,9 @@ CREATE TABLE `sanction_referrals` (
 INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`) VALUES
 (26, 1, 2, 'Melvin Copioso', 'Ken Vinegas', '2022-07-12', 'Actioned'),
 (27, 1, 9, 'wadawd', 'awdawdawdawd', '2022-07-12', 'Actioned'),
-(28, 2, 2, 'Jan Ramil Intong', 'Ken Vinegas', '2022-07-19', NULL);
+(29, 2, 9, 'Ken Venigas', 'Jan Ramil', '2022-07-24', ''),
+(31, 3, 9, 'huhuhhuhu', 'huhuhuhu', '2022-07-24', 'Actioned'),
+(32, 1, 2, 'wadawd', 'adwadawdawd', '2022-07-08', 'Actioned');
 
 -- --------------------------------------------------------
 
@@ -304,7 +330,8 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `student_no`, `first_name`, `middle_name`, `last_name`, `age`, `gender`, `section`, `email`, `program_id`) VALUES
 (1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 22, 'Male', 'AI42', 'bisoyjan@gmail.com', 1),
-(2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1);
+(2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1),
+(3, 1800050, 'Iris', 'I', 'Sarida', 22, 'Female', 'A|22', 'irisjoyserida@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -395,6 +422,12 @@ INSERT INTO `violations` (`id`, `offenses_id`, `code`, `violation`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `colleges`
+--
+ALTER TABLE `colleges`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cum_laudes`
@@ -532,6 +565,12 @@ ALTER TABLE `violations`
 --
 
 --
+-- AUTO_INCREMENT for table `colleges`
+--
+ALTER TABLE `colleges`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `cum_laudes`
 --
 ALTER TABLE `cum_laudes`
@@ -607,19 +646,19 @@ ALTER TABLE `sanction_cases`
 -- AUTO_INCREMENT for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `themeplate_filepath`

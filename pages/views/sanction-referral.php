@@ -43,6 +43,8 @@ include('../includes/main/navbar.php');
                 </div>
                 <div class="modal-body">
                     <h6>Are you sure to delete this?</h6>
+                    <br>
+                    <p>Other related Data will also be Deleted</p>
                     <input type="hidden" name="delete_referral_id" id="delete_referral_id">
                     <input type="hidden" name="delete_student_no" id="delete_student_no">
                 </div>
@@ -95,10 +97,28 @@ include('../includes/main/navbar.php');
     });
 
     $(document).on('click', '.sanction-actionAddButton', function() {
+
         var referral_id = $(this).val();
 
-        sessionStorage.setItem('sanction-referralFunction', 'Add')
-        sessionStorage.setItem("sanction-referralID", referral_id);
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/sanction-action.php?referral_id=" + referral_id,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response);
+                if (res.status == 404) {
+
+                    sessionStorage.setItem('sanction-referralFunction', 'Add')
+                    sessionStorage.setItem("sanction-referralID", referral_id);
+
+                    window.location.href = "../forms/sanction-action.php";
+
+                } else if (res.status == 200) {
+                    //Message here
+                    toastr.warning(res.message, res.status);
+                }
+            }
+        });
 
     });
 
@@ -143,7 +163,7 @@ include('../includes/main/navbar.php');
                     load_data(1);
                     $('#ReferralDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
-                    
+
 
                 } else if (res.status == 500) {
                     toastr.error(res.message, res.status);

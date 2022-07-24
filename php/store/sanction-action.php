@@ -2,9 +2,11 @@
 
 use Classes\generatePDF;
 
+
 require '../../database/database.php';
 
 require_once '../../vendor/autoload.php';
+require_once '../email/sendEmail.php';
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -22,6 +24,7 @@ if (isset($_GET['action_id'])) {
         students.section,
         students.age,
         students.gender,
+        students.email,
         programs.program_name AS program,
         programs.abbreviation,
         offenses.offense,
@@ -65,11 +68,43 @@ if (isset($_GET['action_id'])) {
     }
 }
 
+if (isset($_GET['referral_id'])) {
+    $referral_id = mysqli_real_escape_string($con, $_GET['referral_id']);
+
+    $query = "SELECT
+        sanction_disciplinary_action.*
+    FROM
+        sanction_disciplinary_action
+    WHERE
+    sanction_referral_id = '$referral_id'";
+
+    $query_run = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($query_run) == 1) {
+
+        $res = [
+            'status' => 200,
+            'message' => 'This Referral Already filed Action Report',
+        ];
+        echo json_encode($res);
+        return;
+    } else {
+        $res = [
+            'status' => 404,
+            'message' => 'Specific action Not found'
+        ];
+        echo json_encode($res);
+        return;
+    }
+}
+
+
 if (isset($_POST['create_Action'])) {
     $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
 
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
+    $student_email = mysqli_real_escape_string($con, $_POST['email_student']);
 
     $studentName = mysqli_real_escape_string($con, $_POST['StudentFullName']);
     $section = mysqli_real_escape_string($con, $_POST['Section']);
@@ -144,17 +179,34 @@ if (isset($_POST['create_Action'])) {
             'student_no' => $student_no
         ];
 
+        $filename =  $student_no . '_' . $last_id . '.pdf';
+        $emailData = [
+            'student_name' => $studentName,
+            'student_no' => $student_no,
+            'student_email' => $student_no . '@lnu.edu.ph',
+            'student_email_2' => $student_email,
+            'fileLocation' => '../../assets/docs/processed/action/' . $filename,
+            'counselling_time' => date_format($convertedCounsellingTime, "h:i A"),
+            'counselling_date' => date_format($convertedCounsellingDate, "M/d/Y"),
+            'last_inserted_id' => $last_id
+        ];
+
         $pdf = new GeneratePDF;
         $response = $pdf->generateAction($data);
 
         if ($response && $query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Action Created Successfully',
-                'console' => $query_run,
-            ];
-            echo json_encode($res);
-            return;
+
+            $email = new sendEmail;
+            $response = $email->actionEmail($emailData);
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Action Created Successfully',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -170,6 +222,7 @@ if (isset($_POST['create_Action'])) {
 if (isset($_POST['update_Action'])) {
     $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
     $action_id  = mysqli_real_escape_string($con, $_POST['action_id']);
+    $student_email = mysqli_real_escape_string($con, $_POST['email_student']);
 
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
@@ -241,10 +294,25 @@ if (isset($_POST['update_Action'])) {
             'student_no' => $student_no
         ];
 
+        $filename =  $student_no . '_' . $action_id . '.pdf';
+        $emailData = [
+            'student_name' => $studentName,
+            'student_no' => $student_no,
+            'student_email' => $student_no . '@lnu.edu.ph',
+            'student_email_2' => $student_email,
+            'fileLocation' => '../../assets/docs/processed/action/' . $filename,
+            'counselling_time' => date_format($convertedCounsellingTime, "h:i A"),
+            'counselling_date' => date_format($convertedCounsellingDate, "M/d/Y"),
+            'last_inserted_id' => $action_id
+        ];
+
         $pdf = new GeneratePDF;
         $response = $pdf->generateAction($data);
 
-        if ($response && $query_run) {
+        $email = new sendEmail;
+        $response1 = $email->actionEmail($emailData);
+
+        if ($response1 && $response && $query_run) {
             $res = [
                 'status' => 200,
                 'message' => 'Action Updated Successfully',
@@ -267,14 +335,18 @@ if (isset($_POST['update_Action'])) {
 if (isset($_POST['delete_Action'])) {
     $action_id = mysqli_real_escape_string($con, $_POST['delete_action_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['delete_student_no']);
+    $referral_id = mysqli_real_escape_string($con, $_POST['delete_referral_id']);
 
     $filename =  $student_no . '_' . $action_id . '.pdf';
     unlink('../../assets/docs/processed/action/' . $filename);
 
+    $query1 = "UPDATE `sanction_referrals` SET `remark`='' WHERE id = '$referral_id'";
+    $query_run1 = mysqli_query($con, $query1);
+
     $query = "DELETE FROM `sanction_disciplinary_action` WHERE id = '$action_id'";
     $query_run = mysqli_query($con, $query);
 
-    if ($query_run) {
+    if ($query_run1 && $query) {
         $res = [
             'status' => 200,
             'message' => 'Action Successfully Delete',

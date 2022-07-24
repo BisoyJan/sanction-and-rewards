@@ -92,6 +92,7 @@ if (isset($_GET['referral_id'])) {
         students.section,
         students.age,
         students.gender,
+        students.email,
         programs.program_name AS program,
         programs.abbreviation,
         offenses.offense,
@@ -154,6 +155,20 @@ if (isset($_POST['create_Referral'])) {
         echo json_encode($res);
         return;
     } else {
+
+
+        $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id';";
+
+        $select = mysqli_query($con, $query);
+        if (mysqli_num_rows($select) === 3) {
+            $res = [
+                'status' => 401,
+                'message' => 'This Student is been Sanctioned 3 Times',
+                'console' => $select
+            ];
+            echo json_encode($res);
+            return;
+        }
 
         $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id' AND violation_id = '$violation_id' AND date = '$dateIssued';";
 
