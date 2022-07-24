@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2022 at 05:48 PM
+-- Generation Time: Jul 24, 2022 at 06:00 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -364,6 +364,25 @@ INSERT INTO `themeplate_filepath` (`id`, `name`, `path`, `save_path`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `id` int(11) NOT NULL,
+  `provider` varchar(255) NOT NULL,
+  `provider_value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tokens`
+--
+
+INSERT INTO `tokens` (`id`, `provider`, `provider_value`) VALUES
+(1, 'google', '1//0erLaGqfsbncCCgYIARAAGA4SNwF-L9IrD2moqV_TuwvXLcOd8oJ2xNX1LmTWKO7nPmMqSijVf6vfqb9-ZfnqSo9SoAlrI-8mBm0');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -548,6 +567,12 @@ ALTER TABLE `themeplate_filepath`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -665,6 +690,12 @@ ALTER TABLE `students`
 --
 ALTER TABLE `themeplate_filepath`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tokens`
+--
+ALTER TABLE `tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
