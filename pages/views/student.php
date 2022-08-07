@@ -350,7 +350,6 @@ include('../includes/main/navbar.php');
 
                     toastr.error(res.message, res.status);
                     console.log(res.console);
-
                 }
             }
         });

@@ -464,8 +464,8 @@ include('../includes/forms/header.php');
                 }
             }
         });
-
     });
+    
 </script>
 
 <?php

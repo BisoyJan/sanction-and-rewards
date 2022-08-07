@@ -59,7 +59,7 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Rewards</a></li>
-                <li><a href="../php/logout.php">MVP</a></li>
+                <li><a href="../views/reward-leadership.php">Leadership</a></li>
                 <li><a href="#">Outstanding Athlete</a></li>
                 <li><a href="#">Kindly Act</a></li>
                 <li><a href="#">Honors</a></li>

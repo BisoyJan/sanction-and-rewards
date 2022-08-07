@@ -405,6 +405,10 @@ include('../includes/forms/header.php');
                     sessionStorage.clear('sanction-actionID');
                     sessionStorage.clear('sanction-counselFunction');
 
+                    setTimeout(function() {
+                        window.location.href = '../views/sanction-counselling.php';
+                    }, 1000);
+
                 } else if (res.status == 500) {
 
                     toastr.error(res.message, res.status);

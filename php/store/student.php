@@ -140,7 +140,6 @@ if (isset($_POST['update_Student'])) {
     $section = mysqli_real_escape_string($con, $_POST['section']);
     $program = mysqli_real_escape_string($con, $_POST['program']);
 
-
     if ($firstName == NULL || $middleName == NULL || $lastName == NULL || $age == NULL || $gender == NULL || $email == NULL || $section == NULL || $program == NULL) {
 
         $res = [

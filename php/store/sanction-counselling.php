@@ -62,6 +62,36 @@ if (isset($_GET['counsel_id'])) {
     }
 }
 
+if (isset($_GET['action_id'])) {
+    $action_id = mysqli_real_escape_string($con, $_GET['action_id']);
+
+    $query = "SELECT
+        sanction_cases.*
+    FROM
+        sanction_cases
+    WHERE
+    sanction_disciplinary_action_id = '$action_id'";
+
+    $query_run = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($query_run) == 1) {
+
+        $res = [
+            'status' => 200,
+            'message' => 'This Action Already filed Counselling Report',
+        ];
+        echo json_encode($res);
+        return;
+    } else {
+        $res = [
+            'status' => 404,
+            'message' => 'Specific Counselling Not found'
+        ];
+        echo json_encode($res);
+        return;
+    }
+}
+
 if (isset($_POST['create_Counsel'])) {
 
     $action_id = mysqli_real_escape_string($con, $_POST['action_id']);
@@ -297,5 +327,36 @@ if (isset($_POST['update_Counsel'])) {
             echo json_encode($res);
             return;
         }
+    }
+}
+
+if (isset($_POST['delete_Counsel'])) {
+    $counsel_id = mysqli_real_escape_string($con, $_POST['delete_counsel_id']);
+    $student_no = mysqli_real_escape_string($con, $_POST['delete_student_no']);
+    $action_id = mysqli_real_escape_string($con, $_POST['delete_action_id']);
+
+    $filename =  $student_no . '_' . $counsel_id . '.pdf';
+    unlink('../../assets/docs/processed/counselling/' . $filename);
+
+    $query1 = "UPDATE `sanction_disciplinary_action` SET `remarks`='' WHERE id = '$action_id'";
+    $query_run1 = mysqli_query($con, $query1);
+
+    $query = "DELETE FROM `sanction_cases` WHERE id = '$counsel_id'";
+    $query_run = mysqli_query($con, $query);
+
+    if ($query_run1 && $query) {
+        $res = [
+            'status' => 200,
+            'message' => 'Counselling Successfully Delete',
+        ];
+        echo json_encode($res);
+        return;
+    } else {
+        $res = [
+            'status' => 500,
+            'message' => 'Counselling is not Been Delete'
+        ];
+        echo json_encode($res);
+        return;
     }
 }

@@ -105,7 +105,7 @@ if ($total_data > 0) {
             <td>' . $row["complainer_name"] . '</td>
             <td>' . $row["remarks"] . '</td>
             <td>
-                <a href="../forms/sanction-counselling.php" style="text-decoration: none;"> <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button> </a>
+                <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button>
                 <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
                 <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete Button</button>
             </td>

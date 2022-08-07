@@ -13,30 +13,19 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-    SELECT
-        sanction_cases.*,
-        students.id AS student_id,
-        students.student_no,
-        students.first_name,
-        students.middle_name,
-        students.last_name,
-        students.section,
-        students.age,
-        students.gender,
-        programs.program_name AS program,
-        programs.abbreviation,
-        offenses.offense,
-        violations.id AS violation_id,
-        violations.code,
-        violations.violation
-    FROM
-        sanction_cases
-    JOIN sanction_disciplinary_action ON sanction_cases.sanction_disciplinary_action_id = sanction_disciplinary_action.id
-    JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations ON sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id;
+SELECT
+    leaderships.*,
+    students.student_no,
+    students.first_name,
+    students.middle_name,
+    students.last_name,
+    students.gender,
+    students.section,
+    programs.abbreviation
+FROM
+    leaderships
+JOIN students ON leaderships.student_id = students.id
+JOIN programs ON students.program_id = programs.id;
 ";
 
 if ($_POST['query'] != '') {
@@ -45,8 +34,6 @@ if ($_POST['query'] != '') {
     OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   ';
 }
 
@@ -73,11 +60,8 @@ $output = '
         <th>Student Name</th>
         <th>Section</th>
         <th>Course</th>
-        <th>Offense Code</th>
-        <th>Recommendations</th>
-        <th>Hearing Date</th>
+        <th>Event Title</th>
         <th>Date Issued</th>
-        <th>Chairman</th>
         <th>Actions</th>
     </tr>
 </thead>
@@ -86,31 +70,21 @@ $output = '
 if ($total_data > 0) {
     foreach ($result as $row) {
         $output .= '
-
         <tr>
             <td>' . $row["id"] . '</td>
             <td>' . $row["student_no"] . '</td>
             <td>' . $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"] . '</td>
             <td>' . $row["section"] . '</td>
             <td>' . $row["abbreviation"] . '</td>
-            <td>' . $row["code"] . '</td>
-            <td>' . $row["recommend"] . '</td>';
-        if ($row["hearing_date"] == '0000-00-00') {
-            $output .= '<td>NO Date</td>';
-        } else {
-            $output .= ' <td>' . date("M/d/Y", strtotime($row["hearing_date"])) . '</td> ';
-        }
-        $output .= '
+            <td style="width:30%;">' . $row["event_title"] . '</td>
             <td>' . date("M/d/Y", strtotime($row["date_issued"])) . '</td>
-            <td>' . $row["chairman"] . '</td>
             <td>
-                <a href="../forms/sanction-counselling.php" style="text-decoration: none;"> <button class="sanction-counsellingEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
-                <button class="counselDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#CounselDeleteModal">Delete Button</button>
+                <button class="leadershipEditButton btn btn-success m-1" value="' . $row["id"] . '" onclick="formIDChangeEdit()" data-bs-toggle="modal" data-bs-target="#LeadershipModal" type="button">Edit Button</button>
+                <button class="leadershipDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" onclick="formIDChangeDelete()" type="button" data-bs-toggle="modal" data-bs-target="#LeadershipDeleteModal">Delete Button</button>
             </td>
         </tr>
    ';
     }
-
     $output .= '
     </tbody>
     </table>
