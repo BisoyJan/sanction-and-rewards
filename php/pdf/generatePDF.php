@@ -58,7 +58,6 @@ class generatePDF
         return $filename;
     }
 
-    // TODO: Please fix the generate function
     public function generateGoodDeeds($data)
     {
 
@@ -68,6 +67,19 @@ class generatePDF
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/good-deeds/' . $filename);
+
+        return $filename;
+    }
+
+    public function generateOutstandingAthlete($data)
+    {
+
+        extract($data);
+        $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
+        $pdf = new Pdf('../../assets/docs/themeplates/OUTSTANDING-ATHLETE-CERTIFICATE.pdf');
+        $pdf->fillForm($data)
+            ->flatten()
+            ->saveAs('../../assets/docs/processed/outstanding-athlete/' . $filename);
 
         return $filename;
     }

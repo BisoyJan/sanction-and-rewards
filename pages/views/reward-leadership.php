@@ -223,7 +223,7 @@ include('../includes/main/navbar.php');
         } else {
             $.ajax({
                 type: "GET",
-                url: "../../php/store/student.php?student_id=" + student_id,
+                url: "../../php/store/student.php?student_no=" + student_id,
                 success: function(response) {
 
                     var res = jQuery.parseJSON(response);
