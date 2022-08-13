@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2022 at 06:00 PM
+-- Generation Time: Aug 13, 2022 at 05:42 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -98,6 +98,13 @@ CREATE TABLE `kindly_acts` (
   `kindly_act` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `kindly_acts`
+--
+
+INSERT INTO `kindly_acts` (`id`, `student_id`, `date_issued`, `kindly_act`) VALUES
+(10, 1, '2022-08-10', 'sadasdadsadsadsa');
+
 -- --------------------------------------------------------
 
 --
@@ -108,8 +115,7 @@ CREATE TABLE `leaderships` (
   `id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `date_issued` varchar(100) NOT NULL,
-  `event_title` varchar(100) NOT NULL,
-  `vpsdas_name` varchar(100) NOT NULL
+  `event_title` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -249,7 +255,7 @@ CREATE TABLE `sanction_cases` (
 --
 
 INSERT INTO `sanction_cases` (`id`, `sanction_disciplinary_action_id`, `report`, `resolution`, `recommend`, `chairman`, `members`, `hearing_date`, `date_issued`) VALUES
-(38, 14, 'ss', 'ss', 'For Continuing Hearing', 'ss', 'ss', '2022-07-23', '2021-07-22');
+(39, 14, 'wdadawdawdawd', 'wadwadwadawd', 'Closed/Resolved', 'wadawdawdawd', 'awdawdawdawd', '0000-00-00', '2026-07-22');
 
 -- --------------------------------------------------------
 
@@ -274,9 +280,7 @@ CREATE TABLE `sanction_disciplinary_action` (
 
 INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`) VALUES
 (14, 26, '2022-07-19', '10:26:00', '2022-07-19', '10:26:00', '2022-07-19', 'Counselled'),
-(15, 27, '2022-07-14', '10:59:00', '2022-07-14', '10:59:00', '2022-07-14', 'Counselled'),
-(77, 32, '2022-07-24', '23:49:00', '2022-07-24', '23:49:00', '2022-07-24', ''),
-(78, 31, '2022-07-24', '23:49:00', '2022-07-24', '23:49:00', '2022-07-24', '');
+(77, 32, '2022-07-24', '23:49:00', '2022-07-24', '23:49:00', '2022-07-24', '');
 
 -- --------------------------------------------------------
 
@@ -300,10 +304,10 @@ CREATE TABLE `sanction_referrals` (
 
 INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`) VALUES
 (26, 1, 2, 'Melvin Copioso', 'Ken Vinegas', '2022-07-12', 'Actioned'),
-(27, 1, 9, 'wadawd', 'awdawdawdawd', '2022-07-12', 'Actioned'),
 (29, 2, 9, 'Ken Venigas', 'Jan Ramil', '2022-07-24', ''),
-(31, 3, 9, 'huhuhhuhu', 'huhuhuhu', '2022-07-24', 'Actioned'),
-(32, 1, 2, 'wadawd', 'adwadawdawd', '2022-07-08', 'Actioned');
+(32, 1, 2, 'wadawd', 'adwadawdawd', '2022-07-08', 'Actioned'),
+(33, 1, 9, 'wadwadadawwadwadawd', 'wwdawdawdwdwd', '2022-07-28', NULL),
+(34, 2, 9, 'wadawdwadadd', 'awdwadawdawd', '2022-07-28', NULL);
 
 -- --------------------------------------------------------
 
@@ -360,25 +364,6 @@ INSERT INTO `themeplate_filepath` (`id`, `name`, `path`, `save_path`) VALUES
 (7, 'Outstanding Athlete', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\OUTSTANDING-ATHLETE-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\Outstanding Athlete'),
 (8, 'MVP', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\REWARDS-ATHLETE-MVP-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\MVP Athlete'),
 (9, 'Honors', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\REWARDS-GWA-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\GWA');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tokens`
---
-
-CREATE TABLE `tokens` (
-  `id` int(11) NOT NULL,
-  `provider` varchar(255) NOT NULL,
-  `provider_value` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tokens`
---
-
-INSERT INTO `tokens` (`id`, `provider`, `provider_value`) VALUES
-(1, 'google', '1//0erLaGqfsbncCCgYIARAAGA4SNwF-L9IrD2moqV_TuwvXLcOd8oJ2xNX1LmTWKO7nPmMqSijVf6vfqb9-ZfnqSo9SoAlrI-8mBm0');
 
 -- --------------------------------------------------------
 
@@ -567,12 +552,6 @@ ALTER TABLE `themeplate_filepath`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tokens`
---
-ALTER TABLE `tokens`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -617,13 +596,13 @@ ALTER TABLE `honors`
 -- AUTO_INCREMENT for table `kindly_acts`
 --
 ALTER TABLE `kindly_acts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `leaderships`
 --
 ALTER TABLE `leaderships`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `mvp_athletes`
@@ -665,7 +644,7 @@ ALTER TABLE `properties`
 -- AUTO_INCREMENT for table `sanction_cases`
 --
 ALTER TABLE `sanction_cases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `sanction_disciplinary_action`
@@ -677,7 +656,7 @@ ALTER TABLE `sanction_disciplinary_action`
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -690,12 +669,6 @@ ALTER TABLE `students`
 --
 ALTER TABLE `themeplate_filepath`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `tokens`
---
-ALTER TABLE `tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

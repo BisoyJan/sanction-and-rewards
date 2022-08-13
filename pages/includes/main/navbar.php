@@ -60,8 +60,8 @@
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Rewards</a></li>
                 <li><a href="../views/reward-leadership.php">Leadership</a></li>
-                <li><a href="#">Outstanding Athlete</a></li>
-                <li><a href="#">Kindly Act</a></li>
+                <li><a href="../views/reward-outstanding_athlete.php">Outstanding Athlete</a></li>
+                <li><a href="../views/reward-good_deeds.php">Kindly Act</a></li>
                 <li><a href="#">Honors</a></li>
                 <li><a href="#">Deans Lister</a></li>
             </ul>

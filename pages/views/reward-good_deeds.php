@@ -7,7 +7,7 @@ include('../includes/main/navbar.php');
     <div class="row">
         <div class="col-auto">
             <div class="input-group mb-3">
-                <h3>Leadership Awards Table</h3>
+                <h3>Good Deeds Awards Table</h3>
             </div>
         </div>
     </div>
@@ -19,20 +19,20 @@ include('../includes/main/navbar.php');
         </div>
         <div class="col">
             <div class="d-grid gap-2 d-flex justify-content-end">
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" onclick="formIDChangeAdd()" data-bs-target="#LeadershipModal">Add Button</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" onclick="formIDChangeAdd()" data-bs-target="#GoodDeedsModal">Add Button</button>
             </div>
         </div>
     </div>
 
     <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/sanction-actionTable.php -->
+        <!-- The contents of  the tables at the ../php/fetchPaginate/ -->
 
 
     </div>
 </div>
 
 <!-- modal -->
-<div class="modal fade" id="LeadershipModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="LeadershipLabel" aria-hidden="true">
+<div class="modal fade" id="GoodDeedsModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="GoodDeedsLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered ">
         <div class="modal-content">
             <div class="modal-header">
@@ -41,12 +41,12 @@ include('../includes/main/navbar.php');
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <form class="row g-3 requires-validation" id="Leadership" novalidate>
+                    <form class="row g-3 requires-validation" id="GoodDeeds" novalidate>
                         <div class="row justify-content-center pt-3">
                             <div class="col-md-2">
                                 <input type="hidden" name="student_id" id="student_id">
                                 <input type="hidden" name="student_no" id="student_no">
-                                <input type="hidden" name="leadership_id" id="leadership_id">
+                                <input type="hidden" name="goodDeeds_id" id="goodDeeds_id">
                                 <label class="form-label">Student ID</label>
                                 <input type="number" class="form-control" id="Student" name="Student" placeholder="Student No." required>
                                 <div class="valid-feedback">
@@ -82,20 +82,18 @@ include('../includes/main/navbar.php');
                         </div>
 
                         <div class="row pt-3">
-                            <div class="col">
-                                <label class="form-label">Event Title</label>
-                                <textarea class="form-control" aria-label="With textarea" id="EventTitle" name="EventTitle" aria-describedby="inputGroupPrepend" placeholder="Please Provide Event Title" required></textarea>
+                            <div class="col-md-5">
+                                <label class="form-label">Item Returned</label>
+                                <input class="form-control" id="itemReturned" name="itemReturned" placeholder="Please Provide Information" required></i>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please provide Event Title.
+                                    Please provide Information.
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row pt-3">
-                            <div class="col-3">
+                            <div class="col-md-3">
                                 <label class="form-label">Date</label>
                                 <input type="date" class="form-control" size="48" name="dateIssued" id="dateIssued" required>
                                 <div class="valid-feedback">
@@ -119,17 +117,17 @@ include('../includes/main/navbar.php');
     </div>
 </div>
 
-<div class="modal fade" id="LeadershipDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="goodDeedsDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="deleteLeadership">
+            <form id="deleteGoodDeeds">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <h6>Are you sure to delete this?</h6>
-                    <input type="hidden" name="delete_leadership_id" id="delete_leadership_id">
+                    <input type="hidden" name="delete_goodDeeds_id" id="delete_goodDeeds_id">
                     <input type="hidden" name="delete_student_id" id="delete_student_id">
                 </div>
                 <div class="modal-footer">
@@ -147,7 +145,7 @@ include('../includes/main/navbar.php');
 
     function load_data(page = 1, query = '') {
         $.ajax({
-            url: "../../php/fetchPaginate/reward-leadershipTable.php",
+            url: "../../php/fetchPaginate/reward-good_deedsTable.php",
             method: "POST",
             data: {
                 page: page,
@@ -196,22 +194,22 @@ include('../includes/main/navbar.php');
     function formIDChangeAdd() {
         document.getElementById("Student").disabled = false;
 
-        $("form").attr('id', 'Leadership')
-        $('#Leadership')[0].reset();
+        $("form").attr('id', 'GoodDeeds')
+        $('#GoodDeeds')[0].reset();
         var label = document.getElementById('ModalLabel');
-        label.innerHTML = "Leadership Award Details";
+        label.innerHTML = "Good Deeds Award Details";
     };
 
     function formIDChangeEdit() {
         document.getElementById("Student").disabled = true;
 
-        $("form").attr('id', 'EditLeadership')
+        $("form").attr('id', 'editGoodDeeds')
         var label = document.getElementById('ModalLabel');
-        label.innerHTML = "Edit Leadership Award Details";
+        label.innerHTML = "Edit Good Deeds Award Details";
     }
 
     function formIDChangeDelete() {
-        $("form").attr('id', 'deleteLeadership')
+        $("form").attr('id', 'deleteGoodDeeds')
     }
 
     $(document).on('keyup keypress', '#Student', function(e) {
@@ -223,7 +221,7 @@ include('../includes/main/navbar.php');
         } else {
             $.ajax({
                 type: "GET",
-                url: "../../php/store/student.php?student_id=" + student_id,
+                url: "../../php/store/student.php?student_no=" + student_id,
                 success: function(response) {
 
                     var res = jQuery.parseJSON(response);
@@ -251,17 +249,17 @@ include('../includes/main/navbar.php');
     });
 
     //NOTE: CRUD Function
-    // [x]: Add function done
-    // [x]: Edit function done
-    // [x]: Delete function done
-    // [x]: Auto generate PDF done
+    // [x]: Add function
+    // [x]: Edit function
+    // [x]: Delete function
+    // [x]: Auto generate PDF
 
-    $(document).on('click', '.leadershipEditButton', function() {
-        var leadership_id = $(this).val();
+    $(document).on('click', '.goodDeedsEditButton', function() {
+        var goodDeeds_id = $(this).val();
 
         $.ajax({
             type: "GET",
-            url: "../../php/store/reward-leadership.php?leadership_id=" + leadership_id,
+            url: "../../php/store/reward-good_deeds.php?goodDeeds_id=" + goodDeeds_id,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response);
@@ -269,13 +267,15 @@ include('../includes/main/navbar.php');
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
 
+                    console.log(res.data)
+
                     firstName = res.data.first_name + ' ';
                     middleName = res.data.middle_name + ' ';
                     lastName = res.data.last_name
 
                     fullName = firstName + middleName + lastName;
 
-                    $('#leadership_id').val(res.data.id);
+                    $('#goodDeeds_id').val(res.data.id);
                     $('#student_id').val(res.data.student_id);
                     $('#student_no').val(res.data.student_no);
                     $('#Student').val(res.data.student_no);
@@ -284,98 +284,19 @@ include('../includes/main/navbar.php');
                     $('#Gender').val(res.data.gender);
                     $('#Course').val(res.data.program_name);
                     $('#Section').val(res.data.section);
-                    $('#EventTitle').val(res.data.event_title);
+                    $('#itemReturned').val(res.data.kindly_act);
                     $('#dateIssued').val(res.data.date_issued);
                 }
             }
         });
     });
 
-    $(document).on('submit', '#Leadership', function(e) {
-        e.preventDefault();
-
-        var formData = new FormData(this);
-        formData.append("create_Leadership", true)
-
-        $.ajax({
-            type: "POST",
-            url: "../../php/store/reward-leadership.php",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-
-                var res = jQuery.parseJSON(response)
-                if (res.status == 422) {
-
-                    toastr.warning(res.message, res.status);
-
-                } else if (res.status == 401) {
-
-                    toastr.error(res.message, res.status);
-
-                } else if (res.status == 200) {
-
-                    load_data(1);
-                    $('#Leadership')[0].reset();
-                    $('#LeadershipModal').modal('hide');
-                    toastr.success(res.message, res.status);
-
-                } else if (res.status == 500) {
-
-                    toastr.error(res.message, res.status);
-
-                }
-            }
-        });
-
-    });
-
-    $(document).on('submit', '#EditLeadership', function(e) {
-        e.preventDefault();
-
-        var formData = new FormData(this);
-        formData.append("update_Leadership", true)
-
-        $.ajax({
-            type: "POST",
-            url: "../../php/store/reward-leadership.php",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-
-                var res = jQuery.parseJSON(response)
-                if (res.status == 422) {
-
-                    toastr.warning(res.message, res.status);
-
-                } else if (res.status == 401) {
-
-                    toastr.error(res.message, res.status);
-
-                } else if (res.status == 200) {
-
-                    load_data(1);
-                    $('#EditLeadership')[0].reset();
-                    $('#LeadershipModal').modal('hide');
-                    toastr.success(res.message, res.status);
-
-                } else if (res.status == 500) {
-
-                    toastr.error(res.message, res.status);
-
-                }
-            }
-        });
-    });
-
-    $(document).on('click', '.leadershipDeleteButton', function() {
-        var action_id = $(this).val();
+    $(document).on('click', '.goodDeedsDeleteButton', function() {
+        var goodDeeds_id = $(this).val();
 
         $.ajax({
             type: "GET",
-            url: "../../php/store/reward-leadership.php?leadership_id=" + action_id,
+            url: "../../php/store/reward-good_deeds.php?goodDeeds_id=" + goodDeeds_id,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response);
@@ -384,7 +305,7 @@ include('../includes/main/navbar.php');
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
 
-                    $('#delete_leadership_id').val(res.data.id);
+                    $('#delete_goodDeeds_id').val(res.data.id);
                     $('#delete_student_id').val(res.data.student_no);
 
                     console.log(res.data);
@@ -393,15 +314,94 @@ include('../includes/main/navbar.php');
         });
     });
 
-    $(document).on('submit', '#deleteLeadership', function(e) {
+    $(document).on('submit', '#GoodDeeds', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("delete_Leadership", true)
+        formData.append("create_GoodDeeds", true)
 
         $.ajax({
             type: "POST",
-            url: "../../php/store/reward-leadership.php",
+            url: "../../php/store/reward-good_deeds.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response)
+                if (res.status == 422) {
+
+                    toastr.warning(res.message, res.status);
+
+                } else if (res.status == 401) {
+
+                    toastr.error(res.message, res.status);
+
+                } else if (res.status == 200) {
+
+                    load_data(1);
+                    $('#GoodDeeds')[0].reset();
+                    $('#GoodDeedsModal').modal('hide');
+                    toastr.success(res.message, res.status);
+
+                } else if (res.status == 500) {
+
+                    toastr.error(res.message, res.status);
+
+                }
+            }
+        });
+
+    });
+
+    $(document).on('submit', '#editGoodDeeds', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append("update_GoodDeeds", true);
+
+        $.ajax({
+            type: "POST",
+            url: "../../php/store/reward-good_deeds.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response)
+                if (res.status == 422) {
+
+                    toastr.warning(res.message, res.status);
+
+                } else if (res.status == 401) {
+
+                    toastr.error(res.message, res.status);
+
+                } else if (res.status == 200) {
+
+                    load_data(1);
+                    $('#editGoodDeeds')[0].reset();
+                    $('#GoodDeedsModal').modal('hide');
+                    toastr.success(res.message, res.status);
+
+                } else if (res.status == 500) {
+
+                    toastr.error(res.message, res.status);
+
+                }
+            }
+        });
+    });
+
+    $(document).on('submit', '#deleteGoodDeeds', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append("delete_GoodDeeds", true)
+
+        $.ajax({
+            type: "POST",
+            url: "../../php/store/reward-good_deeds.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -411,7 +411,7 @@ include('../includes/main/navbar.php');
                 if (res.status == 200) {
 
                     load_data(1);
-                    $('#LeadershipDeleteModal').modal('hide');
+                    $('#goodDeedsDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 
                 } else if (res.status == 500) {
