@@ -7,7 +7,7 @@ include('../includes/main/navbar.php');
     <div class="row">
         <div class="col-auto">
             <div class="input-group mb-3">
-                <h3>Outstanding Athlete Awards Table</h3>
+                <h3>MVP Athlete Awards Table</h3>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@ include('../includes/main/navbar.php');
         </div>
         <div class="col">
             <div class="d-grid gap-2 d-flex justify-content-end">
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" onclick="formIDChangeAdd()" data-bs-target="#OutstandingAthleteModal">Add Button</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" onclick="formIDChangeAdd()" data-bs-target="#MVPAthleteModal">Add Button</button>
             </div>
         </div>
     </div>
@@ -31,21 +31,21 @@ include('../includes/main/navbar.php');
     </div>
 
     <!-- modal -->
-    <div class="modal fade" id="OutstandingAthleteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="OutstandingAthleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="MVPAthleteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="MVPAthleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalLabel">Outstanding Athlete Award Details</h5>
+                    <h5 class="modal-title" id="ModalLabel">MVP Athlete Award Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <form class="row g-3 requires-validation" id="Outstanding_athlete" novalidate>
+                        <form class="row g-3 requires-validation" id="MVPAthlete" novalidate>
                             <div class="row justify-content-center pt-3">
                                 <div class="col-md-2">
                                     <input type="hidden" name="student_id" id="student_id">
                                     <input type="hidden" name="student_no" id="student_no">
-                                    <input type="hidden" name="athlete_id" id="athlete_id">
+                                    <input type="hidden" name="MVPAthlete_id" id="MVPAthlete_id">
                                     <label class="form-label">Student ID</label>
                                     <input type="number" class="form-control" id="Student" name="Student" placeholder="Student No." required>
                                     <div class="valid-feedback">
@@ -141,17 +141,17 @@ include('../includes/main/navbar.php');
         </div>
     </div>
 
-    <div class="modal fade" id="OutstandingAthleteDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="MVPAthleteDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form id="deleteOutstandingAthlete">
+                <form id="deleteMVPAthlete">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <h6>Are you sure to delete this?</h6>
-                        <input type="hidden" name="delete_athlete_id" id="delete_athlete_id">
+                        <input type="hidden" name="delete_MVPAthlete_id" id="delete_MVPAthlete_id">
                         <input type="hidden" name="delete_student_id" id="delete_student_id">
                     </div>
                     <div class="modal-footer">
@@ -171,7 +171,7 @@ include('../includes/main/navbar.php');
 
     function load_data(page = 1, query = '') {
         $.ajax({
-            url: "../../php/fetchPaginate/reward-outstanding_athleteTable.php",
+            url: "../../php/fetchPaginate/reward-mvp_athleteTable.php",
             method: "POST",
             data: {
                 page: page,
@@ -198,41 +198,19 @@ include('../includes/main/navbar.php');
     function formIDChangeAdd() {
         document.getElementById("Student").disabled = false;
 
-        $("form").attr('id', 'Outstanding_athlete')
-        $('#Outstanding_athlete')[0].reset();
+        $("form").attr('id', 'MVPAthlete')
+        $('#MVPAthlete')[0].reset();
         var label = document.getElementById('ModalLabel');
-        label.innerHTML = "Outstanding Athlete Award Details";
+        label.innerHTML = "MVP Athlete Award Details";
     };
 
     function formIDChangeEdit() {
         document.getElementById("Student").disabled = true;
 
-        $("form").attr('id', 'EditOutstanding_athlete')
+        $("form").attr('id', 'EditMVP_athlete')
         var label = document.getElementById('ModalLabel');
-        label.innerHTML = "Edit Outstanding Athlete Award Details";
+        label.innerHTML = "Edit MVP Athlete Award Details";
     }
-
-    //Bootstrap input validation 5 Validation
-    (function() {
-        'use strict';
-
-        const forms = document.querySelectorAll('.requires-validation');
-        Array.from(forms).forEach(function(form) {
-            form.addEventListener(
-                'submit',
-                function(event) {
-                    if (!form.checkValidity()) {
-
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-
-                    form.classList.add('was-validated');
-                },
-                false
-            );
-        });
-    })();
 
     //CRUD Function
     $(document).on('keyup keypress', '#Student', function(e) {
@@ -271,15 +249,15 @@ include('../includes/main/navbar.php');
         }
     });
 
-    $(document).on('submit', '#Outstanding_athlete', function(e) {
+    $(document).on('submit', '#MVPAthlete', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("create_OutstandingAthlete", true)
+        formData.append("create_MVPAthlete", true)
 
         $.ajax({
             type: "POST",
-            url: "../../php/store/reward-outstanding_athlete.php",
+            url: "../../php/store/reward-mvp_athlete.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -297,8 +275,8 @@ include('../includes/main/navbar.php');
                 } else if (res.status == 200) {
 
                     load_data(1);
-                    $('#Outstanding_athlete')[0].reset();
-                    $('#OutstandingAthleteModal').modal('hide');
+                    $('#MVPAthlete')[0].reset();
+                    $('#MVPAthleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 
                 } else if (res.status == 500) {
@@ -311,12 +289,12 @@ include('../includes/main/navbar.php');
 
     });
 
-    $(document).on('click', '.outStandingAthleteEditButton', function() {
-        var athlete_id = $(this).val();
+    $(document).on('click', '.MVPAthleteEditButton', function() {
+        var MVPAthlete_id = $(this).val();
 
         $.ajax({
             type: "GET",
-            url: "../../php/store/reward-outstanding_athlete.php?outstandingAthlete_id=" + athlete_id,
+            url: "../../php/store/reward-mvp_athlete.php?MVPAthlete_id=" + MVPAthlete_id,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response);
@@ -330,7 +308,7 @@ include('../includes/main/navbar.php');
 
                     fullName = firstName + middleName + lastName;
 
-                    $('#athlete_id').val(res.data.id);
+                    $('#MVPAthlete_id').val(res.data.id);
                     $('#student_id').val(res.data.student_id);
                     $('#student_no').val(res.data.student_no);
                     $('#Student').val(res.data.student_no);
@@ -348,15 +326,15 @@ include('../includes/main/navbar.php');
         });
     });
 
-    $(document).on('submit', '#EditOutstanding_athlete', function(e) {
+    $(document).on('submit', '#EditMVP_athlete', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("update_OutstandingAthlete", true)
+        formData.append("update_MVPAthlete", true)
 
         $.ajax({
             type: "POST",
-            url: "../../php/store/reward-outstanding_athlete.php",
+            url: "../../php/store/reward-mvp_athlete.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -374,8 +352,8 @@ include('../includes/main/navbar.php');
                 } else if (res.status == 200) {
 
                     load_data(1);
-                    $('#EditOutstanding_athlete')[0].reset();
-                    $('#OutstandingAthleteModal').modal('hide');
+                    $('#EditMVP_athlete')[0].reset();
+                    $('#MVPAthleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 
                 } else if (res.status == 500) {
@@ -387,23 +365,23 @@ include('../includes/main/navbar.php');
         });
     });
 
-    $(document).on('click', '.outStandingAthleteDeleteButton', function() {
-        var athlete_id = $(this).val();
+    $(document).on('click', '.MVPAthleteDeleteButton', function() {
+        var MVPAthlete_id = $(this).val();
 
         $.ajax({
             type: "GET",
-            url: "../../php/store/reward-outstanding_athlete.php?outstandingAthlete_id=" + athlete_id,
+            url: "../../php/store/reward-mvp_athlete.php?MVPAthlete_id=" + MVPAthlete_id,
             success: function(response) {
 
                 var res = jQuery.parseJSON(response);
                 if (res.status == 404) {
 
                     toastr.warning(res.message, res.status);
-                    $('#OutstandingAthleteDeleteModal').modal('hide');
+                    $('#MVPAthleteDeleteModal').modal('hide');
 
                 } else if (res.status == 200) {
 
-                    $('#delete_athlete_id').val(res.data.id);
+                    $('#delete_MVPAthlete_id').val(res.data.id);
                     $('#delete_student_id').val(res.data.student_no);
                     console.log(res.data);
                 }
@@ -411,15 +389,15 @@ include('../includes/main/navbar.php');
         });
     });
 
-    $(document).on('submit', '#deleteOutstandingAthlete', function(e) {
+    $(document).on('submit', '#deleteMVPAthlete', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-        formData.append("delete_OutstandingAthlete", true)
+        formData.append("delete_MVPAthlete", true)
 
         $.ajax({
             type: "POST",
-            url: "../../php/store/reward-outstanding_athlete.php",
+            url: "../../php/store/reward-mvp_athlete.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -429,7 +407,7 @@ include('../includes/main/navbar.php');
                 if (res.status == 200) {
 
                     load_data(1);
-                    $('#OutstandingAthleteDeleteModal').modal('hide');
+                    $('#MVPAthleteDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 
                 } else if (res.status == 500) {
