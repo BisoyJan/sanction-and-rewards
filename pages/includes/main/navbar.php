@@ -1,13 +1,19 @@
 <div class="sidebar">
     <div class="logo-details">
         <i class="fa-solid fa-building-columns"></i>
-        <span class="logo_name">Leyte Normal Unversity</span>
+        <span class="logo_name">LNU VPSDAS</span>
     </div>
     <ul class="nav-links">
         <li>
             <a href="../views/index.php">
                 <i class="fa-solid fa-chart-simple"></i>
                 <span class="link_name">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="../views/index2.php">
+                <i class="fa-solid fa-chart-simple"></i>
+                <span class="link_name">Dashboard2</span>
             </a>
         </li>
         <li>
@@ -50,6 +56,12 @@
             </a>
         </li>
         <li>
+            <a href="#">
+                <i class="fa-solid fa-image-portrait"></i>
+                <span class="link_name">Student Profiling</span>
+            </a>
+        </li>
+        <li>
             <div class="iocn-link">
                 <a href="#">
                     <i class="fa-solid fa-handshake"></i>
@@ -76,7 +88,7 @@
         <li>
             <div class="profile-details">
                 <div class="profile-content">
-                    <img src="../../assets/images/profile.jpg" alt="profileImg">
+                    <img src="../../assets/images/user_90px.png" alt="profileImg">
                 </div>
                 <div class="name-job">
 
