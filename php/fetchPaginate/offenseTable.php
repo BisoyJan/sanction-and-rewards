@@ -23,7 +23,7 @@ JOIN offenses ON violations.offenses_id = offenses.id
 
 if ($_POST['query'] != '') {
     $query .= '
-  WHERE violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '"';
+  WHERE violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"';
 }
 
 $query .= 'ORDER BY id DESC ';

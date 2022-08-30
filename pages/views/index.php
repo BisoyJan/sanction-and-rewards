@@ -109,6 +109,30 @@ require '../../database/database.php';
 
 </div>
 
+<?php
+$query = "SELECT
+    COUNT(violations.id)
+    FROM
+    sanction_referrals
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE offenses.id = '1';";
+$query_run = mysqli_query($con, $query);
+
+if (mysqli_num_rows($query_run) != 0) {
+
+    $data = mysqli_num_rows($query_run);
+} else {
+    $data = 0;
+}
+
+
+
+
+?>
+
 <script src="../../assets/js/chart.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -116,6 +140,8 @@ require '../../database/database.php';
         referral();
         action();
         disciplinary();
+        referralBarChart();
+
     });
 
     function student() {
@@ -130,14 +156,12 @@ require '../../database/database.php';
                     var label = document.getElementById('students');
                     label.innerHTML = res.data;
 
-                    console.log(res.data);
 
                 } else if (res.status == 404) {
 
                     var label = document.getElementById('students');
                     label.innerHTML = "No Data";
 
-                    console.log(res.data);
                 }
             }
         });
@@ -155,14 +179,14 @@ require '../../database/database.php';
                     var label = document.getElementById('referral');
                     label.innerHTML = res.data;
 
-                    console.log(res.data);
+
 
                 } else if (res.status == 404) {
 
                     var label = document.getElementById('referral');
                     label.innerHTML = "No Data";
 
-                    console.log(res.data);
+
                 }
             }
         });
@@ -180,14 +204,12 @@ require '../../database/database.php';
                     var label = document.getElementById('action');
                     label.innerHTML = res.data;
 
-                    console.log(res.data);
-
                 } else if (res.status == 404) {
 
                     var label = document.getElementById('action');
                     label.innerHTML = "No Data";
 
-                    console.log(res.data);
+
                 }
             }
         });
@@ -205,12 +227,67 @@ require '../../database/database.php';
                     var label = document.getElementById('case');
                     label.innerHTML = res.data;
 
-                    console.log(res.data);
 
                 } else if (res.status == 404) {
 
                     var label = document.getElementById('case');
                     label.innerHTML = "No Data";
+
+
+                }
+            }
+        });
+    }
+
+    function referralBarChart() {
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/dashboard.php?referralChart",
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response)
+                if (res.status == 200) {
+
+                    const data = [res.data1, res.data2, res.data3];
+                    console.log(data);
+
+                    const barChartID = document.getElementById('barChart').getContext('2d');
+                    const barChart = new Chart(barChartID, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Light Offense', 'Serious Offense', 'Very Serious Offense'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: data,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132)',
+                                    'rgba(54, 162, 235)',
+                                    'rgba(255, 206, 86)',
+                                    'rgba(75, 192, 192)',
+                                    'rgba(153, 102, 255)',
+                                    'rgba(255, 159, 64)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                } else if (res.status == 404) {
 
                     console.log(res.data);
                 }
@@ -218,46 +295,8 @@ require '../../database/database.php';
         });
     }
 
-    function barChart() {
-
-    }
 
 
-    const barChartID = document.getElementById('barChart').getContext('2d');
-    const barChart = new Chart(barChartID, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132)',
-                    'rgba(54, 162, 235)',
-                    'rgba(255, 206, 86)',
-                    'rgba(75, 192, 192)',
-                    'rgba(153, 102, 255)',
-                    'rgba(255, 159, 64)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 
     const barChartID1 = document.getElementById('barChart1').getContext('2d');
     const barChart1 = new Chart(barChartID1, {
