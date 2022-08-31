@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2022 at 05:42 AM
+-- Generation Time: Sep 01, 2022 at 01:13 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -149,7 +149,7 @@ CREATE TABLE `offenses` (
 --
 
 INSERT INTO `offenses` (`id`, `offense`) VALUES
-(1, 'Light Offenses'),
+(1, 'Light Offense'),
 (2, 'Serious Offense'),
 (3, 'Very Serious Offense');
 
@@ -167,6 +167,13 @@ CREATE TABLE `outstanding_athlete` (
   `sports` varchar(100) NOT NULL,
   `date_issued` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `outstanding_athlete`
+--
+
+INSERT INTO `outstanding_athlete` (`id`, `student_id`, `coach_name`, `organizer_name`, `sports`, `date_issued`) VALUES
+(9, 1, 'dwadawdawwa', 'wadawdadwa', 'WADWADAWDAW', '2022-08-12');
 
 -- --------------------------------------------------------
 
@@ -304,10 +311,11 @@ CREATE TABLE `sanction_referrals` (
 
 INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`) VALUES
 (26, 1, 2, 'Melvin Copioso', 'Ken Vinegas', '2022-07-12', 'Actioned'),
-(29, 2, 9, 'Ken Venigas', 'Jan Ramil', '2022-07-24', ''),
+(29, 2, 39, 'Ken Venigas', 'Jan Ramil', '2022-07-24', ''),
 (32, 1, 2, 'wadawd', 'adwadawdawd', '2022-07-08', 'Actioned'),
-(33, 1, 9, 'wadwadadawwadwadawd', 'wwdawdawdwdwd', '2022-07-28', NULL),
-(34, 2, 9, 'wadawdwadadd', 'awdwadawdawd', '2022-07-28', NULL);
+(33, 1, 35, 'wadwadadawwadwadawd', 'wwdawdawdwdwd', '2022-07-28', NULL),
+(34, 2, 24, 'wadawdwadadd', 'awdwadawdawd', '2022-07-28', NULL),
+(35, 3, 38, 'wadwadwadwadawdwa', 'wadawdawdawdaw', '2022-08-30', NULL);
 
 -- --------------------------------------------------------
 
@@ -335,7 +343,7 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`id`, `student_no`, `first_name`, `middle_name`, `last_name`, `age`, `gender`, `section`, `email`, `program_id`) VALUES
 (1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 22, 'Male', 'AI42', 'bisoyjan@gmail.com', 1),
 (2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1),
-(3, 1800050, 'Iris', 'I', 'Sarida', 22, 'Female', 'A|22', 'irisjoyserida@gmail.com', 1);
+(3, 1800050, 'Iris', 'I', 'Sarida', 22, 'Female', 'A|22', 'irisjoyserida@gmail.com', 2);
 
 -- --------------------------------------------------------
 
@@ -364,6 +372,25 @@ INSERT INTO `themeplate_filepath` (`id`, `name`, `path`, `save_path`) VALUES
 (7, 'Outstanding Athlete', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\OUTSTANDING-ATHLETE-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\Outstanding Athlete'),
 (8, 'MVP', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\REWARDS-ATHLETE-MVP-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\MVP Athlete'),
 (9, 'Honors', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\REWARDS-GWA-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\GWA');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `id` int(11) NOT NULL,
+  `provider` varchar(255) NOT NULL,
+  `provider_value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tokens`
+--
+
+INSERT INTO `tokens` (`id`, `provider`, `provider_value`) VALUES
+(1, 'google', '1//0erLaGqfsbncCCgYIARAAGA4SNwF-L9IrD2moqV_TuwvXLcOd8oJ2xNX1LmTWKO7nPmMqSijVf6vfqb9-ZfnqSo9SoAlrI-8mBm0');
 
 -- --------------------------------------------------------
 
@@ -421,7 +448,32 @@ INSERT INTO `violations` (`id`, `offenses_id`, `code`, `violation`) VALUES
 (12, 1, 'LO12', 'Attending seminars, lectures, and teach-ins or any similar cases bringing the name of the University, without due notice to thier respective deans/adv'),
 (13, 1, 'LO13', 'Gross act of disrespect, in word or in deed, which tend to place any member of the faculty, administration or non-teaching staff in ridicule or in con'),
 (14, 1, 'LO14', 'Solicitation of money, donation, contributions in cash or kind without the prior approval of the school'),
-(15, 1, 'LO15', 'Such other acts as may herein be determined from time to time by the Disciplinary Committee');
+(15, 1, 'LO15', 'Such other acts as may herein be determined from time to time by the Disciplinary Committee'),
+(16, 2, 'SO1', 'Gambling in any form within the campus'),
+(17, 2, 'SO2', 'Deliberate shouting, giggling, conducting boisterous and disruptive conversations, running along the corridors and creating any noise that disturbs ongoing classes'),
+(18, 2, 'SO3', 'Public display of affection within the school premises which offend the sensibilities of fellow students, faculty and administrative officials or which may be deemed by them as improper, vulgar, repulsive or immoral'),
+(19, 2, 'SO4-A', 'Cheating - deliberately looking at a neighbor’s examination papers'),
+(20, 2, 'SO4-B', 'Cheating - copying from or allowing another to copy from one’s examination papers'),
+(21, 2, 'SO4-C', 'Cheating - copying from or allowing another to copy from one’s examination\r\npapers'),
+(22, 2, 'SO4-D', 'Cheating - unauthorized possession of notes or any material relative to the examination'),
+(23, 2, 'SO4-E', 'Cheating - passing as one’s own work, any assigned report, term paper, case analysis, reaction paper, and the like which are copied from others'),
+(24, 2, 'SO5', 'Use of somebody else’s ID card or allowing others to use his/her ID'),
+(25, 2, 'SO6', 'Deliberate disruption of any school function or activity'),
+(26, 2, 'SO7', 'Vandalism or destruction of school property'),
+(27, 2, 'SO8', 'Display or distribution of pornographic materials within the University'),
+(28, 2, 'SO9', 'Entering or being in the school premises under the influence of liquor\r\nand/or drugs'),
+(29, 2, 'SO10', 'Conducting, initiating, or joining unofficial or unauthorized field trips under the guise or presuming to be a part of the academic requirement'),
+(30, 2, 'SO11', 'Use of school premises and/or facilities for meetings and assemblies without prior permit'),
+(31, 2, 'SO12', 'Committing acts inside and outside the campus that affect the good name of the University and/or ones status as a student of the university'),
+(32, 2, 'SO13', 'Gross act of disrespect, in word or in deed, which tend to place any member of the faculty, administration or non-teaching staff in ridicule or in contempt'),
+(33, 2, 'SO14', 'Solicitation of money, donation, contributions in cash or kind without the prior approval of the school'),
+(34, 2, 'SO15', 'Such other acts as may herein be determined from time to time by the Disciplinary Committee'),
+(35, 3, 'VSO1', 'Stealing or influencing others to steal'),
+(36, 3, 'VSO2', 'Acts of misbehavior involving destruction of school property or that of the members of the school community, including those guests and visitors'),
+(37, 3, 'VSO3', 'Having somebody else take exams for student concerned'),
+(38, 3, 'VSO4', 'Illegal possession of deadly weapons'),
+(39, 3, 'VSO5-A', 'Acts of subversion or insurgency - Instigating, inciting, provoking, leading or taking part in\r\nillegal and/or violent demonstrations or activities'),
+(40, 3, 'VSO5-B', 'Acts of subversion or insurgency - Giving support thereto in any manner, whether financial, physical or material');
 
 --
 -- Indexes for dumped tables
@@ -552,6 +604,12 @@ ALTER TABLE `themeplate_filepath`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -608,7 +666,7 @@ ALTER TABLE `leaderships`
 -- AUTO_INCREMENT for table `mvp_athletes`
 --
 ALTER TABLE `mvp_athletes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `offenses`
@@ -620,7 +678,7 @@ ALTER TABLE `offenses`
 -- AUTO_INCREMENT for table `outstanding_athlete`
 --
 ALTER TABLE `outstanding_athlete`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `performers`
@@ -656,7 +714,7 @@ ALTER TABLE `sanction_disciplinary_action`
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -671,6 +729,12 @@ ALTER TABLE `themeplate_filepath`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `tokens`
+--
+ALTER TABLE `tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -680,7 +744,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `violations`
 --
 ALTER TABLE `violations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Constraints for dumped tables
