@@ -26,10 +26,12 @@ endif;
     <link rel="stylesheet" href="../../assets/toastr/toastr.min.css">
 
     <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/moment.min.js"></script>
     <script src="../../assets/toastr/toastr.min.js"></script>
-    
+
 </head>
 
 <body style="width:100%;height:100%;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">

@@ -27,5 +27,4 @@ if (isset($_SESSION['notify'])) {
 ?>
 
 </body>
-
 </html>

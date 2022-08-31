@@ -8,7 +8,6 @@ require '../../database/database.php';
     <h1>Dashboard</h1>
 
     <div class="row pt-2 d-flex justify-content-center">
-
         <div class="col-auto">
             <div class="card mb-3">
                 <div class="row ">
@@ -34,7 +33,7 @@ require '../../database/database.php';
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h4 class="card-title">Referral</h4>
+                            <h4 class="card-title">Referred</h4>
                             <p class="card-text">Total Referred: <strong id="referral" style="font-size:25px"></strong></p>
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
@@ -51,7 +50,7 @@ require '../../database/database.php';
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h4 class="card-title">Action</h4>
+                            <h4 class="card-title">Actioned</h4>
                             <p class="card-text">Total Actioned: <strong id="action" style="font-size:25px"></strong></p>
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
@@ -83,7 +82,7 @@ require '../../database/database.php';
         <div class=" col-auto">
             <div class="card mb-3 text-center" style="width:46.5rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
+                    <h5 class="card-title">Number of Sanctions by Category</h5>
                     <canvas id="barChart" width="250" height="111"></canvas>
                 </div>
             </div>
@@ -99,7 +98,7 @@ require '../../database/database.php';
         <div class="col-auto">
             <div class="card mb-3 text-center" style="width:46.5rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
+                    <h5 class="card-title">Total Number of Sanctions by Colleges</h5>
                     <canvas id="pieChart"></canvas>
                 </div>
             </div>
@@ -109,39 +108,15 @@ require '../../database/database.php';
 
 </div>
 
-<?php
-$query = "SELECT
-    COUNT(violations.id)
-    FROM
-    sanction_referrals
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations ON sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id
-    WHERE offenses.id = '1';";
-$query_run = mysqli_query($con, $query);
 
-if (mysqli_num_rows($query_run) != 0) {
-
-    $data = mysqli_num_rows($query_run);
-} else {
-    $data = 0;
-}
-
-
-
-
-?>
-
-<script src="../../assets/js/chart.min.js"></script>
 <script>
     $(document).ready(function() {
         student();
         referral();
         action();
         disciplinary();
-        referralBarChart();
-
+        SanctionCategoryBarChart();
+        CollegesCategoryPieChart();
     });
 
     function student() {
@@ -239,42 +214,76 @@ if (mysqli_num_rows($query_run) != 0) {
         });
     }
 
-    function referralBarChart() {
+    function SanctionCategoryBarChart() {
         $.ajax({
             type: "GET",
-            url: "../../php/store/dashboard.php?referralChart",
+            url: "../../php/store/dashboard.php?barChart",
             success: function(response) {
 
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
-                    const data = [res.data1, res.data2, res.data3];
-                    console.log(data);
-
                     const barChartID = document.getElementById('barChart').getContext('2d');
                     const barChart = new Chart(barChartID, {
                         type: 'bar',
                         data: {
-                            labels: ['Light Offense', 'Serious Offense', 'Very Serious Offense'],
+                            labels: res.labels,
                             datasets: [{
-                                label: '# of Votes',
-                                data: data,
+                                label: '# of Sanctioned',
+                                data: res.numbers,
                                 backgroundColor: [
                                     'rgba(255, 99, 132)',
                                     'rgba(54, 162, 235)',
-                                    'rgba(255, 206, 86)',
-                                    'rgba(75, 192, 192)',
-                                    'rgba(153, 102, 255)',
-                                    'rgba(255, 159, 64)'
+                                    'rgba(255, 206, 86)'
                                 ],
                                 borderColor: [
                                     'rgba(255, 99, 132, 1)',
                                     'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)'
+                                    'rgba(255, 206, 86, 1)'
                                 ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                } else if (res.status == 404) {
+
+                    console.log(res.data);
+                }
+            }
+        });
+    }
+
+    function CollegesCategoryPieChart() {
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/dashboard.php?pieChart",
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response)
+                if (res.status == 200) {
+
+                    const pieChartID = document.getElementById('pieChart').getContext('2d');
+                    const pieChart = new Chart(pieChartID, {
+                        type: 'pie',
+                        data: {
+                            labels: res.labels,
+                            datasets: [{
+                                data: res.numbers,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132)',
+                                    'rgba(54, 162, 235)',
+                                    'rgba(255, 206, 86)',
+                                    'rgba(75, 192, 192)'
+                                ],
+
                                 borderWidth: 1
                             }]
                         },
@@ -334,32 +343,32 @@ if (mysqli_num_rows($query_run) != 0) {
         }
     });
 
-    const pieChartID = document.getElementById('pieChart').getContext('2d');
-    const pieChart = new Chart(pieChartID, {
-        type: 'pie',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5],
-                backgroundColor: [
-                    'rgba(255, 99, 132)',
-                    'rgba(54, 162, 235)',
-                    'rgba(255, 206, 86)',
-                    'rgba(75, 192, 192)'
-                ],
+    // const pieChartID = document.getElementById('pieChart').getContext('2d');
+    // const pieChart = new Chart(pieChartID, {
+    //     type: 'pie',
+    //     data: {
+    //         labels: ['Red', 'Blue', 'Yellow', 'Green'],
+    //         datasets: [{
+    //             label: '# of Votes',
+    //             data: [12, 19, 3, 5],
+    //             backgroundColor: [
+    //                 'rgba(255, 99, 132)',
+    //                 'rgba(54, 162, 235)',
+    //                 'rgba(255, 206, 86)',
+    //                 'rgba(75, 192, 192)'
+    //             ],
 
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+    //             borderWidth: 1
+    //         }]
+    //     },
+    //     options: {
+    //         scales: {
+    //             y: {
+    //                 beginAtZero: true
+    //             }
+    //         }
+    //     }
+    // });
 </script>
 
 <?php

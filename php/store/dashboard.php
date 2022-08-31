@@ -103,56 +103,77 @@ if (isset($_GET['case'])) {
     }
 }
 
-if (isset($_GET['referralChart'])) {
-
+if (isset($_GET['barChart'])) {
     $query = "SELECT
-        COUNT(offenses.id) as light
+        COUNT(offenses.id) AS total,
+        offenses.offense
     FROM
         sanction_referrals
     JOIN students ON sanction_referrals.student_id = students.id
     JOIN violations ON sanction_referrals.violation_id = violations.id
     JOIN offenses ON violations.offenses_id = offenses.id
     JOIN programs ON students.program_id = programs.id
-    WHERE offenses.id = 1;";
+    GROUP BY
+        offenses.offense;";
     $query_run = mysqli_query($con, $query);
-
-
-    $query1 = "SELECT
-        COUNT(offenses.id) as serious
-    FROM
-        sanction_referrals
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations ON sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id
-    WHERE offenses.id = 2;";
-    $query_run1 = mysqli_query($con, $query1);
-
-    $query2 = "SELECT
-        COUNT(offenses.id) as very
-    FROM
-        sanction_referrals
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations ON sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id
-    WHERE offenses.id = 3;";
-    $query_run2 = mysqli_query($con, $query2);
 
     if (mysqli_num_rows($query_run) != 0) {
 
-        $data1 = mysqli_fetch_array($query_run);
-        $data2 = mysqli_fetch_array($query_run1);
-        $data3 = mysqli_fetch_array($query_run2);
+
+        while ($data = mysqli_fetch_array($query_run)) {
+            $numbers[] = $data['total'];
+            $labels[] = $data['offense'];
+        }
 
         $res = [
             'status' => 200,
-            'message' => 'Case fetched Successfully',
-            'data1' => $data1,
-            'data2' => $data2,
-            'data3' => $data3
+            'message' => 'Bar Chart fetched Successfully',
+            'numbers' => $numbers,
+            'labels' => $labels
         ];
         echo json_encode($res);
+        return;
+    } else {
+        $res = [
+            'status' => 404,
+            'message' => 'No Data found'
+        ];
+        echo json_encode($res);
+        return;
+    }
+}
+
+if (isset($_GET['pieChart'])) {
+    $query = "SELECT
+        COUNT(sanction_referrals.id) AS total,
+        colleges.abbreviation
+    FROM
+        sanction_referrals
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    JOIN colleges ON programs.college_id = colleges.id
+    GROUP BY
+        colleges.abbreviation;";
+    $query_run = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($query_run) != 0) {
+
+
+        while ($data = mysqli_fetch_array($query_run)) {
+            $numbers[] = $data['total'];
+            $labels[] = $data['abbreviation'];
+        }
+
+        $res = [
+            'status' => 200,
+            'message' => 'Pie Chart fetched Successfully',
+            'numbers' => $numbers,
+            'labels' => $labels
+        ];
+        echo json_encode($res);
+        return;
     } else {
         $res = [
             'status' => 404,

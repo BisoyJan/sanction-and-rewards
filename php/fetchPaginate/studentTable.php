@@ -81,7 +81,7 @@ if ($total_data > 0) {
             <td>' . $row["program"] . '</td>
             <td>' . $row["college"] . '</td>
             <td>
-                <button class="leadershipEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#StudentModal">Edit Button</button>
+                <button class="studentEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#StudentModal">Edit Button</button>
                 <button class="studentDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#StudentDeleteModal">Delete Button</button>
             </td>
         </tr>

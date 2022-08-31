@@ -11,12 +11,6 @@
             </a>
         </li>
         <li>
-            <a href="../views/index2.php">
-                <i class="fa-solid fa-chart-simple"></i>
-                <span class="link_name">Dashboard2</span>
-            </a>
-        </li>
-        <li>
             <a href="../views/student.php">
                 <i class="fa-solid fa-person"></i>
                 <span class="link_name">Students</span>
