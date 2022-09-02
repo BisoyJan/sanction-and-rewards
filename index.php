@@ -7,14 +7,14 @@ session_start();
 
 <head>
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Leyte Normal University</title>
     <link rel="stylesheet" href="assets/css/login.css">
     <link rel="stylesheet" href="assets/toastr/toastr.min.css">
 </head>
 
 <body>
     <div class="center">
-        <h1>Login</h1>
+        <h1>Welcome</h1>
         <form id="login">
             <div class="txt_field">
                 <input type="text" name="username" class="form-control">
@@ -26,10 +26,9 @@ session_start();
                 <span></span>
                 <label>Password</label>
             </div>
-            <div class="pass">Forgot Password?</div>
             <input type="submit" value="Login">
             <div class="signup_link">
-                Not a member? <a href="#">Signup</a>
+                LNU VPSDAS
             </div>
         </form>
     </div>
