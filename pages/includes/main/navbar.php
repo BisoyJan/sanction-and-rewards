@@ -32,7 +32,7 @@
             <div class="iocn-link">
                 <a href="#">
                     <i class="fa-solid fa-person-military-to-person"></i>
-                    <span class="link_name">Disciplinary</span>
+                    <span class="link_name">Disciplinary Process</span>
                 </a>
                 <i class="fa-solid fa-angle-down arrow"></i>
             </div>

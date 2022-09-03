@@ -12,36 +12,58 @@ if ($_POST['page'] > 1) {
     $start = 0;
 }
 
-$query = "
-SELECT
-    sanction_referrals.*,
-    students.student_no,
-    students.first_name,
-    students.middle_name,
-    students.last_name,
-    students.section,
-    programs.abbreviation,
-    programs.program_name,
-    offenses.offense,
-    violations.code,
-    violations.violation
-    
-FROM
-    sanction_referrals
-JOIN students ON sanction_referrals.student_id = students.id
-JOIN violations on sanction_referrals.violation_id = violations.id
-JOIN offenses ON violations.offenses_id = offenses.id
-JOIN programs ON students.program_id = programs.id
-";
+if ($_POST['query'] == '') {
+    $query = '
+        SELECT
+        sanction_referrals.*,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        offenses.offense,
+        violations.code,
+        violations.violation
+    FROM
+        sanction_referrals
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations on sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE
+    sanction_referrals.remark IS NULL
+  ';
+}
 
 if ($_POST['query'] != '') {
-    $query .= '
-    WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    $query = '
+        SELECT
+        sanction_referrals.*,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        offenses.offense,
+        violations.code,
+        violations.violation
+        
+    FROM
+        sanction_referrals
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations on sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE sanction_referrals.remark IS NULL AND(students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%")
   ';
 }
 
@@ -68,6 +90,7 @@ $output = '
         <th>Student Name</th>
         <th>Section</th>
         <th>Course</th>
+        <th>Code</th>
         <th>Type</th>
         <th>Description</th>
         <th>Complainer</th>
@@ -87,6 +110,7 @@ if ($total_data > 0) {
             <td>' . $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"] . '</td>
             <td>' . $row["section"] . '</td>
             <td>' . $row["abbreviation"] . '</td>
+            <td>' . $row["code"] . '</td>
             <td>' . $row["offense"] . '</td>
             <td style="width:15%;">' . $row["violation"] . '</td>
             <td>' . $row["complainer_name"] . '</td>

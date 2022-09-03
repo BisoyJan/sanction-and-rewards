@@ -2,7 +2,6 @@
 
 use Classes\generatePDF;
 
-
 require '../../database/database.php';
 
 require_once '../../vendor/autoload.php';
@@ -151,6 +150,7 @@ if (isset($_POST['create_Action'])) {
             `counselling_date`,
             `counselling_time`,
             `issual_date`
+            
         )
         VALUES(
             '$referral_id',
@@ -206,12 +206,21 @@ if (isset($_POST['create_Action'])) {
                 ];
                 echo json_encode($res);
                 return;
+            } else {
+                $res = [
+                    'status' => 401,
+                    'message' => 'Mail Not Sent',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
             }
         } else {
             $res = [
                 'status' => 500,
                 'message' => 'Action Not Created',
                 'console' => $query_run
+
             ];
             echo json_encode($res);
             return;
@@ -340,7 +349,7 @@ if (isset($_POST['delete_Action'])) {
     $filename =  $student_no . '_' . $action_id . '.pdf';
     unlink('../../assets/docs/processed/action/' . $filename);
 
-    $query1 = "UPDATE `sanction_referrals` SET `remark`='' WHERE id = '$referral_id'";
+    $query1 = "UPDATE `sanction_referrals` SET `remark`=NULL WHERE id = '$referral_id'";
     $query_run1 = mysqli_query($con, $query1);
 
     $query = "DELETE FROM `sanction_disciplinary_action` WHERE id = '$action_id'";

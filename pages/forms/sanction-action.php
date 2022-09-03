@@ -283,8 +283,6 @@ include('../includes/forms/header.php');
 
                     } else if (res.status == 200) {
 
-                        console.log(res.data)
-
                         firstName = res.data.first_name + ' ';
                         middleName = res.data.middle_name + ' ';
                         lastName = res.data.last_name
@@ -404,6 +402,7 @@ include('../includes/forms/header.php');
                 } else if (res.status == 401) {
 
                     toastr.error(res.message, res.status);
+                    console.log(res.console);
 
                 } else if (res.status == 200) {
 

@@ -54,7 +54,7 @@ if (isset($_GET['violation_code'])) {
         violations
     JOIN offenses ON violations.offenses_id = offenses.id
     WHERE
-        violations.code LIKE '%$violation_code'";
+        violations.code LIKE '%$violation_code%'";
 
     $query_run = mysqli_query($con, $query);
 
@@ -188,14 +188,16 @@ if (isset($_POST['create_Referral'])) {
             `violation_id`,
             `complainer_name`,
             `referred`,
-            `date`
+            `date`,
+            `remark`
         )
         VALUES(
             '$student_id',
             '$violation_id',
             '$complainerName',
             '$referredTo',
-            '$dateIssued'
+            '$dateIssued',
+            NUll
         );";
 
         $query_run = mysqli_query($con, $query);

@@ -13,6 +13,11 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
+   
+";
+
+if ($_POST['query'] == '') {
+    $query .= '
     SELECT
         sanction_cases.*,
         students.id AS student_id,
@@ -36,17 +41,42 @@ $query = "
     JOIN students ON sanction_referrals.student_id = students.id
     JOIN violations ON sanction_referrals.violation_id = violations.id
     JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id;
-";
+    JOIN programs ON students.program_id = programs.id
+  ';
+}
 
 if ($_POST['query'] != '') {
     $query .= '
-    WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    SELECT
+        sanction_cases.*,
+        students.id AS student_id,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        students.age,
+        students.gender,
+        programs.program_name AS program,
+        programs.abbreviation,
+        offenses.offense,
+        violations.id AS violation_id,
+        violations.code,
+        violations.violation
+    FROM
+        sanction_cases
+    JOIN sanction_disciplinary_action ON sanction_cases.sanction_disciplinary_action_id = sanction_disciplinary_action.id
+    JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+        WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+        OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+        OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+        OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+        OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+        OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   ';
 }
 

@@ -124,7 +124,6 @@ include('../includes/forms/header.php');
                             <label class="form-label">Course</label>
                             <textarea class="form-control" aria-label="With textarea" readonly="readonly" id="Course" name="Course" aria-describedby="inputGroupPrepend" required></textarea>
                         </div>
-
                     </div>
 
 

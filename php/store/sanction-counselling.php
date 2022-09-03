@@ -145,7 +145,7 @@ if (isset($_POST['create_Counsel'])) {
         return;
     } else {
 
-        $query = "UPDATE `sanction_disciplinary_action` SET `remarks`='Counselled' WHERE id = '$action_id'";
+        $query = "UPDATE `sanction_disciplinary_action` SET `remarks`='$recommendations' WHERE id = '$action_id'";
         $query_run = mysqli_query($con, $query);
 
         $query = "INSERT INTO `sanction_cases`(
@@ -270,7 +270,7 @@ if (isset($_POST['update_Counsel'])) {
         return;
     } else {
 
-        $query = "UPDATE `sanction_disciplinary_action` SET `remarks`='Counselled' WHERE id = '$action_id'";
+        $query = "UPDATE `sanction_disciplinary_action` SET `remarks`='$recommendations' WHERE id = '$action_id'";
         $query_run = mysqli_query($con, $query);
 
         $query = "UPDATE
@@ -338,7 +338,7 @@ if (isset($_POST['delete_Counsel'])) {
     $filename =  $student_no . '_' . $counsel_id . '.pdf';
     unlink('../../assets/docs/processed/counselling/' . $filename);
 
-    $query1 = "UPDATE `sanction_disciplinary_action` SET `remarks`='' WHERE id = '$action_id'";
+    $query1 = "UPDATE `sanction_disciplinary_action` SET `remarks`=NULL WHERE id = '$action_id'";
     $query_run1 = mysqli_query($con, $query1);
 
     $query = "DELETE FROM `sanction_cases` WHERE id = '$counsel_id'";
