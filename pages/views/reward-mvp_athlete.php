@@ -212,6 +212,29 @@ include('../includes/main/navbar.php');
         label.innerHTML = "Edit MVP Athlete Award Details";
     }
 
+    $(document).on('click', '.viewPDFButton', function() {
+        var MVPAthlete_id = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/reward-mvp_athlete.php?MVPAthlete_id=" + MVPAthlete_id,
+            async: false,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response);
+                if (res.status == 404) {
+
+                    toastr.warning(res.message, res.status);
+                } else if (res.status == 200) {
+
+                    console.log(res.data);
+
+                    window.open('../../assets/docs/processed/mvp-athlete/' + res.data.student_no + '_' + res.data.id + '.pdf', '_blank').focus();
+                }
+            }
+        });
+    });
+
     //CRUD Function
     $(document).on('keyup keypress', '#Student', function(e) {
         var student_id = $('#Student').val();

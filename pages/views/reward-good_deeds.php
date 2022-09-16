@@ -212,6 +212,29 @@ include('../includes/main/navbar.php');
         $("form").attr('id', 'deleteGoodDeeds')
     }
 
+    $(document).on('click', '.viewPDFButton', function() {
+        var goodDeeds_id = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/reward-good_deeds.php?goodDeeds_id=" + goodDeeds_id,
+            async: false,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response);
+                if (res.status == 404) {
+
+                    toastr.warning(res.message, res.status);
+                } else if (res.status == 200) {
+
+                    console.log(res.data);
+
+                    window.open('../../assets/docs/processed/good-deeds/' + res.data.student_no + '_' + res.data.id + '.pdf', '_blank').focus();
+                }
+            }
+        });
+    });
+
     $(document).on('keyup keypress', '#Student', function(e) {
         var student_id = $('#Student').val();
 

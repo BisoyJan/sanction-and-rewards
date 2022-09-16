@@ -12,8 +12,7 @@ if ($_POST['page'] > 1) {
     $start = 0;
 }
 
-$query = "
-SELECT
+$query = 'SELECT
     kindly_acts.*,
     students.student_no,
     students.first_name,
@@ -25,8 +24,8 @@ SELECT
 FROM
     kindly_acts
 JOIN students ON kindly_acts.student_id = students.id
-JOIN programs ON students.program_id = programs.id;
-";
+JOIN programs ON students.program_id = programs.id
+';
 
 if ($_POST['query'] != '') {
     $query .= '
@@ -37,7 +36,7 @@ if ($_POST['query'] != '') {
   ';
 }
 
-$query .= 'ORDER BY id DESC ';
+$query .= 'ORDER BY kindly_acts.id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -79,8 +78,9 @@ if ($total_data > 0) {
             <td style="width:30%;">' . $row["kindly_act"] . '</td>
             <td>' . date("M/d/Y", strtotime($row["date_issued"])) . '</td>
             <td>
-                <button class="goodDeedsEditButton btn btn-success m-1" value="' . $row["id"] . '" onclick="formIDChangeEdit()" data-bs-toggle="modal" data-bs-target="#GoodDeedsModal" type="button">Edit Button</button>
-                <button class="goodDeedsDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" onclick="formIDChangeDelete()" type="button" data-bs-toggle="modal" data-bs-target="#goodDeedsDeleteModal">Delete Button</button>
+                <button class="viewPDFButton btn btn-success m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
+                <button class="goodDeedsEditButton btn btn-success m-1" value="' . $row["id"] . '" onclick="formIDChangeEdit()" data-bs-toggle="modal" data-bs-target="#GoodDeedsModal" type="button">Update</button>
+                <button class="goodDeedsDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" onclick="formIDChangeDelete()" type="button" data-bs-toggle="modal" data-bs-target="#goodDeedsDeleteModal">Delete</button>
             </td>
         </tr>
    ';

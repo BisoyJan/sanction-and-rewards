@@ -12,8 +12,7 @@ if ($_POST['page'] > 1) {
     $start = 0;
 }
 
-$query = "
-SELECT
+$query = "SELECT
     violations.*,
     offenses.offense
 FROM
@@ -62,8 +61,8 @@ if ($total_data > 0) {
             <td>' . $row["code"] . '</td>
             <td style="width:25%;">' . $row["violation"] . '</td>
             <td>
-                <button class="offenseEditButton btn btn-success" value="' . $row["id"] . '" onclick="buttonIDChange()" type="button">Edit Button</button>
-                <button class="offenseDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#OffenseDeleteModal">Delete Button</button>
+                <button class="offenseEditButton btn btn-success" value="' . $row["id"] . '" onclick="buttonIDChange()" type="button">Update</button>
+                <button class="offenseDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#OffenseDeleteModal">Delete</button>
             </td>
         </tr>
    ';

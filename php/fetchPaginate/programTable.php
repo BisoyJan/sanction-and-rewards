@@ -12,8 +12,7 @@ if ($_POST['page'] > 1) {
     $start = 0;
 }
 
-$query = "
-SELECT
+$query = "SELECT
     programs.*,
     colleges.abbreviation as collegeAbbreviation
 FROM
@@ -29,7 +28,7 @@ if ($_POST['query'] != '') {
   ';
 }
 
-$query .= 'ORDER BY id DESC ';
+$query .= 'ORDER BY programs.id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -66,8 +65,8 @@ if ($total_data > 0) {
             <td>' . $row["program_name"] . '</td>
             <td>' . $row["collegeAbbreviation"] . '</td>
             <td>
-                <button class="programEditButton btn btn-success" value="' . $row["id"] . '" onclick="buttonIDChange()" type="button">Edit Button</button>
-                <button class="programDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ProgramDeleteModal">Delete Button</button>
+                <button class="programEditButton btn btn-success" value="' . $row["id"] . '" onclick="buttonIDChange()" type="button">Update</button>
+                <button class="programDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ProgramDeleteModal">Delete</button>
             </td>
         </tr>
    ';

@@ -13,8 +13,8 @@ if ($_POST['page'] > 1) {
 }
 
 if ($_POST['query'] == '') {
-    $query = '
-        SELECT
+    if ($_POST['category'] == 3) {
+        $query = 'SELECT
         sanction_disciplinary_action.*,
         sanction_referrals.id AS referrals_id,
         sanction_referrals.complainer_name,
@@ -41,13 +41,143 @@ if ($_POST['query'] == '') {
     JOIN violations ON sanction_referrals.violation_id = violations.id
     JOIN offenses ON violations.offenses_id = offenses.id
     JOIN programs ON students.program_id = programs.id
-    WHERE sanction_disciplinary_action.remarks IS NULL OR sanction_disciplinary_action.remarks = "For Formal Investigation" OR sanction_disciplinary_action.remarks = "For Continuing Hearing"
+    WHERE sanction_disciplinary_action.remarks IS NULL OR sanction_disciplinary_action.remarks = "For Formal Investigation" OR sanction_disciplinary_action.remarks = "For Continuing Hearing" OR sanction_disciplinary_action.remarks = "Closed/Resolved"
     ';
+    } elseif ($_POST['category'] == 2) {
+        $query = 'SELECT
+        sanction_disciplinary_action.*,
+        sanction_referrals.id AS referrals_id,
+        sanction_referrals.complainer_name,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        sanction_disciplinary_action.committed_date,
+        sanction_disciplinary_action.committed_time,
+        sanction_disciplinary_action.counselling_date,
+        sanction_disciplinary_action.counselling_time,
+        sanction_disciplinary_action.issual_date,
+        sanction_disciplinary_action.remarks,
+        offenses.offense,
+        violations.code,
+        violations.violation
+    FROM
+        sanction_disciplinary_action
+    JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE sanction_disciplinary_action.remarks = "For Formal Investigation" OR sanction_disciplinary_action.remarks = "For Continuing Hearing" OR sanction_disciplinary_action.remarks = "Closed/Resolve"
+    ';
+    } else {
+        $query = 'SELECT
+        sanction_disciplinary_action.*,
+        sanction_referrals.id AS referrals_id,
+        sanction_referrals.complainer_name,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        sanction_disciplinary_action.committed_date,
+        sanction_disciplinary_action.committed_time,
+        sanction_disciplinary_action.counselling_date,
+        sanction_disciplinary_action.counselling_time,
+        sanction_disciplinary_action.issual_date,
+        sanction_disciplinary_action.remarks,
+        offenses.offense,
+        violations.code,
+        violations.violation
+    FROM
+        sanction_disciplinary_action
+    JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE sanction_disciplinary_action.remarks IS NULL 
+    ';
+    }
 }
 
 if ($_POST['query'] != '') {
-    $query = '
-        SELECT
+    if ($_POST['category'] == 1) {
+        $query = 'SELECT
+        sanction_disciplinary_action.*,
+        sanction_referrals.id AS referrals_id,
+        sanction_referrals.complainer_name,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        sanction_disciplinary_action.committed_date,
+        sanction_disciplinary_action.committed_time,
+        sanction_disciplinary_action.counselling_date,
+        sanction_disciplinary_action.counselling_time,
+        sanction_disciplinary_action.issual_date,
+        sanction_disciplinary_action.remarks,
+        offenses.offense,
+        violations.code,
+        violations.violation
+    FROM
+        sanction_disciplinary_action
+    JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE sanction_disciplinary_action.remarks IS NULL AND(students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%")
+    ';
+    } elseif ($_POST['category'] == 2) {
+        $query = 'SELECT
+        sanction_disciplinary_action.*,
+        sanction_referrals.id AS referrals_id,
+        sanction_referrals.complainer_name,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        sanction_disciplinary_action.committed_date,
+        sanction_disciplinary_action.committed_time,
+        sanction_disciplinary_action.counselling_date,
+        sanction_disciplinary_action.counselling_time,
+        sanction_disciplinary_action.issual_date,
+        sanction_disciplinary_action.remarks,
+        offenses.offense,
+        violations.code,
+        violations.violation
+    FROM
+        sanction_disciplinary_action
+    JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE (sanction_disciplinary_action.remarks = "For Formal Investigation" OR sanction_disciplinary_action.remarks = "For Continuing Hearing" OR sanction_disciplinary_action.remarks = "Closed/Resolve") AND (students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%")
+    ';
+    } else {
+        $query = 'SELECT
         sanction_disciplinary_action.*,
         sanction_referrals.id AS referrals_id,
         sanction_referrals.complainer_name,
@@ -75,18 +205,17 @@ if ($_POST['query'] != '') {
     JOIN offenses ON violations.offenses_id = offenses.id
     JOIN programs ON students.program_id = programs.id
     WHERE (sanction_disciplinary_action.remarks IS NULL OR sanction_disciplinary_action.remarks = "For Formal Investigation"
-    OR sanction_disciplinary_action.remarks = "For Continuing Hearing")
-    AND (students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR sanction_disciplinary_action.remarks = "For Continuing Hearing" OR sanction_disciplinary_action.remarks = "Closed/Resolve") AND (students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%")
-    
-   ';
+    ';
+    }
 }
 
-$query .= 'ORDER BY id DESC ';
+$query .= 'ORDER BY sanction_disciplinary_action.id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -137,9 +266,11 @@ if ($total_data > 0) {
             <td>' . $row["complainer_name"] . '</td>
             <td>' . $row["remarks"] . '</td>
             <td>
+
+                <button class="viewPDFButton btn btn-success m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
                 <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button>
-                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
-                <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete Button</button>
+                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
+                <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete</button>
             </td>
         </tr>
    ';

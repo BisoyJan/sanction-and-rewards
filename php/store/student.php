@@ -1,5 +1,7 @@
 <?php
+
 require '../../database/database.php';
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -143,15 +145,35 @@ if (isset($_POST['create_Student'])) {
             '$program'
         )";
         $query_run = mysqli_query($con, $query);
+        $last_id = mysqli_insert_id($con);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Student Created Successfully',
-                'console' => $query_run
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Created data Primary key:" . $last_id;
+            $type = "Students";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,, `date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Student Successfully Created',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 401,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -190,12 +212,32 @@ if (isset($_POST['update_Student'])) {
         $query_run = mysqli_query($con, $query);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Student Successfully Updated'
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Updated data Primary key:" . $student_id;
+            $type = "Students";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Student Successfully Updated',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 401,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -214,16 +256,36 @@ if (isset($_POST['delete_Student'])) {
     $query_run = mysqli_query($con, $query);
 
     if ($query_run) {
-        $res = [
-            'status' => 200,
-            'message' => 'Student Successfully Delete',
-        ];
-        echo json_encode($res);
-        return;
+
+        $user_id = $_SESSION['id'];
+        $description = "Deleted data Primary key:" . $student_id;
+        $type = "Students";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Student Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 401,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,
-            'message' => 'Student is not Been Delete'
+            'message' => 'Student is not Been Deleted'
         ];
         echo json_encode($res);
         return;

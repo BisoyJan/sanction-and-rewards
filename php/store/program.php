@@ -60,15 +60,34 @@ if (isset($_POST['create_Program'])) {
 
         $query = "INSERT INTO programs (abbreviation, program_name, college_id) VALUES ('$abbreviation','$program','$college')";
         $query_run = mysqli_query($con, $query);
+        $last_id = mysqli_insert_id($con);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Program Created Successfully',
-                'console' => $query_run
-            ];
-            echo json_encode($res);
-            return;
+            $user_id = $_SESSION['id'];
+            $description = "Created data Primary key:" . $last_id;
+            $type = "Programs";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Successfully Created',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -81,7 +100,7 @@ if (isset($_POST['create_Program'])) {
     }
 }
 
-if (isset($_POST['update_Account'])) {
+if (isset($_POST['update_Program'])) {
     $id = mysqli_real_escape_string($con, $_POST['program_id']);
     $abbreviation = mysqli_real_escape_string($con, $_POST['abbreviation']);
     $college_id = mysqli_real_escape_string($con, $_POST['college']);
@@ -101,12 +120,32 @@ if (isset($_POST['update_Account'])) {
         $query_run = mysqli_query($con, $query);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Program Successfully Updated'
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Updated data Primary key:" . $id;
+            $type = "Programs";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Successfully Updated',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -125,12 +164,31 @@ if (isset($_POST['delete_Program'])) {
     $query_run = mysqli_query($con, $query);
 
     if ($query_run) {
-        $res = [
-            'status' => 200,
-            'message' => 'Program Successfully Delete',
-        ];
-        echo json_encode($res);
-        return;
+        $user_id = $_SESSION['id'];
+        $description = "Deleted data Primary key:" . $program_id;
+        $type = "Programs";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 500,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,

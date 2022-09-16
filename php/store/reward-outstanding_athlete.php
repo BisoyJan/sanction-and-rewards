@@ -120,13 +120,31 @@ if (isset($_POST['create_OutstandingAthlete'])) {
         $response = $pdf->generateOutstandingAthlete($data);
 
         if ($response && $query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Data Created Successfully',
-                'console' => $query_run,
-            ];
-            echo json_encode($res);
-            return;
+            $user_id = $_SESSION['id'];
+            $description = "Created data Primary key:" . $last_id;
+            $type = "Outstanding Athlete";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Successfully Created',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -187,13 +205,31 @@ if (isset($_POST['update_OutstandingAthlete'])) {
         $response = $pdf->generateOutstandingAthlete($data);
 
         if ($response && $query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Updated Successfully',
-                'console' => $query_run,
-            ];
-            echo json_encode($res);
-            return;
+            $user_id = $_SESSION['id'];
+            $description = "Updated data Primary key:" . $athlete_id;
+            $type = "Outstanding Athlete";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Successfully Updated',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -217,12 +253,31 @@ if (isset($_POST['delete_OutstandingAthlete'])) {
     $query_run = mysqli_query($con, $query);
 
     if ($query) {
-        $res = [
-            'status' => 200,
-            'message' => 'Data Successfully Delete',
-        ];
-        echo json_encode($res);
-        return;
+        $user_id = $_SESSION['id'];
+        $description = "Deleted data Primary key:" . $athlete_id;
+        $type = "Outstanding Athlete";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 500,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,

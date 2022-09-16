@@ -279,7 +279,7 @@ include('../includes/main/navbar.php');
         } else {
 
             var formData = new FormData(this);
-            formData.append("update_Account", true);
+            formData.append("update_Program", true);
 
             $.ajax({
                 type: "POST",

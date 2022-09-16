@@ -66,8 +66,8 @@ if ($total_data > 0) {
             <td>' . $row["middle_name"] . '</td>
             <td>' . $row["last_name"] . '</td>
             <td>
-                <button class="accountEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#AccountModal">Edit Button</button>
-                <button class="accountDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#AccountDeleteModal">Delete Button</button>
+                <button class="accountEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#AccountModal">Update</button>
+                <button class="accountDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#AccountDeleteModal">Delete</button>
             </td>
         </tr>
    ';

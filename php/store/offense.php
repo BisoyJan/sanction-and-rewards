@@ -1,4 +1,5 @@
 <?php
+
 require '../../database/database.php';
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -67,15 +68,35 @@ if (isset($_POST['create_Offense'])) {
 
         $query = "INSERT INTO violations(offenses_id, code, violation) VALUES ('$offenseType','$offenseCode','$offenseDescription')";
         $query_run = mysqli_query($con, $query);
+        $last_id = mysqli_insert_id($con);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Offense Created Successfully',
-                'console' => $query_run
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Created data Primary key:" . $last_id;
+            $type = "Offense";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Offense Successfully Created',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -89,7 +110,7 @@ if (isset($_POST['create_Offense'])) {
 }
 
 if (isset($_POST['update_Offense'])) {
-    $id = mysqli_real_escape_string($con, $_POST['offense_id']);
+    $offense_id = mysqli_real_escape_string($con, $_POST['offense_id']);
     $offenseType =  mysqli_real_escape_string($con, $_POST['offenseType']);
     $offenseCode =  mysqli_real_escape_string($con, $_POST['offenseCode']);
     $offenseDescription =  mysqli_real_escape_string($con, $_POST['offenseDescription']);
@@ -103,16 +124,35 @@ if (isset($_POST['update_Offense'])) {
         echo json_encode($res);
         return;
     } else {
-        $query = "UPDATE `violations` SET `offenses_id`='$offenseType',`code`='$offenseCode',`violation`='$offenseDescription' WHERE id = '$id'";
+        $query = "UPDATE `violations` SET `offenses_id`='$offenseType',`code`='$offenseCode',`violation`='$offenseDescription' WHERE id = '$offense_id'";
         $query_run = mysqli_query($con, $query);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Offense Successfully Updated'
-            ];
-            echo json_encode($res);
-            return;
+            $user_id = $_SESSION['id'];
+            $description = "Updated data Primary key:" . $offense_id;
+            $type = "Account";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Offense Successfully Updated',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -125,18 +165,37 @@ if (isset($_POST['update_Offense'])) {
 }
 
 if (isset($_POST['delete_Offense'])) {
-    $program_id = mysqli_real_escape_string($con, $_POST['delete_offense_id']);
+    $offense_id = mysqli_real_escape_string($con, $_POST['delete_offense_id']);
 
-    $query = "DELETE FROM `violations` WHERE id = '$program_id'";
+    $query = "DELETE FROM `violations` WHERE id = '$offense_id'";
     $query_run = mysqli_query($con, $query);
 
     if ($query_run) {
-        $res = [
-            'status' => 200,
-            'message' => 'Offense Successfully Delete',
-        ];
-        echo json_encode($res);
-        return;
+        $user_id = $_SESSION['id'];
+        $description = "Deleted data Primary key:" . $offense_id;
+        $type = "Offense";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Offense Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 500,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,

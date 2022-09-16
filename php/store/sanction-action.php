@@ -149,8 +149,7 @@ if (isset($_POST['create_Action'])) {
             `committed_time`,
             `counselling_date`,
             `counselling_time`,
-            `issual_date`
-            
+            `issual_date`   
         )
         VALUES(
             '$referral_id',
@@ -198,29 +197,66 @@ if (isset($_POST['create_Action'])) {
 
             $email = new sendEmail;
             $response = $email->actionEmail($emailData);
+
             if ($response) {
-                $res = [
-                    'status' => 200,
-                    'message' => 'Action Created Successfully',
-                    'console' => $query_run,
-                ];
-                echo json_encode($res);
-                return;
+
+                $user_id = $_SESSION['id'];
+                $description = "Created data Primary key:" . $last_id;
+                $type = "Sanction Action";
+                $date = date('Y-m-d H:i:s');
+
+                $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+                $response = mysqli_query($con, $query);
+
+                if ($response) {
+                    $res = [
+                        'status' => 200,
+                        'message' => 'Action Successfully Created',
+                        'console' => $query_run,
+                    ];
+                    echo json_encode($res);
+                    return;
+                } else {
+                    $res = [
+                        'status' => 500,
+                        'message' => 'Something wrong with the logs system',
+                        'console' => $response
+                    ];
+                    echo json_encode($res);
+                    return;
+                }
             } else {
-                $res = [
-                    'status' => 401,
-                    'message' => 'Mail Not Sent',
-                    'console' => $response
-                ];
-                echo json_encode($res);
-                return;
+
+                $user_id = $_SESSION['id'];
+                $description = "Created data Primary key:" . $last_id . " But Mail failed to sent";
+                $type = "Sanction Action";
+                $date = date('Y-m-d H:i:s');
+
+                $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+                $response = mysqli_query($con, $query);
+                if ($response) {
+                    $res = [
+                        'status' => 401,
+                        'message' => 'Mail Not Sent',
+                        'console' => $query_run,
+                    ];
+                    echo json_encode($res);
+                    return;
+                } else {
+                    $res = [
+                        'status' => 500,
+                        'message' => 'Something wrong with the logs system',
+                        'console' => $response
+                    ];
+                    echo json_encode($res);
+                    return;
+                }
             }
         } else {
             $res = [
                 'status' => 500,
                 'message' => 'Action Not Created',
                 'console' => $query_run
-
             ];
             echo json_encode($res);
             return;
@@ -318,17 +354,65 @@ if (isset($_POST['update_Action'])) {
         $pdf = new GeneratePDF;
         $response = $pdf->generateAction($data);
 
-        $email = new sendEmail;
-        $response1 = $email->actionEmail($emailData);
+        if ($response && $query_run) {
 
-        if ($response1 && $response && $query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Action Updated Successfully',
-                'console' => $query_run,
-            ];
-            echo json_encode($res);
-            return;
+            $email = new sendEmail;
+            $response = $email->actionEmail($emailData);
+
+            if ($response) {
+
+                $user_id = $_SESSION['id'];
+                $description = "Updated data Primary key:" . $last_id;
+                $type = "Sanction Action";
+                $date = date('Y-m-d H:i:s');
+
+                $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+                $response = mysqli_query($con, $query);
+
+                if ($response) {
+                    $res = [
+                        'status' => 200,
+                        'message' => 'Action Successfully Updated',
+                        'console' => $query_run,
+                    ];
+                    echo json_encode($res);
+                    return;
+                } else {
+                    $res = [
+                        'status' => 500,
+                        'message' => 'Something wrong with the logs system',
+                        'console' => $response
+                    ];
+                    echo json_encode($res);
+                    return;
+                }
+            } else {
+
+                $user_id = $_SESSION['id'];
+                $description = "Updated data Primary key:" . $action_id . " But Mail failed to sent";
+                $type = "Sanction Action";
+                $date = date('Y-m-d H:i:s');
+
+                $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+                $response = mysqli_query($con, $query);
+                if ($response) {
+                    $res = [
+                        'status' => 401,
+                        'message' => 'Mail Not Sent',
+                        'console' => $query_run,
+                    ];
+                    echo json_encode($res);
+                    return;
+                } else {
+                    $res = [
+                        'status' => 500,
+                        'message' => 'Something wrong with the logs system',
+                        'console' => $response
+                    ];
+                    echo json_encode($res);
+                    return;
+                }
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -346,9 +430,6 @@ if (isset($_POST['delete_Action'])) {
     $student_no = mysqli_real_escape_string($con, $_POST['delete_student_no']);
     $referral_id = mysqli_real_escape_string($con, $_POST['delete_referral_id']);
 
-    $filename =  $student_no . '_' . $action_id . '.pdf';
-    unlink('../../assets/docs/processed/action/' . $filename);
-
     $query1 = "UPDATE `sanction_referrals` SET `remark`=NULL WHERE id = '$referral_id'";
     $query_run1 = mysqli_query($con, $query1);
 
@@ -356,16 +437,38 @@ if (isset($_POST['delete_Action'])) {
     $query_run = mysqli_query($con, $query);
 
     if ($query_run1 && $query) {
-        $res = [
-            'status' => 200,
-            'message' => 'Action Successfully Delete',
-        ];
-        echo json_encode($res);
-        return;
+
+        $filename =  $student_no . '_' . $action_id . '.pdf';
+        unlink('../../assets/docs/processed/action/' . $filename);
+
+        $user_id = $_SESSION['id'];
+        $description = "Deleted data Primary key:" . $last_id;
+        $type = "Sanction Action";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Action Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 500,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,
-            'message' => 'Action is not Been Delete'
+            'message' => 'Action is not Been Deleted'
         ];
         echo json_encode($res);
         return;

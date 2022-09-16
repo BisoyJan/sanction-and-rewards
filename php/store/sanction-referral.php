@@ -3,7 +3,6 @@
 use Classes\generatePDF;
 
 require '../../database/database.php';
-
 require_once '../../vendor/autoload.php';
 
 ini_set('display_errors', 1);
@@ -145,9 +144,8 @@ if (isset($_POST['create_Referral'])) {
     $referredTo = mysqli_real_escape_string($con, $_POST['referredTo']);
     $dateIssued = mysqli_real_escape_string($con, $_POST['dateIssued']);
 
-
+    //First if statement that checks if all data need is present in the parameters
     if ($student_id == NULL || $violation_id == NULL || $complainerName == NULL || $referredTo == NULL || $dateIssued == NULL) {
-
         $res = [
             'status' => 422,
             'message' => 'All fields are mandatory'
@@ -156,7 +154,7 @@ if (isset($_POST['create_Referral'])) {
         return;
     } else {
 
-
+        //This query to check if the student Sanctioned 3 times
         $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id';";
 
         $select = mysqli_query($con, $query);
@@ -170,6 +168,7 @@ if (isset($_POST['create_Referral'])) {
             return;
         }
 
+        //This query to check if data in database is already existing. if exist will return "Referral already exist"
         $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id' AND violation_id = '$violation_id' AND date = '$dateIssued';";
 
         $select = mysqli_query($con, $query);
@@ -183,6 +182,7 @@ if (isset($_POST['create_Referral'])) {
             return;
         }
 
+        //This query will insert data to database if conditions are meet.
         $query = "INSERT INTO `sanction_referrals`(
             `student_id`,
             `violation_id`,
@@ -201,7 +201,7 @@ if (isset($_POST['create_Referral'])) {
         );";
 
         $query_run = mysqli_query($con, $query);
-        $last_id = mysqli_insert_id($con);
+        $last_id = mysqli_insert_id($con); //This function will get the last inserted ID to be used in document naming
 
         $data = [
             'date_field' => $dateIssued,
@@ -217,13 +217,32 @@ if (isset($_POST['create_Referral'])) {
         $response = $pdf->generateReferral($data);
 
         if ($response && $query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Referral Created Successfully',
-                'console' => $query_run,
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Created data Primary key:" . $last_id;
+            $type = "Sanction Referral";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Referral Successfully Created',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -278,12 +297,31 @@ if (isset($_POST['update_Referral'])) {
         $response = $pdf->generateReferral($data);
 
         if ($response && $query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Referral Successfully Updated'
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Updated data Primary key:" . $referral_id;
+            $type = "Sanction Referral";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Referral Successfully Updated',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -299,23 +337,43 @@ if (isset($_POST['delete_Referral'])) {
     $referral_id = mysqli_real_escape_string($con, $_POST['delete_referral_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['delete_student_no']);
 
-    $filename =  $student_no . '_' . $referral_id . '.pdf';
-    unlink('../../assets/docs/processed/referrals/' . $filename);
-
     $query = "DELETE FROM `sanction_referrals` WHERE id = '$referral_id'";
     $query_run = mysqli_query($con, $query);
 
     if ($query_run) {
-        $res = [
-            'status' => 200,
-            'message' => 'Lost and Found Successfully Delete',
-        ];
-        echo json_encode($res);
-        return;
+
+        $filename =  $student_no . '_' . $referral_id . '.pdf';
+        unlink('../../assets/docs/processed/referrals/' . $filename);
+
+        $user_id = $_SESSION['id'];
+        $description = "Updated data Primary key:" . $referral_id;
+        $type = "Sanction Referral";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Referral Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 401,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,
-            'message' => 'Lost and Found is not Been Delete'
+            'message' => 'Referral is not Been Delete',
+            'console' => $query_run
         ];
         echo json_encode($res);
         return;

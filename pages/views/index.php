@@ -1,11 +1,17 @@
 <?php
 include('../includes/main/header.php');
 include('../includes/main/navbar.php');
-require '../../database/database.php';
 ?>
 
 <div class="container-fluid pt-1 ps-5 pe-5 ">
-    <h1>Dashboard</h1>
+    <div class="row">
+        <div class="col-auto">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="col pt-2 d-flex justify-content-end">
+            <p class="h4" id="time">Time</p>
+        </div>
+    </div>
 
     <div class="row pt-2 d-flex justify-content-center">
         <div class="col-auto">
@@ -110,14 +116,28 @@ require '../../database/database.php';
 
 
 <script>
+    setInterval(refreshTime, 1000);
+
     $(document).ready(function() {
+        all_functions();
+    });
+
+    function all_functions() {
         student();
         referral();
         action();
         disciplinary();
         SanctionCategoryBarChart();
         CollegesCategoryPieChart();
-    });
+        refreshTime()
+    }
+
+    function refreshTime() {
+        const timeDisplay = document.getElementById("time");
+        const dateString = new Date().toLocaleString();
+        const formattedString = dateString.replace(", ", " - ");
+        timeDisplay.textContent = formattedString;
+    }
 
     function student() {
         $.ajax({

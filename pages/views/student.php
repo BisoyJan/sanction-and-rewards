@@ -271,6 +271,7 @@ include('../includes/main/navbar.php');
                 if (res.status == 404) {
 
                     toastr.warning(res.message, res.status);
+                    
                 } else if (res.status == 200) {
 
                     console.log(res.data)

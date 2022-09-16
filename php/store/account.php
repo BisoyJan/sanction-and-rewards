@@ -1,5 +1,7 @@
 <?php
+
 require '../../database/database.php';
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -39,7 +41,6 @@ if (isset($_POST['create_Account'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $userType = mysqli_real_escape_string($con, $_POST['userType']);
 
-
     if ($firstName == NULL || $middleName == NULL || $lastName == NULL || $userName == NULL || $password == NULL || $userType == NULL) {
 
         $res = [
@@ -65,15 +66,35 @@ if (isset($_POST['create_Account'])) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $query = "INSERT INTO users (username, password, type, first_name, middle_name, last_name) VALUES ('$userName','$hash','$userType','$firstName','$middleName','$lastName')";
         $query_run = mysqli_query($con, $query);
+        $last_id = mysqli_insert_id($con);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Account Created Successfully',
-                'console' => $query_run
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Created data Primary key:" . $last_id;
+            $type = "Account";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Account Successfully Inserted',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 401,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -110,12 +131,31 @@ if (isset($_POST['update_Account'])) {
         $query_run = mysqli_query($con, $query);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Account Successfully Updated'
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Updated data Primary key:" . $account_id;
+            $type = "Account";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Account Successfully Updated',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 401,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -134,16 +174,35 @@ if (isset($_POST['delete_Account'])) {
     $query_run = mysqli_query($con, $query);
 
     if ($query_run) {
-        $res = [
-            'status' => 200,
-            'message' => 'Account Successfully Delete',
-        ];
-        echo json_encode($res);
-        return;
+        $user_id = $_SESSION['id'];
+        $description = "Deleted data Primary key:" . $account_id;
+        $type = "Account";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Account Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 401,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,
-            'message' => 'Account is not Been Delete'
+            'message' => 'Account is not Been Deleted'
         ];
         echo json_encode($res);
         return;

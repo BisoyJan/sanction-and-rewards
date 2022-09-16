@@ -1,7 +1,13 @@
 <?php
 include('../../database/database.php');
 
-session_start();
+
+$user_id = $_SESSION['id'];
+$description = "User Logout to the system ";
+$date = date('Y-m-d H:i:s');
+
+$query = "INSERT INTO `logs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
+$query_run = mysqli_query($con, $query);
 
 session_unset();
 session_destroy();

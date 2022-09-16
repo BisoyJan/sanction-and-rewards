@@ -3,7 +3,6 @@
 use Classes\generatePDF;
 
 require '../../database/database.php';
-
 require_once '../../vendor/autoload.php';
 
 ini_set('display_errors', 1);
@@ -195,13 +194,31 @@ if (isset($_POST['create_Counsel'])) {
         $response = $pdf->generateCounselling($data);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Counselling Created Successfully',
-                'console' => $data,
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Created data Primary key:" . $last_id;
+            $type = "Sanction Counselling";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Counselling Successfully Created',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -311,13 +328,31 @@ if (isset($_POST['update_Counsel'])) {
         $response = $pdf->generateCounselling($data);
 
         if ($query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Counselling Updated Successfully',
-                'console' => $data,
-            ];
-            echo json_encode($res);
-            return;
+
+            $user_id = $_SESSION['id'];
+            $description = "Updated data Primary key:" . $counsel_id;
+            $type = "Sanction Counselling";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Counselling Successfully Updated',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -335,9 +370,6 @@ if (isset($_POST['delete_Counsel'])) {
     $student_no = mysqli_real_escape_string($con, $_POST['delete_student_no']);
     $action_id = mysqli_real_escape_string($con, $_POST['delete_action_id']);
 
-    $filename =  $student_no . '_' . $counsel_id . '.pdf';
-    unlink('../../assets/docs/processed/counselling/' . $filename);
-
     $query1 = "UPDATE `sanction_disciplinary_action` SET `remarks`=NULL WHERE id = '$action_id'";
     $query_run1 = mysqli_query($con, $query1);
 
@@ -345,16 +377,38 @@ if (isset($_POST['delete_Counsel'])) {
     $query_run = mysqli_query($con, $query);
 
     if ($query_run1 && $query) {
-        $res = [
-            'status' => 200,
-            'message' => 'Counselling Successfully Delete',
-        ];
-        echo json_encode($res);
-        return;
+
+        $filename =  $student_no . '_' . $counsel_id . '.pdf';
+        unlink('../../assets/docs/processed/counselling/' . $filename);
+
+        $user_id = $_SESSION['id'];
+        $description = "Deleted data Primary key:" . $counsel_id;
+        $type = "Sanction Action";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`,`description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Counselling Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 500,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,
-            'message' => 'Counselling is not Been Delete'
+            'message' => 'Counselling is not Been Deleted'
         ];
         echo json_encode($res);
         return;

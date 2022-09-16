@@ -72,8 +72,8 @@ if ($total_data > 0) {
             <td>' . $row["date_surrendered"] . '</td>
             <td>
                 <button class="lost-foundViewImage btn btn-success" value="' . $row["id"] . '"  type="button" data-bs-toggle="modal" data-bs-target="#viewImage">View Image</button>
-                <a href="../forms/lost-found.php" style="text-decoration: none;"> <button class="lost-foundEditButton btn btn-success" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
-                <button class="lost-foundDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#LostFoundDeleteModal">Delete Button</button>
+                <a href="../forms/lost-found.php" style="text-decoration: none;"> <button class="lost-foundEditButton btn btn-success" value="' . $row["id"] . '"  type="button">Update</button> </a>
+                <button class="lost-foundDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#LostFoundDeleteModal">Delete</button>
             </td>
         </tr>
    ';

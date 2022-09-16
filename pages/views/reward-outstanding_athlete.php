@@ -194,6 +194,29 @@ include('../includes/main/navbar.php');
         load_data(1, query);
     });
 
+    $(document).on('click', '.viewPDFButton', function() {
+        var athlete_id = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/reward-outstanding_athlete.php?outstandingAthlete_id=" + athlete_id,
+            async: false,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response);
+                if (res.status == 404) {
+
+                    toastr.warning(res.message, res.status);
+                } else if (res.status == 200) {
+
+                    console.log(res.data);
+
+                    window.open('../../assets/docs/processed/outstanding-athlete/' + res.data.student_no + '_' + res.data.id + '.pdf', '_blank').focus();
+                }
+            }
+        });
+    });
+
     //Form ID Change click of the button
     function formIDChangeAdd() {
         document.getElementById("Student").disabled = false;

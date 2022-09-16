@@ -1,20 +1,22 @@
 {
-    "name": "vpsdas/pdftk",
-    "authors": [{
-        "name": "Jan Ramil Intong",
-        "email": "bisoyjan@gmail.com"
-    }],
-    "autoload": {
-
-        "psr-4": {
-
-            "Classes\\": ["php/pdf", "php/email"]
-
-        }
-    },
-    "require": {
-        "mikehaertl/php-pdftk": "^0.12.1",
-        "phpmailer/phpmailer": "^6.6",
-        "league/oauth2-google": "^4.0"
-    }
+	"name": "vpsdas/pdftk",
+	"authors": [
+		{
+			"name": "Jan Ramil Intong",
+			"email": "bisoyjan@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Classes\\": [
+				"php/pdf",
+				"php/email"
+			]
+		}
+	},
+	"require": {
+		"mikehaertl/php-pdftk": "^0.12.1",
+		"phpmailer/phpmailer": "^6.6",
+		"league/oauth2-google": "^4.0"
+	}
 }

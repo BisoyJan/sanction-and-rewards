@@ -89,6 +89,7 @@ class ComposerStaticInitb3ab545b9f1ae058d61032f4aca6618f
         array (
             0 => __DIR__ . '/../..' . '/php/pdf',
             1 => __DIR__ . '/../..' . '/php/email',
+            2 => __DIR__ . '/../..' . '/php/store',
         ),
     );
 

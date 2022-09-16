@@ -83,6 +83,7 @@ include('../includes/main/navbar.php');
                                     <option selected disabled value="">Choose...</option>
                                     <option value="Admin">Admin</option>
                                     <option value="User">User</option>
+                                    <option value="Security">Security Guard</option>
 
                                 </select>
                                 <div class="valid-feedback">

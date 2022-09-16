@@ -12,8 +12,7 @@ if ($_POST['page'] > 1) {
     $start = 0;
 }
 
-$query = "
-SELECT
+$query = "SELECT
     students.*,
     programs.abbreviation,
     programs.program_name as program,
@@ -37,7 +36,7 @@ if ($_POST['query'] != '') {
   ';
 }
 
-$query .= 'ORDER BY id DESC ';
+$query .= 'ORDER BY students.id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -81,8 +80,8 @@ if ($total_data > 0) {
             <td>' . $row["program"] . '</td>
             <td>' . $row["college"] . '</td>
             <td>
-                <button class="studentEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#StudentModal">Edit Button</button>
-                <button class="studentDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#StudentDeleteModal">Delete Button</button>
+                <button class="studentEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#StudentModal">Update</button>
+                <button class="studentDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#StudentDeleteModal">Delete</button>
             </td>
         </tr>
    ';

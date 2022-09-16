@@ -13,8 +13,50 @@ if ($_POST['page'] > 1) {
 }
 
 if ($_POST['query'] == '') {
-    $query = '
-        SELECT
+    if ($_POST['category'] == 3) {
+        $query = 'SELECT
+        sanction_referrals.*,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        offenses.offense,
+        violations.code,
+        violations.violation
+    FROM
+        sanction_referrals
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations on sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+  ';
+    } elseif ($_POST['category'] == 2) {
+        $query = 'SELECT
+            sanction_referrals.*,
+            students.student_no,
+            students.first_name,
+            students.middle_name,
+            students.last_name,
+            students.section,
+            programs.abbreviation,
+            programs.program_name,
+            offenses.offense,
+            violations.code,
+            violations.violation
+        FROM
+            sanction_referrals
+        JOIN students ON sanction_referrals.student_id = students.id
+        JOIN violations on sanction_referrals.violation_id = violations.id
+        JOIN offenses ON violations.offenses_id = offenses.id
+        JOIN programs ON students.program_id = programs.id
+        WHERE
+        sanction_referrals.remark = "Actioned"
+  ';
+    } else {
+        $query = 'SELECT
         sanction_referrals.*,
         students.student_no,
         students.first_name,
@@ -35,10 +77,39 @@ if ($_POST['query'] == '') {
     WHERE
     sanction_referrals.remark IS NULL
   ';
+    }
 }
 
 if ($_POST['query'] != '') {
-    $query = '
+    if ($_POST['category'] == 3) {
+        $query = '
+        SELECT
+        sanction_referrals.*,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        offenses.offense,
+        violations.code,
+        violations.violation 
+    FROM
+        sanction_referrals
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations on sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  ';
+    } elseif ($_POST['category'] == 2) {
+        $query = '
         SELECT
         sanction_referrals.*,
         students.student_no,
@@ -51,7 +122,33 @@ if ($_POST['query'] != '') {
         offenses.offense,
         violations.code,
         violations.violation
-        
+    FROM
+        sanction_referrals
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations on sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE sanction_referrals.remark = "Actioned" AND(students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%")
+  ';
+    } else {
+        $query = '
+        SELECT
+        sanction_referrals.*,
+        students.student_no,
+        students.first_name,
+        students.middle_name,
+        students.last_name,
+        students.section,
+        programs.abbreviation,
+        programs.program_name,
+        offenses.offense,
+        violations.code,
+        violations.violation
     FROM
         sanction_referrals
     JOIN students ON sanction_referrals.student_id = students.id
@@ -65,9 +162,10 @@ if ($_POST['query'] != '') {
     OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%")
   ';
+    }
 }
 
-$query .= 'ORDER BY id DESC ';
+$query .= 'ORDER BY sanction_referrals.id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -117,12 +215,14 @@ if ($total_data > 0) {
             <td>' . $row["date"] . '</td>
             <td>' . $row["remark"] . '</td>
             <td>
-                 <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Action</button>
-                <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Edit Button</button> </a>
-                <button class="referralDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete Button</button>
-            </td>
+   
+            <button class="viewPDFButton btn btn-success m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
+            <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Action</button>
+            <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
+            <button class="referralDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
+        </td>
         </tr>
-   ';
+         ';
     }
 
     $output .= '

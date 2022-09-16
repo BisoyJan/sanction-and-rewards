@@ -17,6 +17,21 @@ include('../includes/main/navbar.php');
                 <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
             </div>
         </div>
+        <div class="col-auto">
+            <div class="input-group mb-3">
+                <select class="form-select" id="category" name="category">
+                    <option selected value="1">For Continuing Hearing</option>
+                    <option value="2">For Formal Investigation</option>
+                    <option value="3">Closed/Resolved</option>
+                    <option value="4">All Data</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="input-group mb-3">
+                <button class="btn btn-success" type="button" onclick="refresh()">Refresh</button>
+            </div>
+        </div>
     </div>
 
     <div id="dynamicTable">
@@ -55,13 +70,20 @@ include('../includes/main/navbar.php');
         load_data(1);
     });
 
-    function load_data(page = 1, query = '') {
+    function refresh() {
+        var query = $('#search_box').val();
+        var category = $('#category').val();
+        load_data(1, query, category);
+    }
+
+    function load_data(page = 1, query = '', category = '') {
         $.ajax({
             url: "../../php/fetchPaginate/sanction-counsellingTable.php",
             method: "POST",
             data: {
                 page: page,
-                query: query
+                query: query,
+                category: category
             },
             success: function(data) {
                 $('#dynamicTable').html(data);
@@ -72,20 +94,20 @@ include('../includes/main/navbar.php');
     $(document).on('click', '.page-link', function() {
         var page = $(this).data('page_number');
         var query = $('#search_box').val();
-        load_data(page, query);
+        var category = $('#category').val();
+        load_data(page, query, category);
     });
 
     $('#search_box').keyup(function() {
         var query = $('#search_box').val();
-        load_data(1, query);
+        var category = $('#category').val();
+        load_data(1, query, category);
     });
 
     //CRUD Function
     $(document).on('click', '.sanction-counsellingEditButton', function() {
         var counsel_id = $(this).val();
-
         sessionStorage.setItem("sanction-counselID", counsel_id);
-
     });
 
     $(document).on('click', '.counselDeleteButton', function() {
@@ -107,6 +129,28 @@ include('../includes/main/navbar.php');
                     $('#delete_action_id').val(res.data.sanction_disciplinary_action_id);
 
                     console.log(res.data);
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.viewPDFButton', function() {
+        var counsel_id = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/sanction-counselling.php?counsel_id=" + counsel_id,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response);
+                if (res.status == 404) {
+
+                    toastr.warning(res.message, res.status);
+                } else if (res.status == 200) {
+
+                    console.log(res.data);
+
+                    window.open('../../assets/docs/processed/counselling/' + res.data.student_no + '_' + res.data.id + '.pdf', '_blank').focus();
                 }
             }
         });

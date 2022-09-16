@@ -192,6 +192,29 @@ include('../includes/main/navbar.php');
         });
     })();
 
+    $(document).on('click', '.viewPDFButton', function() {
+        var leadership_id = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/reward-leadership.php?leadership_id=" + leadership_id,
+            async: false,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response);
+                if (res.status == 404) {
+
+                    toastr.warning(res.message, res.status);
+                } else if (res.status == 200) {
+
+                    console.log(res.data);
+
+                    window.open('../../assets/docs/processed/leadership/' + res.data.student_no + '_' + res.data.id + '.pdf', '_blank').focus();
+                }
+            }
+        });
+    });
+
     //Form ID Change click of the button
     function formIDChangeAdd() {
         document.getElementById("Student").disabled = false;

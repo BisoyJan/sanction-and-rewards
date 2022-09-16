@@ -12,8 +12,7 @@ if ($_POST['page'] > 1) {
     $start = 0;
 }
 
-$query = "
-SELECT
+$query = 'SELECT
     outstanding_athlete.*,
     students.student_no,
     students.first_name,
@@ -25,12 +24,11 @@ SELECT
 FROM
 outstanding_athlete
 JOIN students ON outstanding_athlete.student_id = students.id
-JOIN programs ON students.program_id = programs.id;
-";
+JOIN programs ON students.program_id = programs.id
+';
 
 if ($_POST['query'] != '') {
-    $query .= '
-    WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+    $query .= ' WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
     OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
@@ -38,7 +36,7 @@ if ($_POST['query'] != '') {
   ';
 }
 
-$query .= 'ORDER BY id DESC ';
+$query .= 'ORDER BY outstanding_athlete.id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -80,8 +78,9 @@ if ($total_data > 0) {
             <td>' . $row["sports"] . '</td>
             <td>' . date("M/d/Y", strtotime($row["date_issued"])) . '</td>
             <td>
-                <button class="outStandingAthleteEditButton btn btn-success m-1" value="' . $row["id"] . '" onclick="formIDChangeEdit()" data-bs-toggle="modal" data-bs-target="#OutstandingAthleteModal" type="button">Edit Button</button>
-                <button class="outStandingAthleteDeleteButton btn btn-danger m-1" value="' . $row["id"] . '"  type="button" data-bs-toggle="modal" data-bs-target="#OutstandingAthleteDeleteModal">Delete Button</button>
+                <button class="viewPDFButton btn btn-success m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
+                <button class="outStandingAthleteEditButton btn btn-success m-1" value="' . $row["id"] . '" onclick="formIDChangeEdit()" data-bs-toggle="modal" data-bs-target="#OutstandingAthleteModal" type="button">Update</button>
+                <button class="outStandingAthleteDeleteButton btn btn-danger m-1" value="' . $row["id"] . '"  type="button" data-bs-toggle="modal" data-bs-target="#OutstandingAthleteDeleteModal">Delete</button>
             </td>
         </tr>
    ';

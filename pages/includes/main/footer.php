@@ -1,3 +1,4 @@
+
 </div>
 </section>
 
@@ -27,4 +28,5 @@ if (isset($_SESSION['notify'])) {
 ?>
 
 </body>
+
 </html>

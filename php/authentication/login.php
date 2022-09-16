@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require '../../database/database.php';
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -31,6 +31,13 @@ if (isset($_POST['login_user'])) {
                     $_SESSION['last_name'] = $row['last_name'];
                     $_SESSION['type'] = $row['type'];
                     $_SESSION['notify'] = 1; // Show toastr when login 
+
+                    $user_id = $_SESSION['id'];
+                    $description = "User Login to the system";
+                    $date = date('Y-m-d H:i:s');
+
+                    $query = "INSERT INTO `logs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
+                    $query_run = mysqli_query($con, $query);
                     $res = [
                         'status' => 200,
                         'message' => 'Successfully Login',

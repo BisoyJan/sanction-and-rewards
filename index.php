@@ -3,40 +3,57 @@ session_start();
 ?>
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Leyte Normal University</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/login.css">
     <link rel="stylesheet" href="assets/toastr/toastr.min.css">
+    <title>LNU VPSDAS</title>
 </head>
 
 <body>
-    <div class="center">
-        <h1>Welcome</h1>
-        <form id="login">
-            <div class="txt_field">
-                <input type="text" name="username" class="form-control">
-                <span></span>
-                <label>Username</label>
+    <section class="hero">
+        <div class="left-bar">
+            <div class="hero-1">
+                <img src="assets/images/logo.png" alt="" class="logo">
+                <h2>Leyte Normal University</h2>
+                <h1>Student Development and Auxilliary Services</h1>
             </div>
-            <div class="txt_field">
-                <input type="password" name="password" class="form-control">
-                <span></span>
-                <label>Password</label>
+            <div class="hero-2">
+                &nbsp;
             </div>
-            <input type="submit" value="Login">
-            <div class="signup_link">
-                LNU VPSDAS
-            </div>
-        </form>
-    </div>
+        </div>
 
+        <div class="login">
+            <form id="login">
+
+                <h1>Login</h1>
+
+                <span>
+                    <hr>
+                </span>
+
+                <div class="email">
+                    <input type="text" name="username" placeholder="Username" autocomplete="off">
+                    <label for="text">Username</label>
+                </div>
+                <div class="password">
+                    <input type="password" name="password" placeholder="Password" autocomplete="off">
+                    <label for="password" class="label-password">Password</label>
+                </div>
+                <button type="submit" value="Login">Submit</button>
+
+            </form>
+            <p>Welcome to Reward and Sanctioning System</p>
+        </div>
+
+    </section>
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/toastr/toastr.min.js"></script>
-
     <script>
         $(document).on('submit', '#login', function(e) {
             e.preventDefault();
@@ -71,7 +88,6 @@ session_start();
             });
         });
     </script>
-
 
 </body>
 

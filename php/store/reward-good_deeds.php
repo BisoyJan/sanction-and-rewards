@@ -53,7 +53,6 @@ if (isset($_GET['goodDeeds_id'])) {
     }
 }
 
-
 if (isset($_POST['create_GoodDeeds'])) {
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
@@ -116,13 +115,31 @@ if (isset($_POST['create_GoodDeeds'])) {
         $response = $pdf->generateGoodDeeds($data);
 
         if ($response && $query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Created Successfully',
-                'console' => $query_run,
-            ];
-            echo json_encode($res);
-            return;
+            $user_id = $_SESSION['id'];
+            $description = "Created data Primary key:" . $last_id;
+            $type = "Good Deeds";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Successfully Created',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -183,13 +200,31 @@ if (isset($_POST['update_GoodDeeds'])) {
         $response = $pdf->generateGoodDeeds($data);
 
         if ($response && $query_run) {
-            $res = [
-                'status' => 200,
-                'message' => 'Updated Successfully',
-                'console' => $query_run,
-            ];
-            echo json_encode($res);
-            return;
+            $user_id = $_SESSION['id'];
+            $description = "Updated data Primary key:" . $goodDeeds_id;
+            $type = "Good Deeds";
+            $date = date('Y-m-d H:i:s');
+
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $response = mysqli_query($con, $query);
+
+            if ($response) {
+                $res = [
+                    'status' => 200,
+                    'message' => 'Successfully Updated',
+                    'console' => $query_run,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                $res = [
+                    'status' => 500,
+                    'message' => 'Something wrong with the logs system',
+                    'console' => $response
+                ];
+                echo json_encode($res);
+                return;
+            }
         } else {
             $res = [
                 'status' => 500,
@@ -214,12 +249,31 @@ if (isset($_POST['delete_GoodDeeds'])) {
     $query_run = mysqli_query($con, $query);
 
     if ($query) {
-        $res = [
-            'status' => 200,
-            'message' => 'Successfully Deleted',
-        ];
-        echo json_encode($res);
-        return;
+        $user_id = $_SESSION['id'];
+        $description = "Deleted data Primary key:" . $goodDeeds_id;
+        $type = "Good Deeds";
+        $date = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $response = mysqli_query($con, $query);
+
+        if ($response) {
+            $res = [
+                'status' => 200,
+                'message' => 'Successfully Deleted',
+                'console' => $query_run,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 500,
+                'message' => 'Something wrong with the logs system',
+                'console' => $response
+            ];
+            echo json_encode($res);
+            return;
+        }
     } else {
         $res = [
             'status' => 500,
