@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2022 at 12:34 PM
+-- Generation Time: Sep 17, 2022 at 01:57 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -125,6 +125,81 @@ CREATE TABLE `leaderships` (
 
 INSERT INTO `leaderships` (`id`, `student_id`, `date_issued`, `event_title`) VALUES
 (30, 1, '2022-09-14', 'wadwadadawdawdw');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `section` varchar(100) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`id`, `user_id`, `description`, `section`, `date`) VALUES
+(38, 1, 'Created data Primary key:10', 'Outstanding Athlete', '2022-09-13 09:48:10'),
+(39, 1, 'Created data Primary key:11', 'Outstanding Athlete', '2022-09-13 09:49:18'),
+(40, 1, 'Created data Primary key:56', 'Sanction Referral', '2022-09-13 09:52:23'),
+(42, 1, 'Created data Primary key:10', 'MVP Athlete', '2022-09-13 09:59:39'),
+(44, 1, 'Created data Primary key:', 'Programs', '2022-09-13 10:00:59'),
+(45, 1, 'Deleted data Primary key:20', 'Programs', '2022-09-13 10:01:12'),
+(46, 1, 'Created data Primary key:13', 'Good Deeds', '2022-09-13 10:01:37'),
+(47, 1, 'Deleted data Primary key:13', 'Good Deeds', '2022-09-13 10:04:43'),
+(48, 1, 'User Logout to the system ', '', '2022-09-13 10:04:57'),
+(49, 1, 'User Login to the system', '', '2022-09-13 10:05:02'),
+(50, 1, 'Created data Primary key:11', 'MVP Athlete', '2022-09-13 10:08:06'),
+(51, 1, 'Updated data Primary key:11', 'MVP Athlete', '2022-09-13 10:08:53'),
+(52, 1, 'Created data Primary key:', 'Programs', '2022-09-13 10:09:17'),
+(53, 1, 'User Logout to the system ', '', '2022-09-13 10:18:04'),
+(54, 1, 'User Login to the system', '', '2022-09-13 10:26:06'),
+(55, 1, 'User Logout to the system ', '', '2022-09-13 10:28:02'),
+(56, 1, 'User Login to the system', '', '2022-09-13 10:30:31'),
+(57, 1, 'User Login to the system', '', '2022-09-14 01:46:33'),
+(58, 1, 'Created data Primary key:30', 'Leadership', '2022-09-14 02:06:34'),
+(59, 1, 'User Login to the system', '', '2022-09-14 05:51:09'),
+(60, 1, 'Deleted data Primary key:2', 'Programs', '2022-09-14 05:51:58'),
+(61, 1, 'Deleted data Primary key:4', 'Programs', '2022-09-14 05:52:00'),
+(62, 1, 'Deleted data Primary key:5', 'Programs', '2022-09-14 05:52:01'),
+(63, 1, 'Deleted data Primary key:7', 'Programs', '2022-09-14 05:52:02'),
+(64, 1, 'Deleted data Primary key:19', 'Programs', '2022-09-14 05:52:06'),
+(65, 1, 'Deleted data Primary key:21', 'Programs', '2022-09-14 05:52:08'),
+(66, 1, 'Created data Primary key:22', 'Programs', '2022-09-14 05:54:01'),
+(67, 1, 'Created data Primary key:23', 'Programs', '2022-09-14 05:54:37'),
+(68, 1, 'Created data Primary key:24', 'Programs', '2022-09-14 05:54:54'),
+(69, 1, 'Created data Primary key:25', 'Programs', '2022-09-14 05:55:29'),
+(70, 1, 'Created data Primary key:26', 'Programs', '2022-09-14 05:55:53'),
+(71, 1, 'Created data Primary key:27', 'Programs', '2022-09-14 05:56:32'),
+(72, 1, 'Created data Primary key:28', 'Programs', '2022-09-14 05:56:53'),
+(73, 1, 'Created data Primary key:29', 'Programs', '2022-09-14 05:57:14'),
+(74, 1, 'Created data Primary key:30', 'Programs', '2022-09-14 05:57:38'),
+(75, 1, 'Created data Primary key:31', 'Programs', '2022-09-14 05:58:48'),
+(76, 1, 'Created data Primary key:32', 'Programs', '2022-09-14 05:59:09'),
+(77, 1, 'Deleted data Primary key:4', 'Students', '2022-09-14 06:00:01'),
+(78, 1, 'User Logout to the system ', '', '2022-09-14 06:21:35'),
+(79, 1, 'User Login to the system', '', '2022-09-14 06:21:56'),
+(80, 1, 'Updated data Primary key:2', 'Account', '2022-09-14 06:36:14'),
+(81, 1, 'User Logout to the system ', '', '2022-09-14 06:36:19'),
+(82, 2, 'User Login to the system', '', '2022-09-14 06:36:23'),
+(83, 2, 'User Logout to the system ', '', '2022-09-14 06:36:35'),
+(84, 1, 'User Login to the system', '', '2022-09-14 06:36:39'),
+(85, 1, 'User Login to the system', '', '2022-09-14 09:48:00'),
+(86, 1, 'User Logout to the system ', '', '2022-09-14 15:20:24'),
+(87, 1, 'User Login to the system', '', '2022-09-14 15:20:50'),
+(88, 1, 'Created data Primary key:57', 'Sanction Referral', '2022-09-14 15:21:20'),
+(89, 1, 'User Login to the system', '', '2022-09-16 07:38:59'),
+(90, 1, 'User Login to the system', '', '2022-09-16 11:21:17'),
+(91, 1, 'User Login to the system', '', '2022-09-16 14:22:29'),
+(92, 1, 'User Login to the system', '', '2022-09-16 16:58:12'),
+(93, 1, 'Updated data Primary key:4', 'Semester', '2022-09-16 17:11:37'),
+(94, 1, 'User Login to the system', '', '2022-09-17 07:38:50');
 
 -- --------------------------------------------------------
 
@@ -347,6 +422,28 @@ INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complaine
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `semesters`
+--
+
+CREATE TABLE `semesters` (
+  `id` int(11) NOT NULL,
+  `first_starting` date NOT NULL,
+  `first_ending` date NOT NULL,
+  `second_starting` date NOT NULL,
+  `second_ending` date NOT NULL,
+  `school_year` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `semesters`
+--
+
+INSERT INTO `semesters` (`id`, `first_starting`, `first_ending`, `second_starting`, `second_ending`, `school_year`) VALUES
+(4, '2022-08-01', '2022-12-26', '2023-01-01', '2023-05-31', '2022-2023');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students`
 --
 
@@ -528,6 +625,13 @@ ALTER TABLE `leaderships`
   ADD KEY `leadership_student_id` (`student_id`);
 
 --
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `mvp_athletes`
 --
 ALTER TABLE `mvp_athletes`
@@ -591,6 +695,12 @@ ALTER TABLE `sanction_referrals`
   ADD KEY `student_id` (`student_id`),
   ADD KEY `referral_violation_id` (`violation_id`),
   ADD KEY `referrals_semester_id` (`semester_id`);
+
+--
+-- Indexes for table `semesters`
+--
+ALTER TABLE `semesters`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `students`
@@ -665,6 +775,12 @@ ALTER TABLE `leaderships`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+
+--
 -- AUTO_INCREMENT for table `mvp_athletes`
 --
 ALTER TABLE `mvp_athletes`
@@ -717,6 +833,12 @@ ALTER TABLE `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_referrals`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `semesters`
+--
+ALTER TABLE `semesters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -775,6 +897,12 @@ ALTER TABLE `kindly_acts`
 --
 ALTER TABLE `leaderships`
   ADD CONSTRAINT `leadership_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`);
+
+--
+-- Constraints for table `logs`
+--
+ALTER TABLE `logs`
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `mvp_athletes`
