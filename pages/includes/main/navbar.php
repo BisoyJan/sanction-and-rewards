@@ -84,7 +84,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Disciplinary</a></li>
-                    <li><a href="../views/file-path.php">Semester</a></li>
+                    <li><a href="../views/semester.php">Semester</a></li>
                 </ul>
             </li>
             <li>
@@ -169,7 +169,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Disciplinary</a></li>
-                    <li><a href="../views/file-path.php">Semester</a></li>
+                    <li><a href="../views/semester.php">Semester</a></li>
                 </ul>
             </li>
             <li>
@@ -230,7 +230,7 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Disciplinary</a></li>
-                    <li><a href="../views/file-path.php">Semester</a></li>
+                    <li><a href="../views/semester.php">Semester</a></li>
                 </ul>
             </li>
             <li>

@@ -308,7 +308,7 @@ if ($total_data > 0) {
             <td>' . $row["code"] . '</td>
             <td>' . $row["recommend"] . '</td>';
         if ($row["hearing_date"] == '0000-00-00') {
-            $output .= '<td>NO Date</td>';
+            $output .= '<td>No Date</td>';
         } else {
             $output .= ' <td>' . date("M/d/Y", strtotime($row["hearing_date"])) . '</td> ';
         }

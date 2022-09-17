@@ -182,23 +182,25 @@ if (isset($_POST['create_Referral'])) {
             return;
         }
 
+        
+
         //This query will insert data to database if conditions are meet.
         $query = "INSERT INTO `sanction_referrals`(
-            `student_id`,
-            `violation_id`,
-            `complainer_name`,
-            `referred`,
-            `date`,
-            `remark`
-        )
-        VALUES(
-            '$student_id',
-            '$violation_id',
-            '$complainerName',
-            '$referredTo',
-            '$dateIssued',
-            NUll
-        );";
+                `student_id`,
+                `violation_id`,
+                `complainer_name`,
+                `referred`,
+                `date`,
+                `remark`
+            )
+            VALUES(
+                '$student_id',
+                '$violation_id',
+                '$complainerName',
+                '$referredTo',
+                '$dateIssued',
+                NUll
+            );";
 
         $query_run = mysqli_query($con, $query);
         $last_id = mysqli_insert_id($con); //This function will get the last inserted ID to be used in document naming

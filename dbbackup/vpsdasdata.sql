@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2022 at 01:13 AM
+-- Generation Time: Sep 17, 2022 at 12:34 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -103,7 +103,8 @@ CREATE TABLE `kindly_acts` (
 --
 
 INSERT INTO `kindly_acts` (`id`, `student_id`, `date_issued`, `kindly_act`) VALUES
-(10, 1, '2022-08-10', 'sadasdadsadsadsa');
+(10, 1, '2022-08-10', 'sadasdadsadsadsaasdsa'),
+(12, 2, '2022-09-13', 'sadsadsad');
 
 -- --------------------------------------------------------
 
@@ -117,6 +118,13 @@ CREATE TABLE `leaderships` (
   `date_issued` varchar(100) NOT NULL,
   `event_title` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `leaderships`
+--
+
+INSERT INTO `leaderships` (`id`, `student_id`, `date_issued`, `event_title`) VALUES
+(30, 1, '2022-09-14', 'wadwadadawdawdw');
 
 -- --------------------------------------------------------
 
@@ -132,6 +140,15 @@ CREATE TABLE `mvp_athletes` (
   `sports` varchar(50) NOT NULL,
   `date_issued` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `mvp_athletes`
+--
+
+INSERT INTO `mvp_athletes` (`id`, `student_id`, `coach_name`, `organizer_name`, `sports`, `date_issued`) VALUES
+(9, 2, 'wadwadaw', 'dasdwad', 'WADWADAWDA', '2022-09-13'),
+(10, 1, 'awawdawd', 'wadwadawd', 'WADWDAWD', '2022-09-14'),
+(11, 2, 'SADSADSADASDASss', 'dasdasdss', 'SADSADSAS', '');
 
 -- --------------------------------------------------------
 
@@ -173,7 +190,9 @@ CREATE TABLE `outstanding_athlete` (
 --
 
 INSERT INTO `outstanding_athlete` (`id`, `student_id`, `coach_name`, `organizer_name`, `sports`, `date_issued`) VALUES
-(9, 1, 'dwadawdawwa', 'wadawdadwa', 'WADWADAWDAW', '2022-08-12');
+(9, 1, 'dwadawdawwas', 'wadawdadwasa', 'WADWADAWDAWSS', '2022-09-13'),
+(10, 2, 'ddasdasdasd', 'sadasdsa', 'SADSADSAD', '2022-09-13'),
+(11, 1, 'ddsadasdas', 'sadsadsa', 'SADSADASDAS', '2022-09-13');
 
 -- --------------------------------------------------------
 
@@ -208,10 +227,17 @@ CREATE TABLE `programs` (
 
 INSERT INTO `programs` (`id`, `abbreviation`, `program_name`, `college_id`) VALUES
 (1, 'BSIT', 'Bachelor of Science in Information Technology', 1),
-(2, 'wadwd', 'wadwadawdaws', 3),
-(4, 'wadwa', 'awdawdaw', 4),
-(5, 'awdad', 'awdwadaws', 1),
-(7, 'dwadwadadw', 'wadawdwadwad', 1);
+(22, 'BEED', 'Bachelor of Elementary Education', 2),
+(23, 'BSED', 'Bachelor of Secondary Education', 2),
+(24, 'TCP', 'Teacher Certificate Program', 2),
+(25, 'ABCOM', 'Bachelor of Arts in Communication', 1),
+(26, 'AB PolSci', 'Bachelor of Arts in Political Science', 1),
+(27, 'AB English', 'Bachelor of Arts in English', 1),
+(28, 'BS Biology', 'Bachelor of Science in Biology', 1),
+(29, 'BSSW', 'Bachelor of science in Social Work', 1),
+(30, 'BLIS', 'Bachelor of Library and Information Science', 1),
+(31, 'BSTHRM', 'Bachelor of Science in Tourism, Hotel and Res', 3),
+(32, 'BSHRM', 'Bachelor of Science in Hotel and Restaurant M', 3);
 
 -- --------------------------------------------------------
 
@@ -262,7 +288,8 @@ CREATE TABLE `sanction_cases` (
 --
 
 INSERT INTO `sanction_cases` (`id`, `sanction_disciplinary_action_id`, `report`, `resolution`, `recommend`, `chairman`, `members`, `hearing_date`, `date_issued`) VALUES
-(39, 14, 'wdadawdawdawd', 'wadwadwadawd', 'Closed/Resolved', 'wadawdawdawd', 'awdawdawdawd', '0000-00-00', '2026-07-22');
+(49, 98, 'dwadwadaw', 'dwadawd', 'For Continuing Hearing', 'awawdawd', 'awdawdawdawdawd', '2022-09-12', '2012-09-22'),
+(50, 99, 'awdwa', 'dwdawdawdaw', 'Closed/Resolved', 'dwadawdaw', 'dwadwadw', '0000-00-00', '2012-09-22');
 
 -- --------------------------------------------------------
 
@@ -278,7 +305,7 @@ CREATE TABLE `sanction_disciplinary_action` (
   `counselling_date` date NOT NULL,
   `counselling_time` time NOT NULL,
   `issual_date` date NOT NULL,
-  `remarks` varchar(40) NOT NULL
+  `remarks` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -286,8 +313,8 @@ CREATE TABLE `sanction_disciplinary_action` (
 --
 
 INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`) VALUES
-(14, 26, '2022-07-19', '10:26:00', '2022-07-19', '10:26:00', '2022-07-19', 'Counselled'),
-(77, 32, '2022-07-24', '23:49:00', '2022-07-24', '23:49:00', '2022-07-24', '');
+(98, 49, '2022-09-04', '20:23:00', '2022-09-04', '20:23:00', '2022-09-04', 'For Continuing Hearing'),
+(99, 55, '2022-09-12', '20:33:00', '2022-09-12', '08:33:00', '2022-09-12', 'Closed/Resolved');
 
 -- --------------------------------------------------------
 
@@ -302,20 +329,20 @@ CREATE TABLE `sanction_referrals` (
   `complainer_name` varchar(150) NOT NULL,
   `referred` varchar(45) NOT NULL,
   `date` date NOT NULL,
-  `remark` varchar(45) DEFAULT NULL
+  `remark` varchar(45) DEFAULT NULL,
+  `semester_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sanction_referrals`
 --
 
-INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`) VALUES
-(26, 1, 2, 'Melvin Copioso', 'Ken Vinegas', '2022-07-12', 'Actioned'),
-(29, 2, 39, 'Ken Venigas', 'Jan Ramil', '2022-07-24', ''),
-(32, 1, 2, 'wadawd', 'adwadawdawd', '2022-07-08', 'Actioned'),
-(33, 1, 35, 'wadwadadawwadwadawd', 'wwdawdawdwdwd', '2022-07-28', NULL),
-(34, 2, 24, 'wadawdwadadd', 'awdwadawdawd', '2022-07-28', NULL),
-(35, 3, 38, 'wadwadwadwadawdwa', 'wadawdawdawdaw', '2022-08-30', NULL);
+INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`, `semester_id`) VALUES
+(49, 1, 38, 'wadawd', 'awdawdawdaw', '2022-09-04', 'Actioned', 4),
+(54, 1, 9, 'wadwadawdwad', 'wadadawdwadaw', '2022-09-12', NULL, 4),
+(55, 1, 8, 'wadawdaw', 'dawdawdawd', '2022-09-12', 'Actioned', 4),
+(56, 2, 8, 'wadwadaw', 'dwadadaw', '2022-09-13', NULL, 4),
+(57, 2, 2, 'awdawdawd', 'awdawdawd', '2022-09-14', NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -342,8 +369,7 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `student_no`, `first_name`, `middle_name`, `last_name`, `age`, `gender`, `section`, `email`, `program_id`) VALUES
 (1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 22, 'Male', 'AI42', 'bisoyjan@gmail.com', 1),
-(2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1),
-(3, 1800050, 'Iris', 'I', 'Sarida', 22, 'Female', 'A|22', 'irisjoyserida@gmail.com', 2);
+(2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1);
 
 -- --------------------------------------------------------
 
@@ -376,25 +402,6 @@ INSERT INTO `themeplate_filepath` (`id`, `name`, `path`, `save_path`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tokens`
---
-
-CREATE TABLE `tokens` (
-  `id` int(11) NOT NULL,
-  `provider` varchar(255) NOT NULL,
-  `provider_value` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tokens`
---
-
-INSERT INTO `tokens` (`id`, `provider`, `provider_value`) VALUES
-(1, 'google', '1//0erLaGqfsbncCCgYIARAAGA4SNwF-L9IrD2moqV_TuwvXLcOd8oJ2xNX1LmTWKO7nPmMqSijVf6vfqb9-ZfnqSo9SoAlrI-8mBm0');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
@@ -414,7 +421,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `type`, `first_name`, `middle_name`, `last_name`) VALUES
 (1, 'Admin', '$2y$10$j91BGsxmOVPESpirJseRc.BnYrUJ1VHlCmBFRC1TP4gSPHp.LRLpC', 'Admin', 'Admin', 'Admin', 'Admin'),
-(2, 'User', '$2y$10$F6TjYEA3d4qrOfDVY9OFr.14W5O2uIJ9Gw0Mtk0s8OWJ4XQQ78Jsi', 'User', 'User', 'User', 'User');
+(2, 'User', '$2y$10$x9zsdND2ozL7OQTVvsrc.uiLfKCPaqflnh8SK1MeSP..77TE76ra2', 'User', 'User', 'User', 'User');
 
 -- --------------------------------------------------------
 
@@ -582,7 +589,8 @@ ALTER TABLE `sanction_disciplinary_action`
 ALTER TABLE `sanction_referrals`
   ADD PRIMARY KEY (`id`),
   ADD KEY `student_id` (`student_id`),
-  ADD KEY `referral_violation_id` (`violation_id`);
+  ADD KEY `referral_violation_id` (`violation_id`),
+  ADD KEY `referrals_semester_id` (`semester_id`);
 
 --
 -- Indexes for table `students`
@@ -601,12 +609,6 @@ ALTER TABLE `students`
 -- Indexes for table `themeplate_filepath`
 --
 ALTER TABLE `themeplate_filepath`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tokens`
---
-ALTER TABLE `tokens`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -654,19 +656,19 @@ ALTER TABLE `honors`
 -- AUTO_INCREMENT for table `kindly_acts`
 --
 ALTER TABLE `kindly_acts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `leaderships`
 --
 ALTER TABLE `leaderships`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `mvp_athletes`
 --
 ALTER TABLE `mvp_athletes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `offenses`
@@ -678,7 +680,7 @@ ALTER TABLE `offenses`
 -- AUTO_INCREMENT for table `outstanding_athlete`
 --
 ALTER TABLE `outstanding_athlete`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `performers`
@@ -690,7 +692,7 @@ ALTER TABLE `performers`
 -- AUTO_INCREMENT for table `programs`
 --
 ALTER TABLE `programs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `properties`
@@ -702,37 +704,31 @@ ALTER TABLE `properties`
 -- AUTO_INCREMENT for table `sanction_cases`
 --
 ALTER TABLE `sanction_cases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `themeplate_filepath`
 --
 ALTER TABLE `themeplate_filepath`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `tokens`
---
-ALTER TABLE `tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -808,26 +804,27 @@ ALTER TABLE `programs`
 -- Constraints for table `sanction_cases`
 --
 ALTER TABLE `sanction_cases`
-  ADD CONSTRAINT `case_disciplinary_id` FOREIGN KEY (`sanction_disciplinary_action_id`) REFERENCES `sanction_disciplinary_action` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `case_disciplinary_id` FOREIGN KEY (`sanction_disciplinary_action_id`) REFERENCES `sanction_disciplinary_action` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
-  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`sanction_referral_id`) REFERENCES `sanction_referrals` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`sanction_referral_id`) REFERENCES `sanction_referrals` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  ADD CONSTRAINT `referral_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `referral_violation_id` FOREIGN KEY (`violation_id`) REFERENCES `violations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `referral_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `referral_violation_id` FOREIGN KEY (`violation_id`) REFERENCES `violations` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `referrals_semester_id` FOREIGN KEY (`semester_id`) REFERENCES `semesters` (`id`);
 
 --
 -- Constraints for table `students`
 --
 ALTER TABLE `students`
-  ADD CONSTRAINT `program_id` FOREIGN KEY (`program_id`) REFERENCES `programs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `program_id` FOREIGN KEY (`program_id`) REFERENCES `programs` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `violations`

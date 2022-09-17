@@ -8,6 +8,9 @@ include('../includes/main/navbar.php');
         <div class="col-auto">
             <h1>Dashboard</h1>
         </div>
+        <div class="col-7 pt-2 d-flex justify-content-end">
+            <p class="h4">School Year | </p>
+        </div>
         <div class="col pt-2 d-flex justify-content-end">
             <p class="h4" id="time">Time</p>
         </div>
