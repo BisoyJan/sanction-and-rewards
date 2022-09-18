@@ -68,32 +68,43 @@ if (isset($_GET['action_id'])) {
 }
 
 if (isset($_GET['referral_id'])) {
-    $referral_id = mysqli_real_escape_string($con, $_GET['referral_id']);
 
-    $query = "SELECT
+    if (empty($_SESSION['school_year'])) {
+        $res = [
+            'status' => 200,
+            'message' => 'School year and semester not set!!',
+        ];
+        echo json_encode($res);
+        return;
+    } else {
+
+        $referral_id = mysqli_real_escape_string($con, $_GET['referral_id']);
+
+        $query = "SELECT
         sanction_disciplinary_action.*
     FROM
         sanction_disciplinary_action
     WHERE
     sanction_referral_id = '$referral_id'";
 
-    $query_run = mysqli_query($con, $query);
+        $query_run = mysqli_query($con, $query);
 
-    if (mysqli_num_rows($query_run) == 1) {
+        if (mysqli_num_rows($query_run) == 1) {
 
-        $res = [
-            'status' => 200,
-            'message' => 'This Referral Already filed Action Report',
-        ];
-        echo json_encode($res);
-        return;
-    } else {
-        $res = [
-            'status' => 404,
-            'message' => 'Specific action Not found'
-        ];
-        echo json_encode($res);
-        return;
+            $res = [
+                'status' => 200,
+                'message' => 'This Referral Already filed Action Report',
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 404,
+                'message' => 'Specific action Not found'
+            ];
+            echo json_encode($res);
+            return;
+        }
     }
 }
 

@@ -8,11 +8,19 @@ include('../includes/main/navbar.php');
         <div class="col-auto">
             <h1>Dashboard</h1>
         </div>
-        <div class="col-7 pt-2 d-flex justify-content-end">
-            <p class="h4">School Year | </p>
-        </div>
         <div class="col pt-2 d-flex justify-content-end">
-            <p class="h4" id="time">Time</p>
+
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2 bd-highlight h5" id="time">Time</div>
+                <?php if (empty($_SESSION['school_year'])) { ?>
+                    <a href="semester.php">
+                        <div class="p-2 bd-highlight h5">School year not set click here to set </div>
+                    </a>
+                <?php } else { ?>
+                    <div class="p-2 bd-highlight h5"><?= $_SESSION['semester']; ?> | <?= $_SESSION['school_year']; ?> </div>
+                <?php } ?>
+            </div>
+
         </div>
     </div>
 

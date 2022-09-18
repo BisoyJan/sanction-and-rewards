@@ -212,6 +212,28 @@ include('../includes/main/navbar.php');
         label.innerHTML = "Edit MVP Athlete Award Details";
     }
 
+    //Bootstrap input validation 5 Validation
+    (function() {
+        'use strict';
+
+        const forms = document.querySelectorAll('.requires-validation');
+        Array.from(forms).forEach(function(form) {
+            form.addEventListener(
+                'submit',
+                function(event) {
+                    if (!form.checkValidity()) {
+
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                },
+                false
+            );
+        });
+    })();
+
     $(document).on('click', '.viewPDFButton', function() {
         var MVPAthlete_id = $(this).val();
 

@@ -121,6 +121,7 @@ if (isset($_GET['referral_id'])) {
         ];
         echo json_encode($res);
         return;
+        
     } else {
         $res = [
             'status' => 404,
@@ -132,6 +133,7 @@ if (isset($_GET['referral_id'])) {
 }
 
 if (isset($_POST['create_Referral'])) {
+
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
 
@@ -182,7 +184,7 @@ if (isset($_POST['create_Referral'])) {
             return;
         }
 
-        
+        //TODO need to fix the semester when adding to database
 
         //This query will insert data to database if conditions are meet.
         $query = "INSERT INTO `sanction_referrals`(

@@ -57,6 +57,7 @@ if ($total_data > 0) {
             <td>' .  date("M/d/Y", strtotime($row["second_starting"])) . ' - ' . date("M/d/Y", strtotime($row["second_ending"])) . '</td>
             <td>' . $row["school_year"] . '</td>
             <td>
+                <button class="semesterSetButton btn btn-secondary" value="' . $row["id"] . '" type="button">Set</button> 
                 <button class="semesterEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#SemesterModal">Update</button>
                 <button class="semesterDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#SemesterDeleteModal">Delete</button>
             </td>

@@ -221,6 +221,32 @@ include('../includes/main/navbar.php');
     });
 
     //CRUD Function
+    $(document).on('click', '.semesterSetButton', function() {
+        var semester_id = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/semester.php?semester_set=" + semester_id,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response);
+                if (res.status == 404) {
+
+                    toastr.warning(res.message, res.status);
+
+                } else if (res.status == 200) {
+
+                    console.log(res.console)
+                    toastr.success(res.message, res.status);
+
+                } else {
+                    toastr.info(res.message, res.status);
+                }
+            }
+        });
+
+    });
+
     $(document).on('click', '.semesterEditButton', function() {
         var semester_id = $(this).val();
 
