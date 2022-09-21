@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2022 at 01:57 PM
+-- Generation Time: Sep 21, 2022 at 10:12 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -46,48 +46,6 @@ INSERT INTO `colleges` (`id`, `abbreviation`, `college`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cum_laudes`
---
-
-CREATE TABLE `cum_laudes` (
-  `id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `date_issued` varchar(20) NOT NULL,
-  `school_year` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `document_filepath`
---
-
-CREATE TABLE `document_filepath` (
-  `id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `path` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `honors`
---
-
-CREATE TABLE `honors` (
-  `id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `gwa` varchar(10) NOT NULL,
-  `school_year` varchar(20) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  `unit_head` varchar(100) NOT NULL,
-  `unit_head_title` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `kindly_acts`
 --
 
@@ -115,6 +73,7 @@ INSERT INTO `kindly_acts` (`id`, `student_id`, `date_issued`, `kindly_act`) VALU
 CREATE TABLE `leaderships` (
   `id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
+  `semester_id` int(11) NOT NULL,
   `date_issued` varchar(100) NOT NULL,
   `event_title` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -123,83 +82,8 @@ CREATE TABLE `leaderships` (
 -- Dumping data for table `leaderships`
 --
 
-INSERT INTO `leaderships` (`id`, `student_id`, `date_issued`, `event_title`) VALUES
-(30, 1, '2022-09-14', 'wadwadadawdawdw');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `logs`
---
-
-CREATE TABLE `logs` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `section` varchar(100) NOT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`id`, `user_id`, `description`, `section`, `date`) VALUES
-(38, 1, 'Created data Primary key:10', 'Outstanding Athlete', '2022-09-13 09:48:10'),
-(39, 1, 'Created data Primary key:11', 'Outstanding Athlete', '2022-09-13 09:49:18'),
-(40, 1, 'Created data Primary key:56', 'Sanction Referral', '2022-09-13 09:52:23'),
-(42, 1, 'Created data Primary key:10', 'MVP Athlete', '2022-09-13 09:59:39'),
-(44, 1, 'Created data Primary key:', 'Programs', '2022-09-13 10:00:59'),
-(45, 1, 'Deleted data Primary key:20', 'Programs', '2022-09-13 10:01:12'),
-(46, 1, 'Created data Primary key:13', 'Good Deeds', '2022-09-13 10:01:37'),
-(47, 1, 'Deleted data Primary key:13', 'Good Deeds', '2022-09-13 10:04:43'),
-(48, 1, 'User Logout to the system ', '', '2022-09-13 10:04:57'),
-(49, 1, 'User Login to the system', '', '2022-09-13 10:05:02'),
-(50, 1, 'Created data Primary key:11', 'MVP Athlete', '2022-09-13 10:08:06'),
-(51, 1, 'Updated data Primary key:11', 'MVP Athlete', '2022-09-13 10:08:53'),
-(52, 1, 'Created data Primary key:', 'Programs', '2022-09-13 10:09:17'),
-(53, 1, 'User Logout to the system ', '', '2022-09-13 10:18:04'),
-(54, 1, 'User Login to the system', '', '2022-09-13 10:26:06'),
-(55, 1, 'User Logout to the system ', '', '2022-09-13 10:28:02'),
-(56, 1, 'User Login to the system', '', '2022-09-13 10:30:31'),
-(57, 1, 'User Login to the system', '', '2022-09-14 01:46:33'),
-(58, 1, 'Created data Primary key:30', 'Leadership', '2022-09-14 02:06:34'),
-(59, 1, 'User Login to the system', '', '2022-09-14 05:51:09'),
-(60, 1, 'Deleted data Primary key:2', 'Programs', '2022-09-14 05:51:58'),
-(61, 1, 'Deleted data Primary key:4', 'Programs', '2022-09-14 05:52:00'),
-(62, 1, 'Deleted data Primary key:5', 'Programs', '2022-09-14 05:52:01'),
-(63, 1, 'Deleted data Primary key:7', 'Programs', '2022-09-14 05:52:02'),
-(64, 1, 'Deleted data Primary key:19', 'Programs', '2022-09-14 05:52:06'),
-(65, 1, 'Deleted data Primary key:21', 'Programs', '2022-09-14 05:52:08'),
-(66, 1, 'Created data Primary key:22', 'Programs', '2022-09-14 05:54:01'),
-(67, 1, 'Created data Primary key:23', 'Programs', '2022-09-14 05:54:37'),
-(68, 1, 'Created data Primary key:24', 'Programs', '2022-09-14 05:54:54'),
-(69, 1, 'Created data Primary key:25', 'Programs', '2022-09-14 05:55:29'),
-(70, 1, 'Created data Primary key:26', 'Programs', '2022-09-14 05:55:53'),
-(71, 1, 'Created data Primary key:27', 'Programs', '2022-09-14 05:56:32'),
-(72, 1, 'Created data Primary key:28', 'Programs', '2022-09-14 05:56:53'),
-(73, 1, 'Created data Primary key:29', 'Programs', '2022-09-14 05:57:14'),
-(74, 1, 'Created data Primary key:30', 'Programs', '2022-09-14 05:57:38'),
-(75, 1, 'Created data Primary key:31', 'Programs', '2022-09-14 05:58:48'),
-(76, 1, 'Created data Primary key:32', 'Programs', '2022-09-14 05:59:09'),
-(77, 1, 'Deleted data Primary key:4', 'Students', '2022-09-14 06:00:01'),
-(78, 1, 'User Logout to the system ', '', '2022-09-14 06:21:35'),
-(79, 1, 'User Login to the system', '', '2022-09-14 06:21:56'),
-(80, 1, 'Updated data Primary key:2', 'Account', '2022-09-14 06:36:14'),
-(81, 1, 'User Logout to the system ', '', '2022-09-14 06:36:19'),
-(82, 2, 'User Login to the system', '', '2022-09-14 06:36:23'),
-(83, 2, 'User Logout to the system ', '', '2022-09-14 06:36:35'),
-(84, 1, 'User Login to the system', '', '2022-09-14 06:36:39'),
-(85, 1, 'User Login to the system', '', '2022-09-14 09:48:00'),
-(86, 1, 'User Logout to the system ', '', '2022-09-14 15:20:24'),
-(87, 1, 'User Login to the system', '', '2022-09-14 15:20:50'),
-(88, 1, 'Created data Primary key:57', 'Sanction Referral', '2022-09-14 15:21:20'),
-(89, 1, 'User Login to the system', '', '2022-09-16 07:38:59'),
-(90, 1, 'User Login to the system', '', '2022-09-16 11:21:17'),
-(91, 1, 'User Login to the system', '', '2022-09-16 14:22:29'),
-(92, 1, 'User Login to the system', '', '2022-09-16 16:58:12'),
-(93, 1, 'Updated data Primary key:4', 'Semester', '2022-09-16 17:11:37'),
-(94, 1, 'User Login to the system', '', '2022-09-17 07:38:50');
+INSERT INTO `leaderships` (`id`, `student_id`, `semester_id`, `date_issued`, `event_title`) VALUES
+(30, 1, 4, '2022-09-14', 'wadwadadawdawdw');
 
 -- --------------------------------------------------------
 
@@ -223,7 +107,7 @@ CREATE TABLE `mvp_athletes` (
 INSERT INTO `mvp_athletes` (`id`, `student_id`, `coach_name`, `organizer_name`, `sports`, `date_issued`) VALUES
 (9, 2, 'wadwadaw', 'dasdwad', 'WADWADAWDA', '2022-09-13'),
 (10, 1, 'awawdawd', 'wadwadawd', 'WADWDAWD', '2022-09-14'),
-(11, 2, 'SADSADSADASDASss', 'dasdasdss', 'SADSADSAS', '');
+(11, 2, 'SADSADSADASDASss', 'dasdasdss', 'SADSADSAS', '2022-09-18');
 
 -- --------------------------------------------------------
 
@@ -268,20 +152,6 @@ INSERT INTO `outstanding_athlete` (`id`, `student_id`, `coach_name`, `organizer_
 (9, 1, 'dwadawdawwas', 'wadawdadwasa', 'WADWADAWDAWSS', '2022-09-13'),
 (10, 2, 'ddasdasdasd', 'sadasdsa', 'SADSADSAD', '2022-09-13'),
 (11, 1, 'ddsadasdas', 'sadsadsa', 'SADSADASDAS', '2022-09-13');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `performers`
---
-
-CREATE TABLE `performers` (
-  `id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `date` datetime NOT NULL,
-  `type` varchar(150) NOT NULL,
-  `description` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -417,29 +287,8 @@ INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complaine
 (54, 1, 9, 'wadwadawdwad', 'wadadawdwadaw', '2022-09-12', NULL, 4),
 (55, 1, 8, 'wadawdaw', 'dawdawdawd', '2022-09-12', 'Actioned', 4),
 (56, 2, 8, 'wadwadaw', 'dwadadaw', '2022-09-13', NULL, 4),
-(57, 2, 2, 'awdawdawd', 'awdawdawd', '2022-09-14', NULL, 4);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `semesters`
---
-
-CREATE TABLE `semesters` (
-  `id` int(11) NOT NULL,
-  `first_starting` date NOT NULL,
-  `first_ending` date NOT NULL,
-  `second_starting` date NOT NULL,
-  `second_ending` date NOT NULL,
-  `school_year` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `semesters`
---
-
-INSERT INTO `semesters` (`id`, `first_starting`, `first_ending`, `second_starting`, `second_ending`, `school_year`) VALUES
-(4, '2022-08-01', '2022-12-26', '2023-01-01', '2023-05-31', '2022-2023');
+(57, 2, 2, 'awdawdawd', 'awdawdawd', '2022-09-14', NULL, 4),
+(68, 2, 9, 'wadwad', 'wadawdad', '2022-09-22', NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -467,34 +316,6 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`id`, `student_no`, `first_name`, `middle_name`, `last_name`, `age`, `gender`, `section`, `email`, `program_id`) VALUES
 (1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 22, 'Male', 'AI42', 'bisoyjan@gmail.com', 1),
 (2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `themeplate_filepath`
---
-
-CREATE TABLE `themeplate_filepath` (
-  `id` int(11) NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `path` varchar(250) NOT NULL,
-  `save_path` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `themeplate_filepath`
---
-
-INSERT INTO `themeplate_filepath` (`id`, `name`, `path`, `save_path`) VALUES
-(1, 'Cum Laude', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\CUMLAUDE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\CumLaude'),
-(2, 'Action', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\DISCIPLINARY ACTION SLIP FORM.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\Action'),
-(3, 'Case', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\DISCIPLINARY CASE SLIP FORM.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\Case'),
-(4, 'Referral', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\DISCIPLINARY REFERRAL SLIP FORM.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\Referral'),
-(5, 'Kindly Act', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\GOOD-DEEDS-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\Good Deeds'),
-(6, 'LeaderShip', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\LEADERSHIP.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\Leadership'),
-(7, 'Outstanding Athlete', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\OUTSTANDING-ATHLETE-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\Outstanding Athlete'),
-(8, 'MVP', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\REWARDS-ATHLETE-MVP-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\MVP Athlete'),
-(9, 'Honors', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Themeplates\\REWARDS-GWA-CERTIFICATE.docx', 'C:\\Users\\bisoy\\Documents\\Important\\Projects\\VPSDAS system\\vpsdas-system\\Documents\\GWA');
 
 -- --------------------------------------------------------
 
@@ -590,27 +411,6 @@ ALTER TABLE `colleges`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cum_laudes`
---
-ALTER TABLE `cum_laudes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cumlaude_student_id` (`student_id`);
-
---
--- Indexes for table `document_filepath`
---
-ALTER TABLE `document_filepath`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `document_filepath_case_id` (`student_id`);
-
---
--- Indexes for table `honors`
---
-ALTER TABLE `honors`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `honors_student_id` (`student_id`);
-
---
 -- Indexes for table `kindly_acts`
 --
 ALTER TABLE `kindly_acts`
@@ -622,14 +422,8 @@ ALTER TABLE `kindly_acts`
 --
 ALTER TABLE `leaderships`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `leadership_student_id` (`student_id`);
-
---
--- Indexes for table `logs`
---
-ALTER TABLE `logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `leadership_student_id` (`student_id`),
+  ADD KEY `leadership_semester_id` (`semester_id`);
 
 --
 -- Indexes for table `mvp_athletes`
@@ -650,13 +444,6 @@ ALTER TABLE `offenses`
 ALTER TABLE `outstanding_athlete`
   ADD PRIMARY KEY (`id`),
   ADD KEY `outstanding_student_id` (`student_id`);
-
---
--- Indexes for table `performers`
---
-ALTER TABLE `performers`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `programs`
@@ -697,12 +484,6 @@ ALTER TABLE `sanction_referrals`
   ADD KEY `referrals_semester_id` (`semester_id`);
 
 --
--- Indexes for table `semesters`
---
-ALTER TABLE `semesters`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -714,12 +495,6 @@ ALTER TABLE `students`
   ADD KEY `program_id_2` (`program_id`),
   ADD KEY `student_id_3` (`student_no`),
   ADD KEY `id` (`id`);
-
---
--- Indexes for table `themeplate_filepath`
---
-ALTER TABLE `themeplate_filepath`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -745,24 +520,6 @@ ALTER TABLE `colleges`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `cum_laudes`
---
-ALTER TABLE `cum_laudes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `document_filepath`
---
-ALTER TABLE `document_filepath`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
-
---
--- AUTO_INCREMENT for table `honors`
---
-ALTER TABLE `honors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- AUTO_INCREMENT for table `kindly_acts`
 --
 ALTER TABLE `kindly_acts`
@@ -773,12 +530,6 @@ ALTER TABLE `kindly_acts`
 --
 ALTER TABLE `leaderships`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT for table `logs`
---
-ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `mvp_athletes`
@@ -797,12 +548,6 @@ ALTER TABLE `offenses`
 --
 ALTER TABLE `outstanding_athlete`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `performers`
---
-ALTER TABLE `performers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `programs`
@@ -832,25 +577,13 @@ ALTER TABLE `sanction_disciplinary_action`
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
---
--- AUTO_INCREMENT for table `semesters`
---
-ALTER TABLE `semesters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `themeplate_filepath`
---
-ALTER TABLE `themeplate_filepath`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -869,24 +602,6 @@ ALTER TABLE `violations`
 --
 
 --
--- Constraints for table `cum_laudes`
---
-ALTER TABLE `cum_laudes`
-  ADD CONSTRAINT `cumlaude_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `document_filepath`
---
-ALTER TABLE `document_filepath`
-  ADD CONSTRAINT `document_filepath_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `honors`
---
-ALTER TABLE `honors`
-  ADD CONSTRAINT `honors_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `kindly_acts`
 --
 ALTER TABLE `kindly_acts`
@@ -896,13 +611,8 @@ ALTER TABLE `kindly_acts`
 -- Constraints for table `leaderships`
 --
 ALTER TABLE `leaderships`
+  ADD CONSTRAINT `leadership_semester_id` FOREIGN KEY (`semester_id`) REFERENCES `semesters` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `leadership_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`);
-
---
--- Constraints for table `logs`
---
-ALTER TABLE `logs`
-  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `mvp_athletes`
@@ -915,12 +625,6 @@ ALTER TABLE `mvp_athletes`
 --
 ALTER TABLE `outstanding_athlete`
   ADD CONSTRAINT `outstanding_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `performers`
---
-ALTER TABLE `performers`
-  ADD CONSTRAINT `performers_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `programs`
