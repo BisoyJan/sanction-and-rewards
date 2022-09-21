@@ -317,10 +317,10 @@ include('../includes/forms/header.php');
 
                 } else if (res.status == 200) {
 
-                    // toastr.success(res.message, res.status);
-                    // setTimeout(function() {
-                    //     window.location.href = '../views/sanction-referral.php';
-                    // }, 1000);
+                    toastr.success(res.message, res.status);
+                    setTimeout(function() {
+                        window.location.href = '../views/sanction-referral.php';
+                    }, 1000);
 
                     console.log(res.console);
 

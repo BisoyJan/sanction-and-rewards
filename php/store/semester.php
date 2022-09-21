@@ -81,7 +81,8 @@ if (isset($_GET['semester_set'])) {
     } else {
         $res = [
             'status' => 100,
-            'message' => 'Is already set'
+            'message' => 'Is already set',
+            'console' =>  $_SESSION['school_year']
         ];
         echo json_encode($res);
         return;

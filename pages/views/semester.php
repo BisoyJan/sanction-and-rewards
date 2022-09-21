@@ -137,6 +137,10 @@ include('../includes/main/navbar.php');
         load_data(1);
     });
 
+    function refresh() {
+        load_data(1);
+    }
+
     function load_data(page = 1, query = '') {
         $.ajax({
             url: "../../php/fetchPaginate/semesterTable.php",

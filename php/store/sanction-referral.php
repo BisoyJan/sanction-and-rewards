@@ -121,7 +121,6 @@ if (isset($_GET['referral_id'])) {
         ];
         echo json_encode($res);
         return;
-        
     } else {
         $res = [
             'status' => 404,
@@ -145,6 +144,8 @@ if (isset($_POST['create_Referral'])) {
     $complainerName = mysqli_real_escape_string($con, $_POST['complainerName']);
     $referredTo = mysqli_real_escape_string($con, $_POST['referredTo']);
     $dateIssued = mysqli_real_escape_string($con, $_POST['dateIssued']);
+
+    $semester_id =  $_SESSION['semester_id'];
 
     //First if statement that checks if all data need is present in the parameters
     if ($student_id == NULL || $violation_id == NULL || $complainerName == NULL || $referredTo == NULL || $dateIssued == NULL) {
@@ -193,7 +194,8 @@ if (isset($_POST['create_Referral'])) {
                 `complainer_name`,
                 `referred`,
                 `date`,
-                `remark`
+                `remark`,
+                `semester_id`
             )
             VALUES(
                 '$student_id',
@@ -201,7 +203,8 @@ if (isset($_POST['create_Referral'])) {
                 '$complainerName',
                 '$referredTo',
                 '$dateIssued',
-                NUll
+                NUll,
+                '$semester_id'
             );";
 
         $query_run = mysqli_query($con, $query);

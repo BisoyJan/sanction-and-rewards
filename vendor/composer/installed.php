@@ -3,7 +3,7 @@
         'name' => 'vpsdas/pdftk',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '4d45317dc6cd36028292d92bd4b7afab2517f6b8',
+        'reference' => 'e4e7981058f60bc681956238ef26f05a6d08a059',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -166,7 +166,7 @@
         'vpsdas/pdftk' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '4d45317dc6cd36028292d92bd4b7afab2517f6b8',
+            'reference' => 'e4e7981058f60bc681956238ef26f05a6d08a059',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

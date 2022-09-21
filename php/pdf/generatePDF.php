@@ -11,7 +11,13 @@ class generatePDF
         extract($data);
 
         $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
-        $pdf = new Pdf('../../assets/docs/themeplates/DISCIPLINARY REFERRAL SLIP FORM.pdf');
+
+        $pdf = new Pdf('C:\xampp\htdocs\sanction-and-rewards\assets\docs\themeplates\DISCIPLINARY REFERRAL SLIP FORM.pdf', [
+            'command' => 'C:\Program Files (x86)\PDFtk Server\bin\pdftk.exe',
+            'useExec' => true
+        ]);
+
+        //$pdf = new Pdf('../../assets/docs/themeplates/DISCIPLINARY REFERRAL SLIP FORM.pdf');
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/referrals/' . $filename);
@@ -24,7 +30,13 @@ class generatePDF
         extract($data);
 
         $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
-        $pdf = new Pdf('../../assets/docs/themeplates/DISCIPLINARY ACTION SLIP FORM.pdf');
+
+        $pdf = new Pdf('C:\xampp\htdocs\sanction-and-rewards\assets\docs\themeplates\DISCIPLINARY ACTION SLIP FORM.pdf', [
+            'command' => 'C:\Program Files (x86)\PDFtk Server\bin\pdftk.exe',
+            'useExec' => true
+        ]);
+
+        //$pdf = new Pdf('../../assets/docs/themeplates/DISCIPLINARY ACTION SLIP FORM.pdf');
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/action/' . $filename);
@@ -37,7 +49,13 @@ class generatePDF
         extract($data);
 
         $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
-        $pdf = new Pdf('../../assets/docs/themeplates/DISCIPLINARY CASE SLIP FORM.pdf');
+
+        $pdf = new Pdf('C:\xampp\htdocs\sanction-and-rewards\assets\docs\themeplates\DISCIPLINARY CASE SLIP FORM.pdf', [
+            'command' => 'C:\Program Files (x86)\PDFtk Server\bin\pdftk.exe',
+            'useExec' => true
+        ]);
+
+        //$pdf = new Pdf('../../assets/docs/themeplates/DISCIPLINARY CASE SLIP FORM.pdf');
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/counselling/' . $filename);
@@ -50,7 +68,13 @@ class generatePDF
         extract($data);
 
         $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
-        $pdf = new Pdf('../../assets/docs/themeplates/LEADERSHIP.pdf');
+
+        $pdf = new Pdf('C:\xampp\htdocs\sanction-and-rewards\assets\docs\themeplates\LEADERSHIP.pdf', [
+            'command' => 'C:\Program Files (x86)\PDFtk Server\bin\pdftk.exe',
+            'useExec' => true
+        ]);
+
+        //$pdf = new Pdf('../../assets/docs/themeplates/LEADERSHIP.pdf');
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/leadership/' . $filename);
@@ -63,7 +87,13 @@ class generatePDF
 
         extract($data);
         $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
-        $pdf = new Pdf('../../assets/docs/themeplates/GOOD-DEEDS-CERTIFICATE.pdf');
+
+        $pdf = new Pdf('C:\xampp\htdocs\sanction-and-rewards\assets\docs\themeplates\GOOD-DEEDS-CERTIFICATE.pdf', [
+            'command' => 'C:\Program Files (x86)\PDFtk Server\bin\pdftk.exe',
+            'useExec' => true
+        ]);
+
+        //$pdf = new Pdf('../../assets/docs/themeplates/GOOD-DEEDS-CERTIFICATE.pdf');
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/good-deeds/' . $filename);
@@ -76,7 +106,13 @@ class generatePDF
 
         extract($data);
         $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
-        $pdf = new Pdf('../../assets/docs/themeplates/OUTSTANDING-ATHLETE-CERTIFICATE.pdf');
+
+        $pdf = new Pdf('C:\xampp\htdocs\sanction-and-rewards\assets\docs\themeplates\OUTSTANDING-ATHLETE-CERTIFICATE.pdf', [
+            'command' => 'C:\Program Files (x86)\PDFtk Server\bin\pdftk.exe',
+            'useExec' => true
+        ]);
+
+        //$pdf = new Pdf('../../assets/docs/themeplates/OUTSTANDING-ATHLETE-CERTIFICATE.pdf');
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/outstanding-athlete/' . $filename);
@@ -89,7 +125,13 @@ class generatePDF
 
         extract($data);
         $filename =  $student_no . '_' . $last_inserted_id . '.pdf';
-        $pdf = new Pdf('../../assets/docs/themeplates/REWARDS-ATHLETE-MVP-CERTIFICATE.pdf');
+
+        $pdf = new Pdf('C:\xampp\htdocs\sanction-and-rewards\assets\docs\themeplates\REWARDS-ATHLETE-MVP-CERTIFICATE.pdf', [
+            'command' => 'C:\Program Files (x86)\PDFtk Server\bin\pdftk.exe',
+            'useExec' => true
+        ]);
+
+        //$pdf = new Pdf('../../assets/docs/themeplates/REWARDS-ATHLETE-MVP-CERTIFICATE.pdf');
         $pdf->fillForm($data)
             ->flatten()
             ->saveAs('../../assets/docs/processed/mvp-athlete/' . $filename);
