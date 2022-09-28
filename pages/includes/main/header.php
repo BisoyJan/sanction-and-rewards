@@ -26,7 +26,7 @@ endif;
 
     <script src="../../assets/js/jquery.min.js"></script>
     <script src="../../assets/js/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script> -->
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/moment.min.js"></script>
     <script src="../../assets/toastr/toastr.min.js"></script>
@@ -34,30 +34,3 @@ endif;
 </head>
 
 <body style="width:100%;height:100%;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
-
-    <!-- Modal
-    <div class="modal fade" id="ReferralDeleteModal" tabindex="-1" aria-labelledby="ReferralDeleteModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <form id="semester">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Delete Account</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h6>Please Select What Semester?</h6>
-                        <div class="input-group mb-3">
-                            <select class="form-select" id="category" name="category">
-                                <option selected value="1st Semester">Un-actioned</option>
-                                <option value="2">Actioned</option>
-                                <option value="3">All Data</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary deleteLostFound" type="submit">Confirm</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> -->

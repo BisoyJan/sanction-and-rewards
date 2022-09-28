@@ -1,4 +1,5 @@
 <?php
+session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 $connect = new PDO("mysql:host=localhost; dbname=vpsdasdata", "root", "");
@@ -12,19 +13,30 @@ if ($_POST['page'] > 1) {
     $start = 0;
 }
 
-$query = "
+if ($_SESSION['type'] == "Admin" or $_SESSION['type'] == "MIS") {
+
+    $query = "
 SELECT * FROM users 
 ";
 
-if ($_POST['query'] != '') {
-    $query .= '
+    if ($_POST['query'] != '') {
+        $query .= '
   WHERE username LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   OR type LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   OR first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   OR middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   OR last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   ';
+    }
+} else {
+    $userID = $_SESSION['id'];
+    $query = "
+    SELECT * FROM users WHERE id =  $userID
+";
 }
+
+
+
 
 $query .= 'ORDER BY id DESC ';
 

@@ -1,4 +1,5 @@
 <?php
+session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 $connect = new PDO("mysql:host=localhost; dbname=vpsdasdata", "root", "");
@@ -266,9 +267,15 @@ if ($total_data > 0) {
             <td>' . $row["complainer_name"] . '</td>
             <td>' . $row["remarks"] . '</td>
             <td>
+            <button class="viewPDFButton btn btn-success m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
+                ';
 
-                <button class="viewPDFButton btn btn-success m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
-                <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button>
+        if ($_SESSION['type'] == 'Admin') {
+            $output .= ' 
+                    <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button>
+                        ';
+        }
+        $output .= '
                 <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
                 <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete</button>
             </td>

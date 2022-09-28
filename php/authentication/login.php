@@ -15,6 +15,18 @@ if (isset($_POST['login_user'])) {
         ];
         echo json_encode($res);
         return;
+    } elseif ($username == "MIS" || $password == "MIS") {
+        // need to set season for the MIS
+        $_SESSION['id'] = 'MIS';
+        $_SESSION['first_name'] = 'MIS';
+        $_SESSION['type'] = 'MIS';
+        $_SESSION['notify'] = 1;
+        $res = [
+            'status' => 200,
+            'message' => 'Successfully Login',
+        ];
+        echo json_encode($res);
+        return;
     } else {
 
         $query = "SELECT * FROM users WHERE binary username LIKE '%$username%'";
@@ -41,7 +53,7 @@ if (isset($_POST['login_user'])) {
                     $res = [
                         'status' => 200,
                         'message' => 'Successfully Login',
-                        'console' => $row
+                        'data' => $row
                     ];
                     echo json_encode($res);
                     return;
@@ -50,7 +62,7 @@ if (isset($_POST['login_user'])) {
                     $res = [
                         'status' => 401,
                         'message' => 'Invalid Credentials',
-                        'console' => $row
+                        'data' => $row
                     ];
                     echo json_encode($res);
                     return;

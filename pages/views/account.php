@@ -17,11 +17,16 @@ include('../includes/main/navbar.php');
                 <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
             </div>
         </div>
-        <div class="col">
-            <div class="d-grid gap-2 d-flex justify-content-end">
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="accountAddButton" onclick="formIDChangeAdd()" data-bs-target="#AccountModal">Add Button</button>
+
+        
+        <?php
+        if ($_SESSION['type'] == "Admin") { ?>
+            <div class="col">
+                <div class="d-grid gap-2 d-flex justify-content-end">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="accountAddButton" onclick="formIDChangeAdd()" data-bs-target="#AccountModal">Add Button</button>
+                </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
 
     <div id="dynamicTable">

@@ -85,8 +85,6 @@
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Disciplinary</a></li>
                     <li><a href="../views/semester.php">Semester</a></li>
-                    <li><a href="#">Database Backup</a></li>
-
                 </ul>
             </li>
             <li>
@@ -104,7 +102,36 @@
                 </div>
             </li>
         </ul>
-    <?php } elseif ($_SESSION['type'] == "User") { ?>
+    <?php } elseif ($_SESSION['type'] == "MIS") { ?>
+        <ul class="nav-links">
+            <li>
+                <a href="../views/account.php">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="link_name">Accounts</span>
+                </a>
+            </li>
+            <li>
+                <a href="../../pages/forms/databasebackup.php">
+                    <i class="fa-solid fa-database"></i>
+                    <span class="link_name">Database</span>
+                </a>
+            </li>
+            <li>
+                <div class="profile-details">
+                    <div class="profile-content">
+                        <img src="../../assets/images/user_90px.png" alt="profileImg">
+                    </div>
+                    <div class="name-job">
+
+                        <div class="profile_name"><?= $_SESSION['first_name']; ?></div>
+                        <div class="job">User Type: <?= $_SESSION['type']; ?></div>
+
+                    </div>
+                    <a href="../../php/authentication/logout.php"><i class="logoutBtn fa-solid fa-arrow-right-from-bracket"></i></a>
+                </div>
+            </li>
+        </ul>
+    <?php  } elseif ($_SESSION['type'] == "User") { ?>
         <ul class="nav-links">
             <li>
                 <a href="../views/index.php">
@@ -160,6 +187,12 @@
                     <li><a href="../views/reward-mvp_athlete.php">MVP Athlete</a></li>
                     <li><a href="../views/reward-good_deeds.php">Kindly Act</a></li>
                 </ul>
+            </li>
+            <li>
+                <a href="../views/account.php">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="link_name">Accounts</span>
+                </a>
             </li>
             <li>
                 <div class="iocn-link">

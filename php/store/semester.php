@@ -32,6 +32,63 @@ if (isset($_GET['semester_id'])) {
     }
 }
 
+if (isset($_GET['select_semesters'])) {
+    if (empty($_SESSION['school_year'])) {
+
+        $select_semester = mysqli_real_escape_string($con, $_GET['select_semesters']);
+
+        $query = "SELECT * FROM `semesters` WHERE school_year LIKE '%$select_semester%'";
+        $query_run = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($query_run) == 1) {
+
+            while ($row = mysqli_fetch_array($query_run)) {
+
+                //return true;  
+                if (date('n', strtotime($row['first_starting'])) <= date('n') && date('n', strtotime($row['first_ending'])) >= date('n')) {
+                    $_SESSION['semester_id'] = $row['id'];
+                    $_SESSION['school_year'] = $row['school_year'];
+                    $_SESSION['semester'] = '1st Semester';
+                } elseif (date('n', strtotime($row['second_starting'])) <= date('n') && date('n', strtotime($row['second_ending'])) >= date('n')) {
+                    $_SESSION['semester_id'] = $row['id'];
+                    $_SESSION['school_year'] = $row['school_year'];
+                    $_SESSION['semester'] = '2nd Semester';
+                }
+
+                $user_id = $_SESSION['id'];
+                $description = "User sets semester to the system";
+                $date = date('Y-m-d H:i:s');
+
+                $query = "INSERT INTO `logs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
+                $query_run = mysqli_query($con, $query);
+                $res = [
+                    'status' => 200,
+                    'message' => 'Semester is Set!',
+                    'console' => $row
+                ];
+                echo json_encode($res);
+                return;
+            }
+        } else {
+            $res = [
+                'status' => 404,
+                'message' => 'Semester Not Found',
+                'console' => 'Error'
+            ];
+            echo json_encode($res);
+            return;
+        }
+    } else {
+        $res = [
+            'status' => 100,
+            'message' => 'Is already set',
+            'console' =>  $_SESSION['school_year']
+        ];
+        echo json_encode($res);
+        return;
+    }
+}
+
 if (isset($_GET['semester_set'])) {
 
     if (empty($_SESSION['school_year'])) {

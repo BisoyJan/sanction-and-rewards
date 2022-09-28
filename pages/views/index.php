@@ -8,17 +8,23 @@ include('../includes/main/navbar.php');
         <div class="col-auto">
             <h1>Dashboard</h1>
         </div>
+        <?php if (empty($_SESSION['school_year'])) { ?>
+            <div class="col-auto">
+                <div class="input-group mb-3 pt-2">
+                    <input type="text" class="form-control " id="SchoolYear" name="SchoolYear" placeholder="School Year Ex 2022-2023" required>
+                </div>
+            </div>
+        <?php } ?>
         <div class="col pt-2 d-flex justify-content-end">
 
             <div class="d-flex flex-row-reverse">
-                <div class="p-2 bd-highlight h5" id="time">Time</div>
                 <?php if (empty($_SESSION['school_year'])) { ?>
-                    <a href="semester.php">
-                        <div class="p-2 bd-highlight h5">School year not set click here to set </div>
-                    </a>
+                    <!-- If school year empty nothings shows -->
                 <?php } else { ?>
                     <div class="p-2 bd-highlight h5"><?= $_SESSION['semester']; ?> | <?= $_SESSION['school_year']; ?> </div>
                 <?php } ?>
+                <div class=" p-2 bd-highlight h5" id="time">Time</div>
+
             </div>
 
         </div>
@@ -107,7 +113,7 @@ include('../includes/main/navbar.php');
             <div class="card mb-3 text-center" style="width:46.5rem;">
                 <div class="card-body">
                     <h5 class="card-title">Special title treatment</h5>
-                    <canvas id="barChart1" width="250" height="111"></canvas>
+                    <canvas id="lineChart" width="250" height="111"></canvas>
                 </div>
             </div>
         </div>
@@ -140,6 +146,7 @@ include('../includes/main/navbar.php');
         disciplinary();
         SanctionCategoryBarChart();
         CollegesCategoryPieChart();
+        MonthSanctionsLineChart()
         refreshTime()
     }
 
@@ -149,6 +156,36 @@ include('../includes/main/navbar.php');
         const formattedString = dateString.replace(", ", " - ");
         timeDisplay.textContent = formattedString;
     }
+
+
+    $(document).on('keyup keypress', '#SchoolYear', function(e) {
+        var SchoolYear = $('#SchoolYear').val();
+
+        if (e.which == 13) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "GET",
+                url: "../../php/store/semester.php?select_semesters=" + SchoolYear,
+                success: function(response) {
+
+                    var res = jQuery.parseJSON(response);
+                    if (res.status == 404) {
+                        toastr.error(res.message, res.status);
+                    } else if (res.status == 200) {
+
+                        console.log(res.console);
+                        toastr.success(res.message, res.status);
+                        setTimeout(function() {
+                            location.reload(true);
+                        }, 1000);
+
+                    }
+                }
+            });
+
+        }
+    });
 
     function student() {
         $.ajax({
@@ -293,6 +330,7 @@ include('../includes/main/navbar.php');
     }
 
     function CollegesCategoryPieChart() {
+
         $.ajax({
             type: "GET",
             url: "../../php/store/dashboard.php?pieChart",
@@ -335,44 +373,90 @@ include('../includes/main/navbar.php');
         });
     }
 
+    function MonthSanctionsLineChart() {
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/dashboard.php?lineChart",
+            success: function(response) {
 
+                var res = jQuery.parseJSON(response)
+                if (res.status == 200) {
 
+                    const lineChartID = document.getElementById('lineChart').getContext('2d');
+                    const lineChart = new Chart(lineChartID, {
+                        type: 'line',
+                        data: {
+                            labels: res.labels,
+                            datasets: [{
+                                label: 'By Month',
+                                data: res.numbers,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132)',
+                                    'rgba(54, 162, 235)',
+                                    'rgba(255, 206, 86)',
+                                    'rgba(75, 192, 192)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)'
+                                ],
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
 
-    const barChartID1 = document.getElementById('barChart1').getContext('2d');
-    const barChart1 = new Chart(barChartID1, {
-        type: 'line',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132)',
-                    'rgba(54, 162, 235)',
-                    'rgba(255, 206, 86)',
-                    'rgba(75, 192, 192)',
-                    'rgba(153, 102, 255)',
-                    'rgba(255, 159, 64)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 3
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+                } else if (res.status == 404) {
+
+                    console.log(res.data);
                 }
             }
-        }
-    });
+        });
+    }
+
+
+
+
+    // const barChartID1 = document.getElementById('lineChart').getContext('2d');
+    // const barChart1 = new Chart(barChartID1, {
+    //     type: 'line',
+    //     data: {
+    //         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    //         datasets: [{
+    //             label: '# of Votes',
+    //             data: [12, 19, 3, 5, 2, 3],
+    //             backgroundColor: [
+    //                 'rgba(255, 99, 132)',
+    //                 'rgba(54, 162, 235)',
+    //                 'rgba(255, 206, 86)',
+    //                 'rgba(75, 192, 192)',
+    //                 'rgba(153, 102, 255)',
+    //                 'rgba(255, 159, 64)'
+    //             ],
+    //             borderColor: [
+    //                 'rgba(255, 99, 132, 1)',
+    //                 'rgba(54, 162, 235, 1)',
+    //                 'rgba(255, 206, 86, 1)',
+    //                 'rgba(75, 192, 192, 1)',
+    //                 'rgba(153, 102, 255, 1)',
+    //                 'rgba(255, 159, 64, 1)'
+    //             ],
+    //             borderWidth: 3
+    //         }]
+    //     },
+    //     options: {
+    //         scales: {
+    //             y: {
+    //                 beginAtZero: true
+    //             }
+    //         }
+    //     }
+    // });
 
     // const pieChartID = document.getElementById('pieChart').getContext('2d');
     // const pieChart = new Chart(pieChartID, {
