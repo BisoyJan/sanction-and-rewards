@@ -145,6 +145,15 @@ if (isset($_POST['create_Referral'])) {
     $referredTo = mysqli_real_escape_string($con, $_POST['referredTo']);
     $dateIssued = mysqli_real_escape_string($con, $_POST['dateIssued']);
 
+    if (empty($_SESSION['semester_id'])) :
+        $res = [
+            'status' => 401,
+            'message' => 'Semester is not yet set'
+        ];
+        echo json_encode($res);
+        return;
+    endif;
+
     $semester_id =  $_SESSION['semester_id'];
 
     //First if statement that checks if all data need is present in the parameters

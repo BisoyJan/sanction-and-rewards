@@ -314,6 +314,9 @@ include('../includes/forms/header.php');
                 } else if (res.status == 401) {
 
                     toastr.error(res.message, res.status);
+                    setTimeout(function() {
+                        window.location.href = '../views/semester.php';
+                    }, 1000);
 
                 } else if (res.status == 200) {
 
