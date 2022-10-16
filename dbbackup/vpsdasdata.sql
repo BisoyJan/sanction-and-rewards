@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2022 at 12:52 AM
+-- Generation Time: Oct 17, 2022 at 12:42 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -248,7 +248,41 @@ INSERT INTO `logs` (`id`, `user_id`, `description`, `section`, `date`) VALUES
 (183, 1, 'User sets semester to the system', '', '2022-10-06 08:44:23'),
 (184, 1, 'User Logout to the system ', '', '2022-10-06 12:50:18'),
 (185, 1, 'User Login to the system', '', '2022-10-13 00:37:31'),
-(186, 1, 'User sets semester to the system', '', '2022-10-13 00:37:39');
+(186, 1, 'User sets semester to the system', '', '2022-10-13 00:37:39'),
+(187, 1, 'User Login to the system', '', '2022-10-13 08:27:46'),
+(188, 1, 'User sets semester to the system', '', '2022-10-13 11:34:05'),
+(189, 1, 'Created data Primary key:69', 'Sanction Referral', '2022-10-13 11:34:24'),
+(190, 1, 'Created data Primary key:70', 'Sanction Referral', '2022-10-13 11:35:49'),
+(191, 1, 'Updated data Primary key:70', 'Sanction Referral', '2022-10-13 11:57:15'),
+(192, 1, 'User Login to the system', '', '2022-10-14 02:58:42'),
+(193, 1, 'User sets semester to the system', '', '2022-10-14 04:06:30'),
+(194, 1, 'Created data Primary key:100', 'Sanction Action', '2022-10-14 04:07:02'),
+(195, 1, 'Deleted data Primary key:', 'Sanction Action', '2022-10-14 10:09:09'),
+(196, 1, 'Created data Primary key:101', 'Sanction Action', '2022-10-14 10:11:08'),
+(197, 1, 'Updated data Primary key:70', 'Sanction Referral', '2022-10-14 10:25:36'),
+(198, 1, 'Updated data Primary key:', 'Sanction Action', '2022-10-14 10:26:28'),
+(199, 1, 'Updated data Primary key:101', 'Sanction Action', '2022-10-14 10:27:55'),
+(200, 1, 'User Login to the system', '', '2022-10-14 14:57:35'),
+(201, 1, 'Created data Primary key:51', 'Sanction Counselling', '2022-10-14 14:59:27'),
+(202, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2022-10-14 15:13:23'),
+(203, 1, 'Updated data Primary key:70', 'Sanction Referral', '2022-10-14 15:13:46'),
+(204, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2022-10-14 15:16:28'),
+(205, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2022-10-14 15:18:31'),
+(206, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2014-10-22 03:22:05'),
+(207, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2022-10-14 15:23:06'),
+(208, 1, 'User Login to the system', '', '2022-10-15 12:29:28'),
+(209, 1, 'User sets semester to the system', '', '2022-10-15 12:44:49'),
+(210, 1, 'Created data Primary key:71', 'Sanction Referral', '2022-10-15 12:45:09'),
+(211, 1, 'Updated data Primary key:8', 'Students', '2022-10-15 15:12:46'),
+(212, 1, 'Created data Primary key:72', 'Sanction Referral', '2022-10-15 15:16:45'),
+(213, 1, 'Created data Primary key:73', 'Sanction Referral', '2022-10-15 15:17:22'),
+(214, 1, 'Created data Primary key:9', 'Students', '2022-10-15 19:51:37'),
+(215, 1, 'Created data Primary key:74', 'Sanction Referral', '2022-10-15 19:52:34'),
+(216, 1, 'Updated data Primary key:72', 'Sanction Referral', '2022-10-15 19:56:53'),
+(217, 1, 'Updated data Primary key:74', 'Sanction Referral', '2022-10-15 19:58:19'),
+(218, 1, 'Updated data Primary key:72', 'Sanction Referral', '2022-10-15 19:59:21'),
+(219, 1, 'User Login to the system', '', '2022-10-16 21:19:39'),
+(220, 1, 'Updated data Primary key:9', 'Students', '2022-10-16 21:19:48');
 
 -- --------------------------------------------------------
 
@@ -390,16 +424,17 @@ CREATE TABLE `sanction_cases` (
   `chairman` varchar(70) NOT NULL,
   `members` varchar(70) NOT NULL,
   `hearing_date` date DEFAULT NULL,
-  `date_issued` date DEFAULT NULL
+  `date_issued` date DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `date_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sanction_cases`
 --
 
-INSERT INTO `sanction_cases` (`id`, `sanction_disciplinary_action_id`, `report`, `resolution`, `recommend`, `chairman`, `members`, `hearing_date`, `date_issued`) VALUES
-(49, 98, 'dwadwadaw', 'dwadawd', 'For Continuing Hearing', 'awawdawd', 'awdawdawdawdawd', '2022-09-12', '2006-10-22'),
-(50, 99, 'awdwa', 'dwdawdawdaw', 'Closed/Resolved', 'dwadawdaw', 'dwadwadw', '0000-00-00', '2012-09-22');
+INSERT INTO `sanction_cases` (`id`, `sanction_disciplinary_action_id`, `report`, `resolution`, `recommend`, `chairman`, `members`, `hearing_date`, `date_issued`, `user_id`, `date_time`) VALUES
+(51, 101, 'wdwadwdawdawdawdawdwad', 'dawawadwadawdawwadwadawd', 'For Continuing Hearing', 'Jan Llyod Intong', 'wdwadwadawdwadwadwads', '2022-10-26', '2014-10-22', 1, '2022-10-14 15:23:06');
 
 -- --------------------------------------------------------
 
@@ -415,16 +450,17 @@ CREATE TABLE `sanction_disciplinary_action` (
   `counselling_date` date NOT NULL,
   `counselling_time` time NOT NULL,
   `issual_date` date NOT NULL,
-  `remarks` varchar(40) DEFAULT NULL
+  `remarks` varchar(40) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `date_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sanction_disciplinary_action`
 --
 
-INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`) VALUES
-(98, 49, '2022-09-04', '20:23:00', '2022-09-04', '20:23:00', '2022-09-04', 'For Continuing Hearing'),
-(99, 55, '2022-09-12', '20:33:00', '2022-09-12', '08:33:00', '2022-09-12', 'Closed/Resolved');
+INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`, `user_id`, `date_time`) VALUES
+(101, 70, '2022-10-14', '10:10:00', '2022-10-14', '10:10:00', '2022-10-14', 'For Continuing Hearing', 1, '2022-10-14 10:27:48');
 
 -- --------------------------------------------------------
 
@@ -440,20 +476,21 @@ CREATE TABLE `sanction_referrals` (
   `referred` varchar(45) NOT NULL,
   `date` date NOT NULL,
   `remark` varchar(45) DEFAULT NULL,
-  `semester_id` int(11) NOT NULL
+  `semester_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `date_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sanction_referrals`
 --
 
-INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`, `semester_id`) VALUES
-(49, 1, 38, 'wadawd', 'awdawdawdaw', '2022-09-04', 'Actioned', 4),
-(54, 1, 9, 'wadwadawdwad', 'wadadawdwadaw', '2022-09-12', NULL, 4),
-(55, 1, 8, 'wadawdaw', 'dawdawdawd', '2022-09-12', 'Actioned', 4),
-(56, 2, 8, 'wadwadaw', 'dwadadaw', '2022-08-13', NULL, 4),
-(57, 2, 2, 'awdawdawd', 'awdawdawd', '2022-08-10', NULL, 4),
-(68, 2, 9, 'wadwad', 'wadawdad', '2022-10-01', NULL, 4);
+INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`, `semester_id`, `user_id`, `date_time`) VALUES
+(70, 1, 35, 'wadawds', 'Jan Ramil', '2022-10-13', 'Actioned', 4, 1, '2022-10-14 15:13:46'),
+(71, 1, 39, 'sadsds', 'adsadasdasd', '2022-09-15', NULL, 4, 1, '2022-10-15 12:45:09'),
+(72, 8, 4, 'Ken Venigas', 'Jan Ramil', '2022-10-01', NULL, 4, 1, '2022-10-15 19:59:21'),
+(73, 8, 4, 'wadawd', 'Jan Ramil', '2022-10-02', NULL, 4, 1, '2022-10-15 15:17:22'),
+(74, 9, 4, 'sadasd', 'sasadasdasds', '2022-10-14', NULL, 4, 1, '2022-10-15 19:58:19');
 
 -- --------------------------------------------------------
 
@@ -502,7 +539,9 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `student_no`, `first_name`, `middle_name`, `last_name`, `age`, `gender`, `section`, `email`, `program_id`) VALUES
 (1, 1800771, 'Jan Ramil', 'Pantorilla', 'Intong', 22, 'Male', 'AI42', 'bisoyjan@gmail.com', 1),
-(2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1);
+(2, 1800763, 'Melvin', 'Carag', 'Copioso', 22, 'Male', 'A|42', 'admin@example.com', 1),
+(8, 1800891, 'Ralph', 'Delda', 'Amistoso', 21, 'Male', 'A|42', 'ralphzkienamistoso@gmail.com', 1),
+(9, 1800674, 'Ken', 'Go', 'Venigas', 22, 'Male', 'A|42', '12345@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -659,14 +698,16 @@ ALTER TABLE `properties`
 --
 ALTER TABLE `sanction_cases`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `case_disciplinary_id` (`sanction_disciplinary_action_id`);
+  ADD KEY `case_disciplinary_id` (`sanction_disciplinary_action_id`),
+  ADD KEY `sanction_case_user_id` (`user_id`);
 
 --
 -- Indexes for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `disciplinary_action_referral_id` (`sanction_referral_id`);
+  ADD KEY `disciplinary_action_referral_id` (`sanction_referral_id`),
+  ADD KEY `disciplinary_action_user_id` (`user_id`);
 
 --
 -- Indexes for table `sanction_referrals`
@@ -675,7 +716,8 @@ ALTER TABLE `sanction_referrals`
   ADD PRIMARY KEY (`id`),
   ADD KEY `student_id` (`student_id`),
   ADD KEY `referral_violation_id` (`violation_id`),
-  ADD KEY `referrals_semester_id` (`semester_id`);
+  ADD KEY `referrals_semester_id` (`semester_id`),
+  ADD KEY `referrals_user_id` (`user_id`);
 
 --
 -- Indexes for table `semesters`
@@ -735,7 +777,7 @@ ALTER TABLE `leaderships`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
 -- AUTO_INCREMENT for table `mvp_athletes`
@@ -771,19 +813,19 @@ ALTER TABLE `properties`
 -- AUTO_INCREMENT for table `sanction_cases`
 --
 ALTER TABLE `sanction_cases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -795,7 +837,7 @@ ALTER TABLE `semesters`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -854,13 +896,15 @@ ALTER TABLE `programs`
 -- Constraints for table `sanction_cases`
 --
 ALTER TABLE `sanction_cases`
-  ADD CONSTRAINT `case_disciplinary_id` FOREIGN KEY (`sanction_disciplinary_action_id`) REFERENCES `sanction_disciplinary_action` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `sanction_case_disciplinary_id` FOREIGN KEY (`sanction_disciplinary_action_id`) REFERENCES `sanction_disciplinary_action` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `sanction_case_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
-  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`sanction_referral_id`) REFERENCES `sanction_referrals` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `disciplinary_action_referral_id` FOREIGN KEY (`sanction_referral_id`) REFERENCES `sanction_referrals` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `disciplinary_action_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sanction_referrals`
@@ -868,7 +912,8 @@ ALTER TABLE `sanction_disciplinary_action`
 ALTER TABLE `sanction_referrals`
   ADD CONSTRAINT `referral_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `referral_violation_id` FOREIGN KEY (`violation_id`) REFERENCES `violations` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `referrals_semester_id` FOREIGN KEY (`semester_id`) REFERENCES `semesters` (`id`);
+  ADD CONSTRAINT `referrals_semester_id` FOREIGN KEY (`semester_id`) REFERENCES `semesters` (`id`),
+  ADD CONSTRAINT `referrals_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `students`

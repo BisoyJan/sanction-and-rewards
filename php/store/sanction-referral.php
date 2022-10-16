@@ -173,7 +173,7 @@ if (isset($_POST['create_Referral'])) {
     } else {
 
 
-        //TODO need to update this part when the student already complied to the counselling this condition will not work anay more.
+        //TODO need to update this part when the student already complied to the counselling this condition will not work anymore.
         //This query to check if the student Sanctioned 3 times
         $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id';";
 
