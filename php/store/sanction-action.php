@@ -24,6 +24,9 @@ if (isset($_GET['action_id'])) {
         students.age,
         students.gender,
         students.email,
+        users.first_name AS user_firstName,
+        users.middle_name AS user_middleName,
+        users.last_name AS user_lastName,
         programs.program_name AS program,
         programs.abbreviation,
         offenses.offense,
@@ -33,16 +36,16 @@ if (isset($_GET['action_id'])) {
         sanction_referrals.complainer_name,
         sanction_referrals.referred,
         sanction_referrals.date
-        
     FROM
         sanction_disciplinary_action
     JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
     JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations on sanction_referrals.violation_id = violations.id
+    JOIN users ON sanction_disciplinary_action.user_id = users.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
     JOIN offenses ON violations.offenses_id = offenses.id
     JOIN programs ON students.program_id = programs.id
     WHERE
-    sanction_disciplinary_action.id = '$action_id'";
+        sanction_disciplinary_action.id = '$action_id'";
 
     $query_run = mysqli_query($con, $query);
 
@@ -67,6 +70,7 @@ if (isset($_GET['action_id'])) {
     }
 }
 
+//NOTE will check if this users has already been filed action report
 if (isset($_GET['referral_id'])) {
 
     if (empty($_SESSION['school_year'])) {
@@ -93,7 +97,7 @@ if (isset($_GET['referral_id'])) {
 
             $res = [
                 'status' => 200,
-                'message' => 'This Referral Already filed Action Report',
+                'message' => 'This Referral Report Already filed an Action Report',
             ];
             echo json_encode($res);
             return;
@@ -110,6 +114,10 @@ if (isset($_GET['referral_id'])) {
 
 
 if (isset($_POST['create_Action'])) {
+
+    $user_id = $_SESSION['id'];
+    $date = date('Y-m-d H:i:s');
+
     $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
 
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
@@ -160,7 +168,9 @@ if (isset($_POST['create_Action'])) {
             `committed_time`,
             `counselling_date`,
             `counselling_time`,
-            `issual_date`   
+            `issual_date`,
+            `user_id`,
+            `date_time`   
         )
         VALUES(
             '$referral_id',
@@ -168,7 +178,9 @@ if (isset($_POST['create_Action'])) {
             '$committedTime',
             '$counsellingDate',
             '$counsellingTime',
-            '$dateIssued'
+            '$dateIssued',
+            '$user_id',
+            '$date'
         )";
 
         $query_run = mysqli_query($con, $query);
@@ -276,6 +288,10 @@ if (isset($_POST['create_Action'])) {
 }
 
 if (isset($_POST['update_Action'])) {
+
+    $user_id = $_SESSION['id'];
+    $date = date('Y-m-d H:i:s');
+
     $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
     $action_id  = mysqli_real_escape_string($con, $_POST['action_id']);
     $student_email = mysqli_real_escape_string($con, $_POST['email_student']);
@@ -328,12 +344,13 @@ if (isset($_POST['update_Action'])) {
             `committed_time` = '$committedTime',
             `counselling_date` = '$counsellingDate',
             `counselling_time` = '$counsellingTime',
-            `issual_date` = '$dateIssued'
+            `issual_date` = '$dateIssued',
+            `user_id` = '$user_id',
+            `date_time` = '$date'
         WHERE
             id = '$action_id'";
 
         $query_run = mysqli_query($con, $query);
-
 
         $data = [
             'student_name_field' => $studentName,
@@ -373,7 +390,7 @@ if (isset($_POST['update_Action'])) {
             if ($response) {
 
                 $user_id = $_SESSION['id'];
-                $description = "Updated data Primary key:" . $last_id;
+                $description = "Updated data Primary key:" . $action_id;
                 $type = "Sanction Action";
                 $date = date('Y-m-d H:i:s');
 
@@ -453,7 +470,7 @@ if (isset($_POST['delete_Action'])) {
         unlink('../../assets/docs/processed/action/' . $filename);
 
         $user_id = $_SESSION['id'];
-        $description = "Deleted data Primary key:" . $last_id;
+        $description = "Deleted data Primary key:" . $referral_id;
         $type = "Sanction Action";
         $date = date('Y-m-d H:i:s');
 

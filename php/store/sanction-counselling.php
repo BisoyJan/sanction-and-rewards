@@ -21,6 +21,9 @@ if (isset($_GET['counsel_id'])) {
         students.section,
         students.age,
         students.gender,
+        users.first_name AS user_firstName,
+        users.middle_name AS user_middleName,
+        users.last_name AS user_lastName,
         programs.program_name AS program,
         programs.abbreviation,
         offenses.offense,
@@ -31,6 +34,7 @@ if (isset($_GET['counsel_id'])) {
         sanction_cases
     JOIN sanction_disciplinary_action ON sanction_cases.sanction_disciplinary_action_id = sanction_disciplinary_action.id
     JOIN sanction_referrals ON sanction_disciplinary_action.sanction_referral_id = sanction_referrals.id
+    JOIN users ON sanction_disciplinary_action.user_id = users.id
     JOIN students ON sanction_referrals.student_id = students.id
     JOIN violations ON sanction_referrals.violation_id = violations.id
     JOIN offenses ON violations.offenses_id = offenses.id
@@ -132,8 +136,6 @@ if (isset($_POST['create_Counsel'])) {
         $continuing = 'Yes';
     }
 
-    $date = date('d-m-y h:i:s'); //Date Issued
-
     if ($incidentReport == NULL || $resolution == NULL || $chairman == NULL || $members == NULL || $recommendations == NULL) {
 
         $res = [
@@ -143,6 +145,9 @@ if (isset($_POST['create_Counsel'])) {
         echo json_encode($res);
         return;
     } else {
+
+        $user_id = $_SESSION['id'];
+        $date = date('Y-m-d H:i:s'); //Date Issued
 
         $query = "UPDATE `sanction_disciplinary_action` SET `remarks`='$recommendations' WHERE id = '$action_id'";
         $query_run = mysqli_query($con, $query);
@@ -155,7 +160,9 @@ if (isset($_POST['create_Counsel'])) {
             `chairman`,
             `members`,
             `hearing_date`,
-            `date_issued`
+            `date_issued`,
+            `user_id`,
+            `date_time`
         )
         VALUES(
             '$action_id',
@@ -165,6 +172,8 @@ if (isset($_POST['create_Counsel'])) {
             '$chairman',
             '$members',
             '$hearingDate',
+            '$date',
+            '$user_id',
             '$date'
         )";
 
@@ -195,10 +204,8 @@ if (isset($_POST['create_Counsel'])) {
 
         if ($query_run) {
 
-            $user_id = $_SESSION['id'];
             $description = "Created data Primary key:" . $last_id;
             $type = "Sanction Counselling";
-            $date = date('Y-m-d H:i:s');
 
             $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
@@ -232,6 +239,7 @@ if (isset($_POST['create_Counsel'])) {
 }
 
 if (isset($_POST['update_Counsel'])) {
+
     $counsel_id = mysqli_real_escape_string($con, $_POST['counselling_id']);
 
     $action_id = mysqli_real_escape_string($con, $_POST['action_id']);
@@ -275,8 +283,6 @@ if (isset($_POST['update_Counsel'])) {
         $continuing = 'Yes';
     }
 
-    $date = date('d-m-y h:i:s'); //Date Issued
-
     if ($incidentReport == NULL || $resolution == NULL || $chairman == NULL || $members == NULL || $recommendations == NULL) {
 
         $res = [
@@ -286,6 +292,9 @@ if (isset($_POST['update_Counsel'])) {
         echo json_encode($res);
         return;
     } else {
+
+        $user_id = $_SESSION['id'];
+        $date = date('Y-m-d H:i:s'); //Date Issued
 
         $query = "UPDATE `sanction_disciplinary_action` SET `remarks`='$recommendations' WHERE id = '$action_id'";
         $query_run = mysqli_query($con, $query);
@@ -299,7 +308,8 @@ if (isset($_POST['update_Counsel'])) {
             `chairman` = '$chairman',
             `members` = '$members',
             `hearing_date` = '$hearingDate',
-            `date_issued` = '$date'
+            `user_id` = '$user_id',
+            `date_time` = '$date'
         WHERE
         id = '$counsel_id'";
 
@@ -329,10 +339,8 @@ if (isset($_POST['update_Counsel'])) {
 
         if ($query_run) {
 
-            $user_id = $_SESSION['id'];
             $description = "Updated data Primary key:" . $counsel_id;
             $type = "Sanction Counselling";
-            $date = date('Y-m-d H:i:s');
 
             $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);

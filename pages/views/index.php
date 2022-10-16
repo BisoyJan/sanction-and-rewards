@@ -41,7 +41,6 @@ include('../includes/main/navbar.php');
                         <div class="card-body">
                             <h4 class="card-title">Student</h4>
                             <p class="card-text">Total Students: <strong id="students" style="font-size:25px"></strong></p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                     </div>
                 </div>
@@ -58,7 +57,7 @@ include('../includes/main/navbar.php');
                         <div class="card-body">
                             <h4 class="card-title">Referred</h4>
                             <p class="card-text">Total Referred: <strong id="referral" style="font-size:25px"></strong></p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
                         </div>
                     </div>
                 </div>
@@ -75,7 +74,7 @@ include('../includes/main/navbar.php');
                         <div class="card-body">
                             <h4 class="card-title">Actioned</h4>
                             <p class="card-text">Total Actioned: <strong id="action" style="font-size:25px"></strong></p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
                         </div>
                     </div>
                 </div>
@@ -92,7 +91,7 @@ include('../includes/main/navbar.php');
                         <div class="card-body">
                             <h4 class="card-title">Case</h4>
                             <p class="card-text">Total Case: <strong id="case" style="font-size:25px"></strong></p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
                         </div>
                     </div>
                 </div>
@@ -112,7 +111,7 @@ include('../includes/main/navbar.php');
 
             <div class="card mb-3 text-center" style="width:46.5rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
+                    <h5 class="card-title">Total Number of Sanctioned Students by Month</h5>
                     <canvas id="lineChart" width="250" height="111"></canvas>
                 </div>
             </div>
@@ -123,6 +122,31 @@ include('../includes/main/navbar.php');
                 <div class="card-body">
                     <h5 class="card-title">Total Number of Sanctions by Colleges</h5>
                     <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-auto">
+            <div class="card mb-3 text-center" style="width:46.5rem;">
+                <div class="card-body">
+                    <h5 class="card-title" id="studentSanctionByCurrentMonth"></h5>
+                    <div id="dynamicTable">
+                        <!-- The contents of  the tables at the ../php/fetchPaginate/.....php -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-auto">
+            <div class="card mb-3 text-center" style="width:46.5rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Common Violations Students Commits</h5>
+                    <div id="dynamicTable1">
+                        <!-- The contents of  the tables at the ../php/fetchPaginate/.....php -->
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,8 +170,10 @@ include('../includes/main/navbar.php');
         disciplinary();
         SanctionCategoryBarChart();
         CollegesCategoryPieChart();
-        MonthSanctionsLineChart()
-        refreshTime()
+        MonthSanctionsLineChart();
+        refreshTime();
+        studentSanctionbyMonthTable(1);
+        violationCommonToViolateTable(1);
     }
 
     function refreshTime() {
@@ -313,11 +339,16 @@ include('../includes/main/navbar.php');
                             }]
                         },
                         options: {
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                }
+                            },
                             scales: {
                                 y: {
-                                    beginAtZero: true
+                                    beginAtZero: false
                                 }
-                            }
+                            },
                         }
                     });
 
@@ -361,7 +392,7 @@ include('../includes/main/navbar.php');
                                 y: {
                                     beginAtZero: true
                                 }
-                            }
+                            },
                         }
                     });
 
@@ -388,7 +419,7 @@ include('../includes/main/navbar.php');
                         data: {
                             labels: res.labels,
                             datasets: [{
-                                label: 'By Month',
+                                label: "Months",
                                 data: res.numbers,
                                 backgroundColor: [
                                     'rgba(255, 99, 132)',
@@ -403,11 +434,16 @@ include('../includes/main/navbar.php');
                             }]
                         },
                         options: {
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                }
+                            },
                             scales: {
                                 y: {
-                                    beginAtZero: true
+                                    beginAtZero: false
                                 }
-                            }
+                            },
                         }
                     });
 
@@ -418,6 +454,50 @@ include('../includes/main/navbar.php');
             }
         });
     }
+
+    function studentSanctionbyMonthTable(page = 1) {
+        $.ajax({
+            url: "../../php/fetchPaginate/dashboard_studentSanctionbyMonthTable.php",
+            method: "POST",
+            data: {
+                page: page,
+            },
+            success: function(data) {
+
+                const date = new Date();
+
+                var label = document.getElementById('studentSanctionByCurrentMonth');
+                label.innerHTML = "List of Student Referred by the Month of " + moment(date).format('MMMM');
+                $('#dynamicTable').html(data);
+
+            }
+        });
+    }
+
+    $(document).on('click', '.studentSanctionbyMonth', function() {
+        var page = $(this).data('page_number');
+        studentSanctionbyMonthTable(page);
+    });
+
+    function violationCommonToViolateTable(page = 1) {
+        $.ajax({
+            url: "../../php/fetchPaginate/dashboard_violationCommonToViolateTable.php",
+            method: "POST",
+            data: {
+                page: page,
+            },
+            success: function(data) {
+                $('#dynamicTable1').html(data);
+            }
+        });
+    }
+
+    $(document).on('click', '.violationCommonToViolate', function() {
+        var page = $(this).data('page_number');
+        violationCommonToViolateTable(page);
+    });
+
+
 
 
 

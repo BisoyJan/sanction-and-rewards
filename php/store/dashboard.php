@@ -202,7 +202,6 @@ if (isset($_GET['lineChart'])) {
 
     if (mysqli_num_rows($query_run) != 0) {
 
-
         while ($data = mysqli_fetch_array($query_run)) {
             $numbers[] = $data['total'];
             $labels[] = $data['monthName'];

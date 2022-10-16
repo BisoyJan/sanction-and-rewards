@@ -154,7 +154,7 @@ if (isset($_POST['create_Student'])) {
             $type = "Students";
             $date = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,, `date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
 
             if ($response) {

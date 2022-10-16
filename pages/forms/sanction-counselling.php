@@ -220,8 +220,11 @@ include('../includes/forms/header.php');
 
                     </div>
 
-                    <div class=" bd-highlight pt-3">
+                    <div class=" bd-highlight pt-1">
                         <div class="row">
+                            <div class="col d-flex align-items-center">
+                                <span id="updated_by" class="align-middle"></span>
+                            </div>
                             <div class="col d-flex flex-row-reverse">
                                 <button class="btn btn-primary" type="submit">Submit form</button>
                             </div>
@@ -366,6 +369,10 @@ include('../includes/forms/header.php');
                         $('#hearingDate').removeAttr('disabled');
 
                         $("form").attr('id', 'edit-counsel')
+
+                        var label = document.getElementById('updated_by')
+                        label.innerHTML = "Last interaction by: " + res.data.user_firstName + " " + res.data.user_lastName + " on " + moment(res.data.date_time).format('llll')
+
                     }
                 }
             });

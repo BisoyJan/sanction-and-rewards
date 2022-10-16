@@ -92,17 +92,20 @@ if (isset($_GET['referral_id'])) {
         students.age,
         students.gender,
         students.email,
+        users.first_name AS user_firstName,
+        users.middle_name AS user_middleName,
+        users.last_name AS user_lastName,
         programs.program_name AS program,
         programs.abbreviation,
         offenses.offense,
         violations.id AS violation_id,
         violations.code,
         violations.violation
-        
     FROM
         sanction_referrals
     JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations on sanction_referrals.violation_id = violations.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN users ON sanction_referrals.user_id = users.id
     JOIN offenses ON violations.offenses_id = offenses.id
     JOIN programs ON students.program_id = programs.id
     WHERE
@@ -132,6 +135,9 @@ if (isset($_GET['referral_id'])) {
 }
 
 if (isset($_POST['create_Referral'])) {
+
+    $user_id = $_SESSION['id'];
+    $date = date('Y-m-d H:i:s');
 
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
@@ -166,6 +172,8 @@ if (isset($_POST['create_Referral'])) {
         return;
     } else {
 
+
+        //TODO need to update this part when the student already complied to the counselling this condition will not work anay more.
         //This query to check if the student Sanctioned 3 times
         $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id';";
 
@@ -194,8 +202,6 @@ if (isset($_POST['create_Referral'])) {
             return;
         }
 
-        //TODO need to fix the semester when adding to database
-
         //This query will insert data to database if conditions are meet.
         $query = "INSERT INTO `sanction_referrals`(
                 `student_id`,
@@ -204,7 +210,9 @@ if (isset($_POST['create_Referral'])) {
                 `referred`,
                 `date`,
                 `remark`,
-                `semester_id`
+                `semester_id`,
+                `user_id`,
+                `date_time`
             )
             VALUES(
                 '$student_id',
@@ -213,7 +221,9 @@ if (isset($_POST['create_Referral'])) {
                 '$referredTo',
                 '$dateIssued',
                 NUll,
-                '$semester_id'
+                '$semester_id',
+                '$user_id',
+                '$date'
             );";
 
         $query_run = mysqli_query($con, $query);
@@ -234,10 +244,8 @@ if (isset($_POST['create_Referral'])) {
 
         if ($response && $query_run) {
 
-            $user_id = $_SESSION['id'];
             $description = "Created data Primary key:" . $last_id;
             $type = "Sanction Referral";
-            $date = date('Y-m-d H:i:s');
 
             $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
@@ -272,6 +280,10 @@ if (isset($_POST['create_Referral'])) {
 }
 
 if (isset($_POST['update_Referral'])) {
+
+    $user_id = $_SESSION['id'];
+    $date = date('Y-m-d H:i:s');
+
     $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
 
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
@@ -306,7 +318,18 @@ if (isset($_POST['update_Referral'])) {
             'student_no' => $student_no
         ];
 
-        $query = "UPDATE `sanction_referrals` SET `student_id`='$student_id',`violation_id`='$violation_id',`complainer_name`='$complainerName',`referred`='$referredTo',`date`='$dateIssued' WHERE id = '$referral_id'";
+        $query = "UPDATE
+        `sanction_referrals`
+    SET
+        `student_id` = '$student_id',
+        `violation_id` = '$violation_id',
+        `complainer_name` = '$complainerName',
+        `referred` = '$referredTo',
+        `date` = '$dateIssued',
+        `user_id` = '$user_id',
+        `date_time` = '$date'
+    WHERE
+        id = '$referral_id'";
         $query_run = mysqli_query($con, $query);
 
         $pdf = new generatePDF;
@@ -314,10 +337,8 @@ if (isset($_POST['update_Referral'])) {
 
         if ($response && $query_run) {
 
-            $user_id = $_SESSION['id'];
             $description = "Updated data Primary key:" . $referral_id;
             $type = "Sanction Referral";
-            $date = date('Y-m-d H:i:s');
 
             $query = "INSERT INTO `logs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
@@ -362,7 +383,7 @@ if (isset($_POST['delete_Referral'])) {
         unlink('../../assets/docs/processed/referrals/' . $filename);
 
         $user_id = $_SESSION['id'];
-        $description = "Updated data Primary key:" . $referral_id;
+        $description = "Deleted data Primary key:" . $referral_id;
         $type = "Sanction Referral";
         $date = date('Y-m-d H:i:s');
 

@@ -228,8 +228,11 @@ include('../includes/forms/header.php');
                         </div>
                     </div>
 
-                    <div class=" bd-highlight pt-3">
+                    <div class=" bd-highlight pt-1">
                         <div class="row">
+                            <div class="col d-flex align-items-center">
+                                <span id="updated_by" class="align-middle"></span>
+                            </div>
                             <div class="col d-flex flex-row-reverse">
                                 <button class="btn btn-primary" type="submit">Submit form</button>
                             </div>
@@ -367,9 +370,10 @@ include('../includes/forms/header.php');
                         $('#counsellingTime').val(res.data.counselling_time);
                         $('#dateIssued').val(res.data.issual_date);
 
-                        sessionStorage.clear('sanction-actionID');
-
                         $("form").attr('id', 'Edit-action')
+
+                        var label = document.getElementById('updated_by')
+                        label.innerHTML = "Last interaction by: " + res.data.user_firstName + " " + res.data.user_lastName + " on " + moment(res.data.date_time).format('llll')
 
                     } else if (res.status == 404) {
                         toastr.error(res.message, res.status);
@@ -423,7 +427,7 @@ include('../includes/forms/header.php');
 
     });
 
-    $(document).on('submit', '#edit-action', function(e) {
+    $(document).on('submit', '#Edit-action', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
@@ -450,8 +454,9 @@ include('../includes/forms/header.php');
 
                     toastr.success(res.message, res.status);
                     sessionStorage.clear('sanction-actionID');
+                    sessionStorage.clear('sanction-referralID');
                     sessionStorage.clear('sanction-counselFunction');
-                    //If button click submit, Found_id Session will be cleared
+                    //If button click submit, Session ID's will be cleared
                     setTimeout(function() {
                         window.location.href = '../views/sanction-action.php';
                     }, 1000);

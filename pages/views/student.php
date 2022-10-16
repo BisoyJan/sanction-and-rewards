@@ -117,7 +117,7 @@ include('../includes/main/navbar.php');
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please provide Email.
+                                    Please provide Age.
                                 </div>
                             </div>
                         </div>

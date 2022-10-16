@@ -192,8 +192,11 @@ include('../includes/forms/header.php');
                         </div>
                     </div>
 
-                    <div class=" bd-highlight pt-3">
+                    <div class=" bd-highlight pt-1">
                         <div class="row">
+                            <div class="col d-flex align-items-center">
+                                <span id="updated_by" class="align-middle"></span>
+                            </div>
                             <div class="col d-flex flex-row-reverse">
                                 <button class="btn btn-primary" type="submit">Submit form</button>
                             </div>
@@ -337,6 +340,8 @@ include('../includes/forms/header.php');
 
     });
 
+
+    //NOTE this Ajax block of code will determine if the referral_id is has value meaning its going to update. if the value is null meaning add
     $(document).ready(function() {
         var referral_id = sessionStorage.getItem("sanction-referralID");
         console.log(referral_id);
@@ -381,16 +386,17 @@ include('../includes/forms/header.php');
                         $('#referredTo').val(res.data.referred);
                         $('#dateIssued').val(res.data.date);
 
-                        $("form").attr('id', 'Edit-referral')
+                        //NOTE this two lines of code below will determine who manupulated the data
+                        var label = document.getElementById('updated_by')
+                        label.innerHTML = "Last interaction by: " + res.data.user_firstName + " " + res.data.user_lastName + " on " + moment(res.data.date_time).format('llll')
 
+                        $("form").attr('id', 'Edit-referral')
                     }
                 }
             });
-
         } else {
             $("form").attr('id', 'referral')
         }
-
     });
 
     $(document).on('submit', '#Edit-referral', function(e) {
