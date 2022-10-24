@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2022 at 12:42 AM
+-- Generation Time: Oct 24, 2022 at 04:13 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -84,205 +84,6 @@ CREATE TABLE `leaderships` (
 
 INSERT INTO `leaderships` (`id`, `student_id`, `semester_id`, `date_issued`, `event_title`) VALUES
 (30, 1, 4, '2022-09-14', 'wadwadadawdawdw');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `logs`
---
-
-CREATE TABLE `logs` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `section` varchar(100) NOT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`id`, `user_id`, `description`, `section`, `date`) VALUES
-(38, 1, 'Created data Primary key:10', 'Outstanding Athlete', '2022-09-13 09:48:10'),
-(39, 1, 'Created data Primary key:11', 'Outstanding Athlete', '2022-09-13 09:49:18'),
-(40, 1, 'Created data Primary key:56', 'Sanction Referral', '2022-09-13 09:52:23'),
-(42, 1, 'Created data Primary key:10', 'MVP Athlete', '2022-09-13 09:59:39'),
-(44, 1, 'Created data Primary key:', 'Programs', '2022-09-13 10:00:59'),
-(45, 1, 'Deleted data Primary key:20', 'Programs', '2022-09-13 10:01:12'),
-(46, 1, 'Created data Primary key:13', 'Good Deeds', '2022-09-13 10:01:37'),
-(47, 1, 'Deleted data Primary key:13', 'Good Deeds', '2022-09-13 10:04:43'),
-(48, 1, 'User Logout to the system ', '', '2022-09-13 10:04:57'),
-(49, 1, 'User Login to the system', '', '2022-09-13 10:05:02'),
-(50, 1, 'Created data Primary key:11', 'MVP Athlete', '2022-09-13 10:08:06'),
-(51, 1, 'Updated data Primary key:11', 'MVP Athlete', '2022-09-13 10:08:53'),
-(52, 1, 'Created data Primary key:', 'Programs', '2022-09-13 10:09:17'),
-(53, 1, 'User Logout to the system ', '', '2022-09-13 10:18:04'),
-(54, 1, 'User Login to the system', '', '2022-09-13 10:26:06'),
-(55, 1, 'User Logout to the system ', '', '2022-09-13 10:28:02'),
-(56, 1, 'User Login to the system', '', '2022-09-13 10:30:31'),
-(57, 1, 'User Login to the system', '', '2022-09-14 01:46:33'),
-(58, 1, 'Created data Primary key:30', 'Leadership', '2022-09-14 02:06:34'),
-(59, 1, 'User Login to the system', '', '2022-09-14 05:51:09'),
-(60, 1, 'Deleted data Primary key:2', 'Programs', '2022-09-14 05:51:58'),
-(61, 1, 'Deleted data Primary key:4', 'Programs', '2022-09-14 05:52:00'),
-(62, 1, 'Deleted data Primary key:5', 'Programs', '2022-09-14 05:52:01'),
-(63, 1, 'Deleted data Primary key:7', 'Programs', '2022-09-14 05:52:02'),
-(64, 1, 'Deleted data Primary key:19', 'Programs', '2022-09-14 05:52:06'),
-(65, 1, 'Deleted data Primary key:21', 'Programs', '2022-09-14 05:52:08'),
-(66, 1, 'Created data Primary key:22', 'Programs', '2022-09-14 05:54:01'),
-(67, 1, 'Created data Primary key:23', 'Programs', '2022-09-14 05:54:37'),
-(68, 1, 'Created data Primary key:24', 'Programs', '2022-09-14 05:54:54'),
-(69, 1, 'Created data Primary key:25', 'Programs', '2022-09-14 05:55:29'),
-(70, 1, 'Created data Primary key:26', 'Programs', '2022-09-14 05:55:53'),
-(71, 1, 'Created data Primary key:27', 'Programs', '2022-09-14 05:56:32'),
-(72, 1, 'Created data Primary key:28', 'Programs', '2022-09-14 05:56:53'),
-(73, 1, 'Created data Primary key:29', 'Programs', '2022-09-14 05:57:14'),
-(74, 1, 'Created data Primary key:30', 'Programs', '2022-09-14 05:57:38'),
-(75, 1, 'Created data Primary key:31', 'Programs', '2022-09-14 05:58:48'),
-(76, 1, 'Created data Primary key:32', 'Programs', '2022-09-14 05:59:09'),
-(77, 1, 'Deleted data Primary key:4', 'Students', '2022-09-14 06:00:01'),
-(78, 1, 'User Logout to the system ', '', '2022-09-14 06:21:35'),
-(79, 1, 'User Login to the system', '', '2022-09-14 06:21:56'),
-(80, 1, 'Updated data Primary key:2', 'Account', '2022-09-14 06:36:14'),
-(81, 1, 'User Logout to the system ', '', '2022-09-14 06:36:19'),
-(82, 2, 'User Login to the system', '', '2022-09-14 06:36:23'),
-(83, 2, 'User Logout to the system ', '', '2022-09-14 06:36:35'),
-(84, 1, 'User Login to the system', '', '2022-09-14 06:36:39'),
-(85, 1, 'User Login to the system', '', '2022-09-14 09:48:00'),
-(86, 1, 'User Logout to the system ', '', '2022-09-14 15:20:24'),
-(87, 1, 'User Login to the system', '', '2022-09-14 15:20:50'),
-(88, 1, 'Created data Primary key:57', 'Sanction Referral', '2022-09-14 15:21:20'),
-(89, 1, 'User Login to the system', '', '2022-09-16 07:38:59'),
-(90, 1, 'User Login to the system', '', '2022-09-16 11:21:17'),
-(91, 1, 'User Login to the system', '', '2022-09-16 14:22:29'),
-(92, 1, 'User Login to the system', '', '2022-09-16 16:58:12'),
-(93, 1, 'Updated data Primary key:4', 'Semester', '2022-09-16 17:11:37'),
-(94, 1, 'User Login to the system', '', '2022-09-17 07:38:50'),
-(95, 1, 'User Login to the system', '', '2022-09-18 05:44:39'),
-(96, 1, 'User sets semester to the system', '', '2022-09-18 05:44:46'),
-(97, 1, 'User Logout to the system ', '', '2022-09-18 06:27:16'),
-(98, 1, 'User Login to the system', '', '2022-09-18 06:27:21'),
-(99, 1, 'User sets semester to the system', '', '2022-09-18 06:27:40'),
-(100, 1, 'Updated data Primary key:11', 'MVP Athlete', '2022-09-18 07:06:56'),
-(101, 1, 'Updated data Primary key:11', 'MVP Athlete', '2022-09-18 07:07:04'),
-(102, 1, 'Updated data Primary key:11', 'MVP Athlete', '2022-09-18 07:07:54'),
-(103, 1, 'User Login to the system', '', '2022-09-18 10:15:48'),
-(104, 1, 'User Login to the system', '', '2022-09-19 06:46:43'),
-(105, 1, 'User Login to the system', '', '2022-09-20 02:05:44'),
-(106, 1, 'User Login to the system', '', '2022-09-21 09:14:05'),
-(107, 1, 'User sets semester to the system', '', '2022-09-21 09:16:01'),
-(108, 1, 'User Logout to the system ', '', '2022-09-21 09:23:19'),
-(109, 1, 'User Login to the system', '', '2022-09-21 09:23:24'),
-(110, 1, 'User sets semester to the system', '', '2022-09-21 09:23:27'),
-(111, 1, 'Created data Primary key:63', 'Sanction Referral', '2022-09-21 09:29:59'),
-(112, 1, 'Updated data Primary key:63', 'Sanction Referral', '2022-09-21 09:33:07'),
-(113, 1, 'Created data Primary key:64', 'Sanction Referral', '2022-09-21 09:34:11'),
-(114, 1, 'Updated data Primary key:64', 'Sanction Referral', '2022-09-21 09:35:35'),
-(115, 1, 'Created data Primary key:65', 'Sanction Referral', '2022-09-21 09:35:57'),
-(116, 1, 'Updated data Primary key:65', 'Sanction Referral', '2022-09-21 09:37:11'),
-(117, 1, 'Created data Primary key:66', 'Sanction Referral', '2022-09-21 09:37:32'),
-(118, 1, 'Updated data Primary key:66', 'Sanction Referral', '2022-09-21 09:38:47'),
-(119, 1, 'Created data Primary key:67', 'Sanction Referral', '2022-09-21 09:39:08'),
-(120, 1, 'Updated data Primary key:67', 'Sanction Referral', '2022-09-21 09:40:53'),
-(121, 1, 'Created data Primary key:68', 'Sanction Referral', '2022-09-21 09:41:09'),
-(122, 1, 'User Login to the system', '', '2022-09-23 02:40:23'),
-(123, 1, 'User sets semester to the system', '', '2022-09-23 02:40:27'),
-(124, 1, 'User Logout to the system ', '', '2022-09-23 02:47:21'),
-(125, 2, 'User Login to the system', '', '2022-09-23 02:47:29'),
-(126, 2, 'User Logout to the system ', '', '2022-09-23 03:10:58'),
-(127, 1, 'User Login to the system', '', '2022-09-23 03:11:05'),
-(128, 1, 'User sets semester to the system', '', '2022-09-23 03:11:09'),
-(129, 1, 'User Login to the system', '', '2022-09-23 08:47:46'),
-(130, 1, 'User Login to the system', '', '2022-09-23 08:55:44'),
-(131, 1, 'User Login to the system', '', '2022-09-26 07:27:44'),
-(132, 1, 'User Logout to the system ', '', '2022-09-26 07:54:58'),
-(133, 2, 'User Login to the system', '', '2022-09-26 07:55:02'),
-(134, 2, 'User Logout to the system ', '', '2022-09-26 08:03:22'),
-(135, 1, 'User Login to the system', '', '2022-09-26 08:03:27'),
-(136, 1, 'User Logout to the system ', '', '2022-09-26 08:03:41'),
-(137, 2, 'User Login to the system', '', '2022-09-26 08:03:45'),
-(138, 1, 'User Login to the system', '', '2022-09-26 14:14:04'),
-(139, 1, 'User Logout to the system ', '', '2022-09-26 14:35:14'),
-(140, 1, 'User Login to the system', '', '2022-09-26 14:35:21'),
-(141, 1, 'User Logout to the system ', '', '2022-09-26 14:37:03'),
-(142, 1, 'User Login to the system', '', '2022-09-26 14:37:08'),
-(143, 1, 'User Logout to the system ', '', '2022-09-26 14:39:30'),
-(144, 1, 'User Login to the system', '', '2022-09-26 14:39:34'),
-(145, 1, 'User sets semester to the system', '', '2022-09-26 14:39:38'),
-(146, 1, 'User Logout to the system ', '', '2022-09-26 14:41:44'),
-(147, 1, 'User Login to the system', '', '2022-09-26 14:41:49'),
-(148, 1, 'User sets semester to the system', '', '2022-09-26 14:42:02'),
-(149, 1, 'User Logout to the system ', '', '2022-09-26 14:56:41'),
-(150, 1, 'User Login to the system', '', '2022-09-26 14:56:45'),
-(151, 1, 'User sets semester to the system', '', '2022-09-26 14:56:58'),
-(152, 1, 'User Logout to the system ', '', '2022-09-26 14:57:40'),
-(153, 1, 'User Login to the system', '', '2022-09-26 14:57:43'),
-(154, 1, 'User sets semester to the system', '', '2022-09-26 14:57:48'),
-(155, 1, 'User Logout to the system ', '', '2022-09-26 15:00:33'),
-(156, 1, 'User Login to the system', '', '2022-09-26 15:00:36'),
-(157, 1, 'User sets semester to the system', '', '2022-09-26 15:00:41'),
-(158, 1, 'Updated data Primary key:57', 'Sanction Referral', '2022-09-26 16:01:53'),
-(159, 1, 'Updated data Primary key:56', 'Sanction Referral', '2022-09-26 16:14:51'),
-(160, 1, 'Updated data Primary key:68', 'Sanction Referral', '2022-09-26 16:42:57'),
-(161, 1, 'User Login to the system', '', '2022-09-28 08:34:20'),
-(162, 1, 'User Login to the system', '', '2022-09-28 08:37:00'),
-(163, 1, 'User Login to the system', '', '2022-09-28 08:37:06'),
-(164, 1, 'User Login to the system', '', '2022-09-28 08:39:50'),
-(165, 1, 'User sets semester to the system', '', '2022-09-28 08:40:00'),
-(166, 1, 'User Login to the system', '', '2022-09-28 08:42:38'),
-(167, 1, 'User Login to the system', '', '2022-09-28 08:43:29'),
-(168, 1, 'User Logout to the system ', '', '2022-09-28 09:17:27'),
-(170, 1, 'User Login to the system', '', '2022-09-28 09:23:37'),
-(171, 1, 'User Logout to the system ', '', '2022-09-28 12:09:26'),
-(173, 1, 'User Login to the system', '', '2022-10-05 12:51:28'),
-(174, 1, 'User sets semester to the system', '', '2022-10-05 12:55:28'),
-(175, 1, 'User Logout to the system ', '', '2022-10-05 12:56:54'),
-(176, 1, 'User Login to the system', '', '2022-10-05 12:56:59'),
-(177, 1, 'User Login to the system', '', '2022-10-06 08:00:28'),
-(178, 1, 'User sets semester to the system', '', '2022-10-06 08:00:39'),
-(179, 1, 'User Logout to the system ', '', '2022-10-06 08:00:48'),
-(180, 1, 'User Login to the system', '', '2022-10-06 08:00:54'),
-(181, 1, 'Updated data Primary key:68', 'Sanction Referral', '2022-10-06 08:15:08'),
-(182, 1, 'Updated data Primary key:49', 'Sanction Counselling', '2022-10-06 08:19:25'),
-(183, 1, 'User sets semester to the system', '', '2022-10-06 08:44:23'),
-(184, 1, 'User Logout to the system ', '', '2022-10-06 12:50:18'),
-(185, 1, 'User Login to the system', '', '2022-10-13 00:37:31'),
-(186, 1, 'User sets semester to the system', '', '2022-10-13 00:37:39'),
-(187, 1, 'User Login to the system', '', '2022-10-13 08:27:46'),
-(188, 1, 'User sets semester to the system', '', '2022-10-13 11:34:05'),
-(189, 1, 'Created data Primary key:69', 'Sanction Referral', '2022-10-13 11:34:24'),
-(190, 1, 'Created data Primary key:70', 'Sanction Referral', '2022-10-13 11:35:49'),
-(191, 1, 'Updated data Primary key:70', 'Sanction Referral', '2022-10-13 11:57:15'),
-(192, 1, 'User Login to the system', '', '2022-10-14 02:58:42'),
-(193, 1, 'User sets semester to the system', '', '2022-10-14 04:06:30'),
-(194, 1, 'Created data Primary key:100', 'Sanction Action', '2022-10-14 04:07:02'),
-(195, 1, 'Deleted data Primary key:', 'Sanction Action', '2022-10-14 10:09:09'),
-(196, 1, 'Created data Primary key:101', 'Sanction Action', '2022-10-14 10:11:08'),
-(197, 1, 'Updated data Primary key:70', 'Sanction Referral', '2022-10-14 10:25:36'),
-(198, 1, 'Updated data Primary key:', 'Sanction Action', '2022-10-14 10:26:28'),
-(199, 1, 'Updated data Primary key:101', 'Sanction Action', '2022-10-14 10:27:55'),
-(200, 1, 'User Login to the system', '', '2022-10-14 14:57:35'),
-(201, 1, 'Created data Primary key:51', 'Sanction Counselling', '2022-10-14 14:59:27'),
-(202, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2022-10-14 15:13:23'),
-(203, 1, 'Updated data Primary key:70', 'Sanction Referral', '2022-10-14 15:13:46'),
-(204, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2022-10-14 15:16:28'),
-(205, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2022-10-14 15:18:31'),
-(206, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2014-10-22 03:22:05'),
-(207, 1, 'Updated data Primary key:51', 'Sanction Counselling', '2022-10-14 15:23:06'),
-(208, 1, 'User Login to the system', '', '2022-10-15 12:29:28'),
-(209, 1, 'User sets semester to the system', '', '2022-10-15 12:44:49'),
-(210, 1, 'Created data Primary key:71', 'Sanction Referral', '2022-10-15 12:45:09'),
-(211, 1, 'Updated data Primary key:8', 'Students', '2022-10-15 15:12:46'),
-(212, 1, 'Created data Primary key:72', 'Sanction Referral', '2022-10-15 15:16:45'),
-(213, 1, 'Created data Primary key:73', 'Sanction Referral', '2022-10-15 15:17:22'),
-(214, 1, 'Created data Primary key:9', 'Students', '2022-10-15 19:51:37'),
-(215, 1, 'Created data Primary key:74', 'Sanction Referral', '2022-10-15 19:52:34'),
-(216, 1, 'Updated data Primary key:72', 'Sanction Referral', '2022-10-15 19:56:53'),
-(217, 1, 'Updated data Primary key:74', 'Sanction Referral', '2022-10-15 19:58:19'),
-(218, 1, 'Updated data Primary key:72', 'Sanction Referral', '2022-10-15 19:59:21'),
-(219, 1, 'User Login to the system', '', '2022-10-16 21:19:39'),
-(220, 1, 'Updated data Primary key:9', 'Students', '2022-10-16 21:19:48');
 
 -- --------------------------------------------------------
 
@@ -434,7 +235,7 @@ CREATE TABLE `sanction_cases` (
 --
 
 INSERT INTO `sanction_cases` (`id`, `sanction_disciplinary_action_id`, `report`, `resolution`, `recommend`, `chairman`, `members`, `hearing_date`, `date_issued`, `user_id`, `date_time`) VALUES
-(51, 101, 'wdwadwdawdawdawdawdwad', 'dawawadwadawdawwadwadawd', 'For Continuing Hearing', 'Jan Llyod Intong', 'wdwadwadawdwadwadwads', '2022-10-26', '2014-10-22', 1, '2022-10-14 15:23:06');
+(52, 102, 'sadasdas', 'dasdasdsa', 'Closed/Resolved', 'dasdsadas', 'dasdasdas', '0000-00-00', '2022-10-20', 1, '2022-10-20 09:49:21');
 
 -- --------------------------------------------------------
 
@@ -460,7 +261,9 @@ CREATE TABLE `sanction_disciplinary_action` (
 --
 
 INSERT INTO `sanction_disciplinary_action` (`id`, `sanction_referral_id`, `committed_date`, `committed_time`, `counselling_date`, `counselling_time`, `issual_date`, `remarks`, `user_id`, `date_time`) VALUES
-(101, 70, '2022-10-14', '10:10:00', '2022-10-14', '10:10:00', '2022-10-14', 'For Continuing Hearing', 1, '2022-10-14 10:27:48');
+(101, 70, '2022-10-14', '10:10:00', '2022-10-14', '10:10:00', '2022-10-14', NULL, 1, '2022-10-14 10:27:48'),
+(102, 74, '2022-10-20', '09:34:00', '2022-10-20', '09:34:00', '2022-10-20', 'Closed/Resolved', 1, '2022-10-20 09:34:24'),
+(103, 71, '2022-10-23', '13:43:00', '2022-10-23', '01:37:00', '2022-10-23', NULL, 1, '2022-10-23 11:13:18');
 
 -- --------------------------------------------------------
 
@@ -486,33 +289,12 @@ CREATE TABLE `sanction_referrals` (
 --
 
 INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complainer_name`, `referred`, `date`, `remark`, `semester_id`, `user_id`, `date_time`) VALUES
-(70, 1, 35, 'wadawds', 'Jan Ramil', '2022-10-13', 'Actioned', 4, 1, '2022-10-14 15:13:46'),
-(71, 1, 39, 'sadsds', 'adsadasdasd', '2022-09-15', NULL, 4, 1, '2022-10-15 12:45:09'),
+(70, 1, 35, 'wadawds', 'Jan Ramil', '2022-10-13', 'Continuing Hearing', 4, 1, '2022-10-23 11:12:55'),
+(71, 1, 39, 'sadsds', 'adsadasdasd', '2022-10-15', 'Actioned', 4, 1, '2022-10-15 12:45:09'),
 (72, 8, 4, 'Ken Venigas', 'Jan Ramil', '2022-10-01', NULL, 4, 1, '2022-10-15 19:59:21'),
 (73, 8, 4, 'wadawd', 'Jan Ramil', '2022-10-02', NULL, 4, 1, '2022-10-15 15:17:22'),
-(74, 9, 4, 'sadasd', 'sasadasdasds', '2022-10-14', NULL, 4, 1, '2022-10-15 19:58:19');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `semesters`
---
-
-CREATE TABLE `semesters` (
-  `id` int(11) NOT NULL,
-  `first_starting` date NOT NULL,
-  `first_ending` date NOT NULL,
-  `second_starting` date NOT NULL,
-  `second_ending` date NOT NULL,
-  `school_year` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `semesters`
---
-
-INSERT INTO `semesters` (`id`, `first_starting`, `first_ending`, `second_starting`, `second_ending`, `school_year`) VALUES
-(4, '2022-08-01', '2022-12-26', '2023-01-01', '2023-05-31', '2022-2023');
+(74, 9, 4, 'sadasd', 'sasadasdasds', '2022-10-14', 'Actioned', 4, 1, '2022-10-15 19:58:19'),
+(76, 1, 2, 'wadawd', 'Jan Ramil', '2022-10-22', NULL, 4, 1, '2022-10-22 15:23:49');
 
 -- --------------------------------------------------------
 
@@ -652,13 +434,6 @@ ALTER TABLE `leaderships`
   ADD KEY `leadership_semester_id` (`semester_id`);
 
 --
--- Indexes for table `logs`
---
-ALTER TABLE `logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- Indexes for table `mvp_athletes`
 --
 ALTER TABLE `mvp_athletes`
@@ -720,12 +495,6 @@ ALTER TABLE `sanction_referrals`
   ADD KEY `referrals_user_id` (`user_id`);
 
 --
--- Indexes for table `semesters`
---
-ALTER TABLE `semesters`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -774,12 +543,6 @@ ALTER TABLE `leaderships`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `logs`
---
-ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
-
---
 -- AUTO_INCREMENT for table `mvp_athletes`
 --
 ALTER TABLE `mvp_athletes`
@@ -813,25 +576,19 @@ ALTER TABLE `properties`
 -- AUTO_INCREMENT for table `sanction_cases`
 --
 ALTER TABLE `sanction_cases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `sanction_disciplinary_action`
 --
 ALTER TABLE `sanction_disciplinary_action`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
-
---
--- AUTO_INCREMENT for table `semesters`
---
-ALTER TABLE `semesters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -867,12 +624,6 @@ ALTER TABLE `kindly_acts`
 ALTER TABLE `leaderships`
   ADD CONSTRAINT `leadership_semester_id` FOREIGN KEY (`semester_id`) REFERENCES `semesters` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `leadership_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`);
-
---
--- Constraints for table `logs`
---
-ALTER TABLE `logs`
-  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `mvp_athletes`
