@@ -77,15 +77,23 @@ include('../includes/forms/header.php');
     }
 </style>
 
-
 <div class="Center-Container ">
     <div class="Absolute-Center is-Fixed ">
         <div class="container-fluid">
             <div class="container-sm shadow p-3 mb-5 bg-body rounded-3 border border-2">
 
-                <a href=" ../views/sanction-referral.php">
-                    <button class="btn btn-primary" type="submit" onclick="sessionStorage.clear('sanction-referralID');">Return</button>
-                </a>
+                <div class="row">
+                    <div class="col">
+                        <a href=" ../views/sanction-referral.php">
+                            <button class="btn btn-primary" type="submit" onclick="sessionStorage.clear('sanction-referralID');">Return</button>
+                        </a>
+                    </div>
+                    <div class="col d-flex flex-row-reverse">
+                        <p class="h5"><span class="badge bg-danger" id="student_status_danger"></span></p>
+                        <p class="h5"><span class="badge bg-warning" id="student_status_warning"></span></p>
+                        <p class="h5"><span class="badge bg-success" id="student_status_success"></span></p>
+                    </div>
+                </div>
 
                 <form class="row g-3 requires-validation d-flex justify-content-center" id="referral" novalidate>
                     <div class="pt-2 d-flex justify-content-center">
@@ -262,11 +270,74 @@ include('../includes/forms/header.php');
                         $('#Age').val(res.data.age);
                         $('#Gender').val(res.data.gender);
                         $('#Course').val(res.data.program);
+
+                        data = res.data.id
+
+                        console.log(res.data)
+                        clearStudentStatus()
+                        checkStudentStatus(data);
                     }
                 }
             });
+
         }
     });
+
+    function clearStudentStatus() {
+        var label = document.getElementById('student_status_danger')
+        label.innerHTML = "";
+
+        var label = document.getElementById('student_status_warning')
+        label.innerHTML = "";
+
+        var label = document.getElementById('student_status_success')
+        label.innerHTML = "";
+
+    }
+
+
+    //TODO need to implement student status of he/she recents sanctionss
+    function checkStudentStatus(data) {
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/referralLogic.php?checkReferral=" + data,
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response)
+                if (res.status == 412) {
+
+                    if (res.type == "danger") {
+                        var label = document.getElementById('student_status_danger')
+                        label.innerHTML = res.message;
+                    } else if (res.type == "warning") {
+                        var label = document.getElementById('student_status_warning')
+                        label.innerHTML = res.message;
+                    } else {
+                        var label = document.getElementById('student_status_success')
+                        label.innerHTML = res.message;
+                    }
+
+                } else if (res.status == 401) {
+
+                    toastr.error(res.message, res.status);
+
+                } else if (res.status == 200) {
+
+
+                    var label = document.getElementById('student_status_success')
+                    label.innerHTML = res.message
+
+
+                } else if (res.status == 500) {
+
+                    toastr.error(res.message, res.status);
+
+                }
+            }
+
+        });
+    }
 
     $(document).on('keyup keypress', '#violationCode', function(e) {
         var violationCode = $('#violationCode').val();
@@ -303,7 +374,7 @@ include('../includes/forms/header.php');
 
         $.ajax({
             type: "POST",
-            url: "../../php/store/sanction-referral.php",
+            url: "../../php/store/sanction_referral.php",
             data: formData,
             processData: false,
             contentType: false,

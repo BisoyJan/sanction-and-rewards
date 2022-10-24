@@ -99,6 +99,7 @@ include('../includes/forms/header.php');
                             <input type="text" class="form-control" id="Student" name="Student" readonly="readonly">
                             <input type="hidden" name="student_no" id="student_no">
                             <input type="hidden" name="student_id" id="student_id">
+                            <input type="hidden" name="referral_id" id="referral_id">
                             <input type="hidden" name="action_id" id="action_id">
                             <input type="hidden" name="counselling_id" id="counselling_id">
 
@@ -312,6 +313,7 @@ include('../includes/forms/header.php');
                         $('#violationCode').val(res.data.code);
                         $('#offenseType').val(res.data.offense);
                         $('#violationDescription').val(res.data.violation);
+                        $('#referral_id').val(res.data.sanction_referral_id);
 
                     }
                 }
@@ -337,6 +339,7 @@ include('../includes/forms/header.php');
 
                         $('#counselling_id').val(res.data.id);
                         $('#action_id').val(res.data.sanction_disciplinary_action_id);
+                        $('#referral_id').val(res.data.referral_id);
 
                         $('#student_id').val(res.data.student_id);
                         $('#Student').val(res.data.student_no);

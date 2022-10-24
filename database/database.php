@@ -2,6 +2,7 @@
 session_start();
 static $firstTime = true;
 
+global $con;
 date_default_timezone_set('Asia/Manila');
 
 $con = mysqli_connect("localhost", "root", "", "vpsdasdata") or die("Connection failed: " . mysqli_connect_error());

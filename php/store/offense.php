@@ -77,7 +77,7 @@ if (isset($_POST['create_Offense'])) {
             $type = "Offense";
             $date = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
 
             if ($response) {
@@ -133,7 +133,7 @@ if (isset($_POST['update_Offense'])) {
             $type = "Account";
             $date = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
 
             if ($response) {
@@ -176,7 +176,7 @@ if (isset($_POST['delete_Offense'])) {
         $type = "Offense";
         $date = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
         $response = mysqli_query($con, $query);
 
         if ($response) {

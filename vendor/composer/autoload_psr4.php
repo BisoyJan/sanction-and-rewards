@@ -16,5 +16,5 @@ return array(
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
-    'Classes\\' => array($baseDir . '/php/pdf', $baseDir . '/php/email'),
+    'Classes\\' => array($baseDir . '/php/pdf', $baseDir . '/php/email', $baseDir . '/php/store'),
 );

@@ -20,6 +20,7 @@ if (isset($_GET['student_id'])) {
         students
     JOIN programs ON students.program_id = programs.id
     JOIN colleges on programs.college_id = colleges.id WHERE students.student_no LIKE '$student_id%'";
+
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) == 1) {
@@ -37,6 +38,55 @@ if (isset($_GET['student_id'])) {
         $res = [
             'status' => 404,
             'message' => 'Specific student Not found'
+        ];
+        echo json_encode($res);
+        return;
+    }
+}
+
+if (isset($_GET['checkStudentStatus'])) {
+    $notActioned =
+
+        $student_id = mysqli_real_escape_string($con, $_GET['checkStudentStatus']);
+
+    $query = "SELECT
+        COUNT(sanction_referrals.id) as total,
+    sanction_referrals.remark
+    FROM
+    sanction_referrals
+    JOIN students ON sanction_referrals.student_id = students.id
+    JOIN violations ON sanction_referrals.violation_id = violations.id
+    JOIN offenses ON violations.offenses_id = offenses.id
+    JOIN programs ON students.program_id = programs.id
+    WHERE
+    students.id = '$student_id' AND (
+        sanction_referrals.remark = 'Actioned' OR sanction_referrals.remark IS NUll
+    )
+    GROUP BY
+    sanction_referrals.remark";
+
+    $query_run = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($query_run) == 1) {
+
+        while ($row = mysqli_fetch_array($query_run)) {
+            $numbers[] = $row['total'];
+            $labels[] = $row['remark'];
+        }
+
+        $res = [
+            'status' => 200,
+            'message' => 'Specific referral fetched Successfully',
+            'numbers' =>  $numbers,
+            'labels' =>  $labels
+
+        ];
+        echo json_encode($res);
+        return;
+    } else {
+        $res = [
+            'status' => 404,
+            'message' => 'Specific referral Not found'
         ];
         echo json_encode($res);
         return;
@@ -172,29 +222,13 @@ if (isset($_POST['create_Referral'])) {
         return;
     } else {
 
-
-        //TODO need to update this part when the student already complied to the counselling this condition will not work anymore.
-        //This query to check if the student Sanctioned 3 times
-        $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id';";
-
-        $select = mysqli_query($con, $query);
-        if (mysqli_num_rows($select) === 3) {
-            $res = [
-                'status' => 401,
-                'message' => 'This Student is been Sanctioned 3 Times',
-                'console' => $select
-            ];
-            echo json_encode($res);
-            return;
-        }
-
         //This query to check if data in database is already existing. if exist will return "Referral already exist"
         $query = "SELECT * FROM sanction_referrals WHERE student_id = '$student_id' AND violation_id = '$violation_id' AND date = '$dateIssued';";
 
         $select = mysqli_query($con, $query);
         if (mysqli_num_rows($select) === 1) {
             $res = [
-                'status' => 401,
+                'status' => 422,
                 'message' => 'Referral already existed',
                 'console' => $select
             ];
@@ -204,27 +238,27 @@ if (isset($_POST['create_Referral'])) {
 
         //This query will insert data to database if conditions are meet.
         $query = "INSERT INTO `sanction_referrals`(
-                `student_id`,
-                `violation_id`,
-                `complainer_name`,
-                `referred`,
-                `date`,
-                `remark`,
-                `semester_id`,
-                `user_id`,
-                `date_time`
-            )
-            VALUES(
-                '$student_id',
-                '$violation_id',
-                '$complainerName',
-                '$referredTo',
-                '$dateIssued',
-                NUll,
-                '$semester_id',
-                '$user_id',
-                '$date'
-            );";
+                    `student_id`,
+                    `violation_id`,
+                    `complainer_name`,
+                    `referred`,
+                    `date`,
+                    `remark`,
+                    `semester_id`,
+                    `user_id`,
+                    `date_time`
+                )
+                VALUES(
+                    '$student_id',
+                    '$violation_id',
+                    '$complainerName',
+                    '$referredTo',
+                    '$dateIssued',
+                    NUll,
+                    '$semester_id',
+                    '$user_id',
+                    '$date'
+                );";
 
         $query_run = mysqli_query($con, $query);
         $last_id = mysqli_insert_id($con); //This function will get the last inserted ID to be used in document naming
@@ -247,7 +281,7 @@ if (isset($_POST['create_Referral'])) {
             $description = "Created data Primary key:" . $last_id;
             $type = "Sanction Referral";
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
 
             if ($response) {
@@ -340,7 +374,7 @@ if (isset($_POST['update_Referral'])) {
             $description = "Updated data Primary key:" . $referral_id;
             $type = "Sanction Referral";
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
             if ($response) {
                 $res = [
@@ -387,7 +421,7 @@ if (isset($_POST['delete_Referral'])) {
         $type = "Sanction Referral";
         $date = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
+        $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
         $response = mysqli_query($con, $query);
         if ($response) {
             $res = [

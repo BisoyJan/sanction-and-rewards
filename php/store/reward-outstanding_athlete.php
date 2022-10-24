@@ -125,7 +125,7 @@ if (isset($_POST['create_OutstandingAthlete'])) {
             $type = "Outstanding Athlete";
             $date = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
 
             if ($response) {
@@ -210,7 +210,7 @@ if (isset($_POST['update_OutstandingAthlete'])) {
             $type = "Outstanding Athlete";
             $date = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
 
             if ($response) {
@@ -258,7 +258,7 @@ if (isset($_POST['delete_OutstandingAthlete'])) {
         $type = "Outstanding Athlete";
         $date = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
         $response = mysqli_query($con, $query);
 
         if ($response) {

@@ -228,7 +228,7 @@ if (isset($_POST['create_Action'])) {
                 $type = "Sanction Action";
                 $date = date('Y-m-d H:i:s');
 
-                $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+                $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
                 $response = mysqli_query($con, $query);
 
                 if ($response) {
@@ -255,7 +255,7 @@ if (isset($_POST['create_Action'])) {
                 $type = "Sanction Action";
                 $date = date('Y-m-d H:i:s');
 
-                $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+                $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
                 $response = mysqli_query($con, $query);
                 if ($response) {
                     $res = [
@@ -394,7 +394,7 @@ if (isset($_POST['update_Action'])) {
                 $type = "Sanction Action";
                 $date = date('Y-m-d H:i:s');
 
-                $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+                $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
                 $response = mysqli_query($con, $query);
 
                 if ($response) {
@@ -421,7 +421,7 @@ if (isset($_POST['update_Action'])) {
                 $type = "Sanction Action";
                 $date = date('Y-m-d H:i:s');
 
-                $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+                $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
                 $response = mysqli_query($con, $query);
                 if ($response) {
                     $res = [
@@ -474,7 +474,7 @@ if (isset($_POST['delete_Action'])) {
         $type = "Sanction Action";
         $date = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
         $response = mysqli_query($con, $query);
         if ($response) {
             $res = [

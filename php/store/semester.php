@@ -59,7 +59,7 @@ if (isset($_GET['select_semesters'])) {
                 $description = "User sets semester to the system";
                 $date = date('Y-m-d H:i:s');
 
-                $query = "INSERT INTO `logs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
+                $query = "INSERT INTO `syslogs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
                 $query_run = mysqli_query($con, $query);
                 $res = [
                     'status' => 200,
@@ -117,7 +117,7 @@ if (isset($_GET['semester_set'])) {
                 $description = "User sets semester to the system";
                 $date = date('Y-m-d H:i:s');
 
-                $query = "INSERT INTO `logs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
+                $query = "INSERT INTO `syslogs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
                 $query_run = mysqli_query($con, $query);
                 $res = [
                     'status' => 200,
@@ -205,7 +205,7 @@ if (isset($_POST['create_Semester'])) {
             $type = "Semester";
             $date = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`, `date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
 
             if ($response) {
@@ -279,7 +279,7 @@ if (isset($_POST['update_Semester'])) {
             $type = "Semester";
             $date = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
 
             if ($response) {
@@ -322,7 +322,7 @@ if (isset($_POST['delete_Semester'])) {
         $type = "Semester";
         $date = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
         $response = mysqli_query($con, $query);
 
         if ($response) {

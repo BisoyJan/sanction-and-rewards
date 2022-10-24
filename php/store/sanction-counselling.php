@@ -13,6 +13,7 @@ if (isset($_GET['counsel_id'])) {
 
     $query = "SELECT
         sanction_cases.*,
+        sanction_referrals.id AS referral_id,
         students.id AS student_id,
         students.student_no,
         students.first_name,
@@ -98,6 +99,7 @@ if (isset($_GET['action_id'])) {
 if (isset($_POST['create_Counsel'])) {
 
     $action_id = mysqli_real_escape_string($con, $_POST['action_id']);
+    $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
 
     $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
 
@@ -118,16 +120,19 @@ if (isset($_POST['create_Counsel'])) {
     $hearingDate = null;
 
     if ($recommendations == 'Closed/Resolved') {
+        $referral_update = 'Counselled';
         $formatted = null;
         $closed = 'Yes';
         $investigation = 'Off';
         $continuing = 'Off';
     } elseif ($recommendations == 'For Formal Investigation') {
+        $referral_update = 'For Formal Investigation';
         $formatted = null;
         $closed = 'Off';
         $investigation = 'Yes';
         $continuing = 'Off';
     } else {
+        $referral_update = 'Continuing Hearing';
         $hearingDate = mysqli_real_escape_string($con, $_POST['hearingDate']);
         $convertedhearingDate = date_create(mysqli_real_escape_string($con, $_POST['hearingDate']));
         $formatted = date_format($convertedhearingDate, "M/d/Y");
@@ -148,6 +153,10 @@ if (isset($_POST['create_Counsel'])) {
 
         $user_id = $_SESSION['id'];
         $date = date('Y-m-d H:i:s'); //Date Issued
+
+
+        $query = "UPDATE `sanction_referrals` SET `remark` = '$referral_update' WHERE id = '$referral_id'";
+        $query_run = mysqli_query($con, $query);
 
         $query = "UPDATE `sanction_disciplinary_action` SET `remarks`='$recommendations' WHERE id = '$action_id'";
         $query_run = mysqli_query($con, $query);
@@ -207,7 +216,7 @@ if (isset($_POST['create_Counsel'])) {
             $description = "Created data Primary key:" . $last_id;
             $type = "Sanction Counselling";
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
             if ($response) {
                 $res = [
@@ -243,6 +252,7 @@ if (isset($_POST['update_Counsel'])) {
     $counsel_id = mysqli_real_escape_string($con, $_POST['counselling_id']);
 
     $action_id = mysqli_real_escape_string($con, $_POST['action_id']);
+    $referral_id = mysqli_real_escape_string($con, $_POST['referral_id']);
 
     $student_no = mysqli_real_escape_string($con, $_POST['student_no']);
 
@@ -263,18 +273,19 @@ if (isset($_POST['update_Counsel'])) {
     $hearingDate = null;
 
     if ($recommendations == 'Closed/Resolved') {
-        $hearingDate = null;
+        $referral_update = 'Counselled';
         $formatted = null;
         $closed = 'Yes';
         $investigation = 'Off';
         $continuing = 'Off';
     } elseif ($recommendations == 'For Formal Investigation') {
-        $hearingDate = null;
+        $referral_update = 'For Formal Investigation';
         $formatted = null;
         $closed = 'Off';
         $investigation = 'Yes';
         $continuing = 'Off';
     } else {
+        $referral_update = 'Continuing Hearing';
         $hearingDate = mysqli_real_escape_string($con, $_POST['hearingDate']);
         $convertedhearingDate = date_create(mysqli_real_escape_string($con, $_POST['hearingDate']));
         $formatted = date_format($convertedhearingDate, "M/d/Y");
@@ -295,6 +306,9 @@ if (isset($_POST['update_Counsel'])) {
 
         $user_id = $_SESSION['id'];
         $date = date('Y-m-d H:i:s'); //Date Issued
+
+        $query = "UPDATE `sanction_referrals` SET `remark` = '$referral_update' WHERE id = '$referral_id'";
+        $query_run = mysqli_query($con, $query);
 
         $query = "UPDATE `sanction_disciplinary_action` SET `remarks`='$recommendations' WHERE id = '$action_id'";
         $query_run = mysqli_query($con, $query);
@@ -342,7 +356,7 @@ if (isset($_POST['update_Counsel'])) {
             $description = "Updated data Primary key:" . $counsel_id;
             $type = "Sanction Counselling";
 
-            $query = "INSERT INTO `logs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+            $query = "INSERT INTO `syslogs`(`user_id`, `description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
             $response = mysqli_query($con, $query);
             if ($response) {
                 $res = [
@@ -377,14 +391,18 @@ if (isset($_POST['delete_Counsel'])) {
     $counsel_id = mysqli_real_escape_string($con, $_POST['delete_counsel_id']);
     $student_no = mysqli_real_escape_string($con, $_POST['delete_student_no']);
     $action_id = mysqli_real_escape_string($con, $_POST['delete_action_id']);
+    $referral_id = mysqli_real_escape_string($con, $_POST['delete_referral_no']);
 
-    $query1 = "UPDATE `sanction_disciplinary_action` SET `remarks`=NULL WHERE id = '$action_id'";
-    $query_run1 = mysqli_query($con, $query1);
+    $query = "UPDATE `sanction_referrals` SET `remark` ='Actioned' WHERE id = '$referral_id'";
+    $query_run = mysqli_query($con, $query);
+
+    $query = "UPDATE `sanction_disciplinary_action` SET `remarks`=NULL WHERE id = '$action_id'";
+    $query_run = mysqli_query($con, $query);
 
     $query = "DELETE FROM `sanction_cases` WHERE id = '$counsel_id'";
     $query_run = mysqli_query($con, $query);
 
-    if ($query_run1 && $query) {
+    if ($query_run) {
 
         $filename =  $student_no . '_' . $counsel_id . '.pdf';
         unlink('../../assets/docs/processed/counselling/' . $filename);
@@ -394,7 +412,7 @@ if (isset($_POST['delete_Counsel'])) {
         $type = "Sanction Action";
         $date = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO `logs`(`user_id`,`description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
+        $query = "INSERT INTO `syslogs`(`user_id`,`description`,`section`,`date`) VALUES ('$user_id','$description','$type','$date')";
         $response = mysqli_query($con, $query);
         if ($response) {
             $res = [

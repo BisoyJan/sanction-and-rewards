@@ -12,31 +12,28 @@ if ($_POST['page'] > 1) {
     $start = 0;
 }
 
-$query = "SELECT
-    students.*,
-    programs.abbreviation,
-    programs.program_name as program,
-    programs.abbreviation,
-    colleges.abbreviation as college
-FROM
-    students
-JOIN programs ON students.program_id = programs.id
-JOIN colleges ON programs.college_id = colleges.id
-
+$query = "
+    SELECT 
+        syslogs.*,
+        users.first_name,
+        users.middle_name,
+        users.last_name,
+        users.type
+    FROM 
+        syslogs
+    JOIN users ON syslogs.user_id = users.id
 ";
 
 if ($_POST['query'] != '') {
     $query .= '
-  WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR programs.abbreviation LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  OR colleges.abbreviation LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  WHERE  users.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  OR users.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  OR users.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
+  OR users.type LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
   ';
 }
 
-$query .= 'ORDER BY students.id DESC ';
+$query .= 'ORDER BY id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -55,14 +52,12 @@ $output = '
 <thead >
     <tr>
         <th>ID</th>
-        <th>Student Number</th>
+        <th>UserID</th>
         <th>Full Name</th>
-        <th>Age</th>
-        <th>Gender</th>
+        <th>Type</th>
         <th>Section</th>
-        <th>Program</th>
-        <th>College</th>
-        <th>Actions</th>
+        <th>Description</th>
+        <th>Date</th>
     </tr>
 </thead>
 
@@ -72,28 +67,23 @@ if ($total_data > 0) {
         $output .= '
         <tr>
             <td>' . $row["id"] . '</td>
-            <td>' . $row["student_no"] . '</td>
+            <td>' . $row["user_id"] . '</td>
             <td>' . $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"] . '</td>
-            <td>' . $row["age"] . '</td>
-            <td>' . $row["gender"] . '</td>
+            <td>' . $row["type"] . '</td>
             <td>' . $row["section"] . '</td>
-            <td>' . $row["program"] . '</td>
-            <td>' . $row["college"] . '</td>
-            <td>
-                <button class="studentEditButton btn btn-success" value="' . $row["id"] . '" onclick="formIDChangeEdit()" type="button" data-bs-toggle="modal" data-bs-target="#StudentModal">Update</button>
-                <button class="studentDeleteButton btn btn-danger" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#StudentDeleteModal">Delete</button>
-            </td>
+            <td>' . $row["description"] . '</td>
+            <td>' . date("M/d/Y", strtotime($row["date"])) . '</td>
         </tr>
    ';
     }
 
     $output .= '
-</tbody>
-</table>
-</div>
-<label class="mb-2 ps-4">Total Records - ' . $total_data . '</label>
-  <ul class="pagination">
-';
+    </tbody>
+    </table>
+    </div>
+    <label class="mb-2 ps-4">Total Records - ' . $total_data . '</label>
+        <ul class="pagination">
+        ';
 
     $total_links = ceil($total_data / $limit);
     $previous_link = '';
@@ -136,60 +126,62 @@ if ($total_data > 0) {
     for ($count = 0; $count < count($page_array); $count++) {
         if ($page == $page_array[$count]) {
             $page_link .= '
-    <li class="page-item active">
-      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
-    </li>
-    ';
+            <li class="page-item active">
+              <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
+            </li>
+            ';
 
             $previous_id = $page_array[$count] - 1;
             if ($previous_id > 0) {
                 $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">Previous</a></li>';
             } else {
                 $previous_link = '
-      <li class="page-item disabled">
-        <a class="page-link" href="#">Previous</a>
-      </li>
-      ';
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Previous</a>
+              </li>
+              ';
             }
             $next_id = $page_array[$count] + 1;
             if ($next_id >= $total_links) {
                 $next_link = '
-      <li class="page-item disabled">
-        <a class="page-link" href="#">Next</a>
-      </li>
-        ';
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+              </li>
+                ';
             } else {
                 $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">Next</a></li>';
             }
         } else {
             if ($page_array[$count] == '...') {
                 $page_link .= '
-      <li class="page-item disabled">
-          <a class="page-link" href="#">...</a>
-      </li>
-      ';
+              <li class="page-item disabled">
+                  <a class="page-link" href="#">...</a>
+              </li>
+              ';
             } else {
                 $page_link .= '
-      <li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $page_array[$count] . '">' . $page_array[$count] . '</a></li>
-      ';
+              <li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $page_array[$count] . '">' . $page_array[$count] . '</a></li>
+              ';
             }
         }
     }
 
     $output .= $previous_link . $page_link . $next_link;
     $output .= '
-  </ul>
-
-';
+          </ul>
+        
+        ';
 } else {
     $output .= '
-<tbody>
-    <tr>
-        <td colspan="12" align="center"><h1>No Data Found</h1></td>
-    </tr>
-</tbody>
-</table>
-';
+    <tbody>
+        <tr>
+            <td colspan="12" align="center"><h1>No Data Found</h1></td>
+        </tr>
+    </tbody>
+    </table>
+  ';
 }
+
+
 
 echo $output;

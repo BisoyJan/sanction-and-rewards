@@ -54,6 +54,7 @@ include('../includes/main/navbar.php');
                     <input type="hidden" name="delete_counsel_id" id="delete_counsel_id">
                     <input type="hidden" name="delete_action_id" id="delete_action_id">
                     <input type="hidden" name="delete_student_no" id="delete_student_no">
+                    <input type="hidden" name="delete_referral_no" id="delete_referral_no">
                 </div>
                 <div class="modal-footer">
                     <button type="submit" data-bs-dismiss="modal" class="btn btn-primary" type="submit">Confirm</button>
@@ -127,6 +128,7 @@ include('../includes/main/navbar.php');
                     $('#delete_counsel_id').val(res.data.id);
                     $('#delete_student_no').val(res.data.student_no);
                     $('#delete_action_id').val(res.data.sanction_disciplinary_action_id);
+                    $('#delete_referral_id').val(res.data.referral_id);
 
                     console.log(res.data);
                 }
