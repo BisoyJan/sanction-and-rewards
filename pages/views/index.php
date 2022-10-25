@@ -346,7 +346,7 @@ include('../includes/main/navbar.php');
                             },
                             scales: {
                                 y: {
-                                    beginAtZero: false
+                                    beginAtZero: true
                                 }
                             },
                         }
@@ -441,7 +441,7 @@ include('../includes/main/navbar.php');
                             },
                             scales: {
                                 y: {
-                                    beginAtZero: false
+                                    beginAtZero: true
                                 }
                             },
                         }

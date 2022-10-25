@@ -23,7 +23,7 @@ include('../includes/main/navbar.php');
         if ($_SESSION['type'] == "Admin" || $_SESSION['type'] == "MIS") { ?>
             <div class="col">
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="accountAddButton" onclick="formIDChangeAdd()" data-bs-target="#AccountModal">Add Button</button>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="accountAddButton" onclick="formIDChangeAdd()" data-bs-target="#AccountModal">Add Account</button>
                 </div>
             </div>
         <?php } ?>

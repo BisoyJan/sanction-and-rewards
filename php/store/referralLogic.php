@@ -128,9 +128,15 @@ function selectReferralDataSpecificStudent($data)
 
     if ($total >= 1) {
 
-        $type = "warning";
-        $message = 'This student is already Referred ' . $total . ' times by this Semester';
-        $status = 412;
+        if ($total == 1) {
+            $type = "warning";
+            $message = 'This student is already Referred ' . $total . ' time by this Semester';
+            $status = 412;
+        } else {
+            $type = "warning";
+            $message = 'This student is already Referred ' . $total . ' times by this Semester';
+            $status = 412;
+        }
     } elseif ($wholeYearActioned + $wholeYearNotActioned != 0) {
 
         $type = "danger";

@@ -19,7 +19,7 @@ include('../includes/main/navbar.php');
         </div>
         <div class="col">
             <div class="d-grid gap-2 d-flex justify-content-end">
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="studentAddButton" onclick="formIDChangeAdd()" data-bs-target="#StudentModal">Add Button</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="studentAddButton" onclick="formIDChangeAdd()" data-bs-target="#StudentModal">Add Student</button>
             </div>
         </div>
     </div>

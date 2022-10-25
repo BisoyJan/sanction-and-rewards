@@ -48,7 +48,7 @@ if (isset($_POST['login_user'])) {
                     $description = "User Login to the system";
                     $date = date('Y-m-d H:i:s');
 
-                    $query = "INSERT INTO `logs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
+                    $query = "INSERT INTO `syslogs`(`user_id`, `description`, `date`) VALUES ('$user_id','$description','$date')";
                     $query_run = mysqli_query($con, $query);
                     $res = [
                         'status' => 200,

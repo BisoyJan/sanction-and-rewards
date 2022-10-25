@@ -1,6 +1,7 @@
 <?php
 
 use Classes\generatePDF;
+use GuzzleHttp\Psr7\Response;
 
 require '../../database/database.php';
 
@@ -81,7 +82,6 @@ if (isset($_GET['referral_id'])) {
         echo json_encode($res);
         return;
     } else {
-
         $referral_id = mysqli_real_escape_string($con, $_GET['referral_id']);
 
         $query = "SELECT
@@ -218,8 +218,11 @@ if (isset($_POST['create_Action'])) {
 
         if ($response && $query_run) {
 
-            $email = new sendEmail;
-            $response = $email->actionEmail($emailData);
+            //NOTE i disabled the auto email function because of new student datas
+            // $email = new sendEmail;
+            // $response = $email->actionEmail($emailData);
+
+            $response = true;
 
             if ($response) {
 
@@ -384,8 +387,11 @@ if (isset($_POST['update_Action'])) {
 
         if ($response && $query_run) {
 
-            $email = new sendEmail;
-            $response = $email->actionEmail($emailData);
+            //NOTE i disabled the auto email function because of new student datas
+            // $email = new sendEmail;
+            // $response = $email->actionEmail($emailData);
+
+            $response = true;
 
             if ($response) {
 

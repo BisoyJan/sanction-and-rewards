@@ -35,15 +35,15 @@
                 <div class="iocn-link">
                     <a href="#">
                         <i class="fa-solid fa-person-military-to-person"></i>
-                        <span class="link_name">Sanctioning</span>
+                        <span class="link_name">Sanctioning Reports</span>
                     </a>
                     <i class="fa-solid fa-angle-down arrow"></i>
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Disciplinary</a></li>
-                    <li><a href="../views/sanction-counselling.php">Counselling</a></li>
-                    <li><a href="../views/sanction-action.php">Disciplinary Action</a></li>
-                    <li><a href="../views/sanction-referral.php">Referral</a></li>
+                    <li><a href="../views/sanction-counselling.php">Counselling Reports</a></li>
+                    <li><a href="../views/sanction-action.php">Action Reports</a></li>
+                    <li><a href="../views/sanction-referral.php">Referral Reports</a></li>
                 </ul>
             </li>
             <li>

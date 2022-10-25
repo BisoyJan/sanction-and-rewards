@@ -316,8 +316,8 @@ if ($total_data > 0) {
             <td>' . date("M/d/Y", strtotime($row["date_issued"])) . '</td>
             <td>' . $row["chairman"] . '</td>
             <td>
-                <button class="viewPDFButton btn btn-success m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
-                <a href="../forms/sanction-counselling.php" style="text-decoration: none;"> <button class="sanction-counsellingEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
+                <button class="viewPDFButton btn btn-warning m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
+                <a href="../forms/sanction-counselling.php" style="text-decoration: none;"> <button class="sanction-counsellingEditButton btn btn-info m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
                 <button class="counselDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#CounselDeleteModal">Delete</button>
             </td>
         </tr>

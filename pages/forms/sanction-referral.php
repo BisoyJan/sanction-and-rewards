@@ -95,7 +95,7 @@ include('../includes/forms/header.php');
                     </div>
                 </div>
 
-                <form class="row g-3 requires-validation d-flex justify-content-center" id="referral" novalidate>
+                <form class="row g-3 requires-validation d-flex justify-content-center" id="Referral" novalidate>
                     <div class="pt-2 d-flex justify-content-center">
                         <h5>Student Information</h5>
                     </div>
@@ -240,6 +240,18 @@ include('../includes/forms/header.php');
         });
     })();
 
+    function clearStudentStatus() {
+        var label = document.getElementById('student_status_danger')
+        label.innerHTML = "";
+
+        var label = document.getElementById('student_status_warning')
+        label.innerHTML = "";
+
+        var label = document.getElementById('student_status_success')
+        label.innerHTML = "";
+
+    }
+
     $(document).on('keyup keypress', '#Student', function(e) {
         var student_id = $('#Student').val();
 
@@ -282,19 +294,6 @@ include('../includes/forms/header.php');
 
         }
     });
-
-    function clearStudentStatus() {
-        var label = document.getElementById('student_status_danger')
-        label.innerHTML = "";
-
-        var label = document.getElementById('student_status_warning')
-        label.innerHTML = "";
-
-        var label = document.getElementById('student_status_success')
-        label.innerHTML = "";
-
-    }
-
 
     //TODO need to implement student status of he/she recents sanctionss
     function checkStudentStatus(data) {
@@ -366,7 +365,7 @@ include('../includes/forms/header.php');
         }
     });
 
-    $(document).on('submit', '#referral', function(e) {
+    $(document).on('submit', '#Referral', function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
@@ -374,7 +373,7 @@ include('../includes/forms/header.php');
 
         $.ajax({
             type: "POST",
-            url: "../../php/store/sanction_referral.php",
+            url: "../../php/store/sanction-referral.php",
             data: formData,
             processData: false,
             contentType: false,
@@ -466,7 +465,7 @@ include('../includes/forms/header.php');
                 }
             });
         } else {
-            $("form").attr('id', 'referral')
+            $("form").attr('id', 'Referral')
         }
     });
 

@@ -267,7 +267,7 @@ if ($total_data > 0) {
             <td>' . $row["complainer_name"] . '</td>
             <td>' . $row["remarks"] . '</td>
             <td>
-            <button class="viewPDFButton btn btn-success m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
+            <button class="viewPDFButton btn btn-warning m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
                 ';
 
         if ($_SESSION['type'] == 'Admin') {
@@ -276,7 +276,7 @@ if ($total_data > 0) {
                         ';
         }
         $output .= '
-                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
+                <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-info m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
                 <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete</button>
             </td>
         </tr>

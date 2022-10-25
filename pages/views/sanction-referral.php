@@ -34,7 +34,7 @@ include('../includes/main/navbar.php');
         <div class="col">
             <div class="d-grid gap-2 d-flex justify-content-end">
                 <a href="../forms/sanction-referral.php" style="text-decoration: none;">
-                    <button class="btn btn-primary" type="button">Add Button</button>
+                    <button class="btn btn-primary" type="button">Add Report</button>
                 </a>
             </div>
         </div>
