@@ -220,17 +220,25 @@ if ($total_data > 0) {
             <button class="viewPDFButton btn btn-warning m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
             ';
         if ($_SESSION['type'] == 'Admin' or $_SESSION['type'] == 'User') {
-            $output .= ' 
+            if ($row["remark"] == NULL) {
+                $output .= ' 
                 <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Action</button>
                 ';
+            }
         }
 
         $output .= '
             <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-info m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
-            <button class="referralDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
-        </td>
-        </tr>
          ';
+
+        if ($row["remark"] == NULL) {
+            $output .= '
+            <button class="referralDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
+            ';
+        }
+
+        $output .= '  </td>
+        </tr> ';
     }
 
     $output .= '

@@ -271,16 +271,25 @@ if ($total_data > 0) {
                 ';
 
         if ($_SESSION['type'] == 'Admin') {
-            $output .= ' 
-                    <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button>
-                        ';
+
+            if ($row['remarks'] == NULL) {
+                $output .= ' 
+                <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button>
+                    ';
+            }
         }
+
         $output .= '
                 <a href="../forms/sanction-action.php" style="text-decoration: none;"> <button class="sanction-actionEditButton btn btn-info m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
-                <button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete</button>
-            </td>
-        </tr>
-   ';
+        ';
+
+        if ($row['remarks'] == NULL) {
+            $output .= '<button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete</button>
+        ';
+        }
+
+        $output .= '</td>
+        </tr>';
     }
     $output .= '
     </tbody>

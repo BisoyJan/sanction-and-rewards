@@ -46,6 +46,12 @@
                     <li><a href="../views/sanction-referral.php">Referral Reports</a></li>
                 </ul>
             </li>
+            <!-- <li>
+                <a href="../views/student-status.php">
+                    <i class="fa-solid fa-check"></i>
+                    <span class="link_name">Student Status</span>
+                </a>
+            </li> -->
             <li>
                 <a href="../views/lost-found.php">
                     <i class="fa-solid fa-person"></i>
@@ -166,6 +172,12 @@
                     <li><a href="../views/sanction-referral.php">Referral</a></li>
                 </ul>
             </li>
+            <!-- <li>
+                <a href="../views/student-status.php">
+                    <i class="fa-solid fa-check"></i>
+                    <span class="link_name">Student Status</span>
+                </a>
+            </li> -->
             <li>
                 <a href="../views/lost-found.php">
                     <i class="fa-solid fa-person"></i>

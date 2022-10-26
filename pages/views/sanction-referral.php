@@ -52,13 +52,12 @@ include('../includes/main/navbar.php');
         <div class="modal-content">
             <form id="deleteReferral">
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete Account</h5>
+                    <h5 class="modal-title">Delete Referral</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <h6>Are you sure to delete this?</h6>
-                    <br>
-                    <p>Other related Data will also be Deleted</p>
+
                     <input type="hidden" name="delete_referral_id" id="delete_referral_id">
                     <input type="hidden" name="delete_student_no" id="delete_student_no">
                 </div>
