@@ -18,12 +18,14 @@ include('../includes/main/navbar.php');
         <div class="col pt-2 d-flex justify-content-end">
 
             <div class="d-flex flex-row-reverse">
+                <div class=" p-2 bd-highlight h5" id="time">Time</div>
+
                 <?php if (empty($_SESSION['school_year'])) { ?>
-                    <!-- If school year empty nothings shows -->
+                    <div class="p-2 bd-highlight h5">Semester not yet set </div>
                 <?php } else { ?>
                     <div class="p-2 bd-highlight h5"><?= $_SESSION['semester']; ?> | <?= $_SESSION['school_year']; ?> </div>
                 <?php } ?>
-                <div class=" p-2 bd-highlight h5" id="time">Time</div>
+
 
             </div>
 
