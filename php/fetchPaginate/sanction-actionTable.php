@@ -276,6 +276,10 @@ if ($total_data > 0) {
                 $output .= ' 
                 <button class="sanction-counselAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Counsel</button>
                     ';
+            } else {
+                $output .= ' 
+                <button class="sanction-counselAddButton btn btn-success disabled m-1" value="' . $row["id"] . '"  type="button">Counsel</button>
+                    ';
             }
         }
 
@@ -284,8 +288,13 @@ if ($total_data > 0) {
         ';
 
         if ($row['remarks'] == NULL) {
-            $output .= '<button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete</button>
+            $output .=
+                '<button class="actionDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete</button>
         ';
+        } else {
+            $output .=
+                '<button class="actionDeleteButton btn btn-danger disabled m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ActionDeleteModal">Delete</button>
+            ';
         }
 
         $output .= '</td>

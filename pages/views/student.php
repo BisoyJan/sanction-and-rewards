@@ -143,10 +143,8 @@ include('../includes/main/navbar.php');
                                     $result = $con->query($query);
                                     if ($result->num_rows > 0) {
                                         while ($optionData = $result->fetch_assoc()) {
-                                            $option = $optionData['program_name'];
-                                            $id = $optionData['id'];
                                     ?>
-                                            <option value="<?php echo $id; ?>"><?php echo $option; ?></option>
+                                            <option value="<?php echo $optionData['id']; ?>"><?php echo $optionData['program_name']; ?></option>
                                     <?php }
                                     } ?>
 

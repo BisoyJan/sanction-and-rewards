@@ -199,6 +199,7 @@ $output = '
     </tr>
 </thead>
 
+
    <tbody >';
 if ($total_data > 0) {
     foreach ($result as $row) {
@@ -224,6 +225,10 @@ if ($total_data > 0) {
                 $output .= ' 
                 <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Action</button>
                 ';
+            } else {
+                $output .= '
+                <button class="sanction-actionAddButton btn btn-success disabled m-1" value="' . $row["id"] . '"  type="button">Action</button>
+            ';
             }
         }
 
@@ -234,6 +239,10 @@ if ($total_data > 0) {
         if ($row["remark"] == NULL) {
             $output .= '
             <button class="referralDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
+            ';
+        } else {
+            $output .= '
+            <button class="referralDeleteButton btn btn-danger disabled m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
             ';
         }
 

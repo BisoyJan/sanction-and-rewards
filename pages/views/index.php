@@ -15,6 +15,11 @@ include('../includes/main/navbar.php');
                 </div>
             </div>
         <?php } ?>
+        <div class="col-auto">
+            <div class="d-grid gap-2 d-flex pt-2 justify-content-start">
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="studentAddButton" data-bs-target="#StudentModal">Generate Report</button>
+            </div>
+        </div>
         <div class="col pt-2 d-flex justify-content-end">
 
             <div class="d-flex flex-row-reverse">
@@ -157,13 +162,69 @@ include('../includes/main/navbar.php');
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="StudentModal" tabindex="-1" aria-labelledby="StudentLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Select Report to Generate</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div class="pt-2 d-flex justify-content-center">
+                        <h5>Student Referral</h5>
+                    </div>
+
+                    <div class="row d-flex justify-content-center pt-3">
+                        <div class="col-4 d-flex justify-content-center">
+                            <div class="input-group mb-3 ps-4">
+                                <span class="input-group-text">All Students Referred :</span>
+                                <a href="../../php/reportGenerate/allStudentReferral.php" target="_blank" class="btn btn-success btn-sm"><img class="pt-1" src="../../assets/images/report_file_50px.png" width="20" /></a>
+                            </div>
+                        </div>
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="input-group mb-3 ps-4">
+                                <span class="input-group-text">By Semester:</span>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Select
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="../../php/reportGenerate/referralbySemester.php?semester=1st" target="_blank">1st Semester</a></li>
+                                        <li><a class="dropdown-item" href="../../php/reportGenerate/referralbySemester.php?semester=2nd" target="_blank">2nd Semester</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5 d-flex justify-content-center">
+                            <form class="row g-3 d-flex justify-content-center" method="POST" target="_blank" action="../../php/reportGenerate/referralByMonth.php">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">By Month:</span>
+                                    <input type="month" class="form-control" name="datepicker" id="datepicker" />
+                                    <button type="submit" class="btn btn-success btn-sm"><img class="pt-1" src="../../assets/images/report_file_50px.png" width="20" /></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     setInterval(refreshTime, 1000);
 
     $(document).ready(function() {
         all_functions();
+
+
     });
+
+
 
     function all_functions() {
         student();
@@ -498,74 +559,6 @@ include('../includes/main/navbar.php');
         var page = $(this).data('page_number');
         violationCommonToViolateTable(page);
     });
-
-
-
-
-
-
-    // const barChartID1 = document.getElementById('lineChart').getContext('2d');
-    // const barChart1 = new Chart(barChartID1, {
-    //     type: 'line',
-    //     data: {
-    //         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    //         datasets: [{
-    //             label: '# of Votes',
-    //             data: [12, 19, 3, 5, 2, 3],
-    //             backgroundColor: [
-    //                 'rgba(255, 99, 132)',
-    //                 'rgba(54, 162, 235)',
-    //                 'rgba(255, 206, 86)',
-    //                 'rgba(75, 192, 192)',
-    //                 'rgba(153, 102, 255)',
-    //                 'rgba(255, 159, 64)'
-    //             ],
-    //             borderColor: [
-    //                 'rgba(255, 99, 132, 1)',
-    //                 'rgba(54, 162, 235, 1)',
-    //                 'rgba(255, 206, 86, 1)',
-    //                 'rgba(75, 192, 192, 1)',
-    //                 'rgba(153, 102, 255, 1)',
-    //                 'rgba(255, 159, 64, 1)'
-    //             ],
-    //             borderWidth: 3
-    //         }]
-    //     },
-    //     options: {
-    //         scales: {
-    //             y: {
-    //                 beginAtZero: true
-    //             }
-    //         }
-    //     }
-    // });
-
-    // const pieChartID = document.getElementById('pieChart').getContext('2d');
-    // const pieChart = new Chart(pieChartID, {
-    //     type: 'pie',
-    //     data: {
-    //         labels: ['Red', 'Blue', 'Yellow', 'Green'],
-    //         datasets: [{
-    //             label: '# of Votes',
-    //             data: [12, 19, 3, 5],
-    //             backgroundColor: [
-    //                 'rgba(255, 99, 132)',
-    //                 'rgba(54, 162, 235)',
-    //                 'rgba(255, 206, 86)',
-    //                 'rgba(75, 192, 192)'
-    //             ],
-
-    //             borderWidth: 1
-    //         }]
-    //     },
-    //     options: {
-    //         scales: {
-    //             y: {
-    //                 beginAtZero: true
-    //             }
-    //         }
-    //     }
-    // });
 </script>
 
 <?php
