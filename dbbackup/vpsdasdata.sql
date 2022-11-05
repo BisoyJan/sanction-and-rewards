@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2022 at 03:42 AM
+-- Generation Time: Nov 05, 2022 at 03:21 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -295,7 +295,7 @@ INSERT INTO `sanction_referrals` (`id`, `student_id`, `violation_id`, `complaine
 (73, 8, 4, 'wadawd', 'Jan Ramils', '2022-10-02', NULL, 4, 1, '2022-10-25 19:57:48'),
 (74, 9, 4, 'sadasd', 'sasadasdasds', '2022-10-14', 'Actioned', 4, 1, '2022-10-15 19:58:19'),
 (76, 1, 2, 'wadawd', 'Jan Ramils', '2022-10-22', NULL, 4, 1, '2022-10-25 20:03:25'),
-(77, 2, 35, 'Ken Venigas', 'adwadawdawd', '2022-10-25', NULL, 4, 1, '2022-10-25 20:24:28');
+(78, 2, 2, 'wadawd', 'adwadawdawd', '2022-11-04', NULL, 4, 1, '2022-11-04 21:21:05');
 
 -- --------------------------------------------------------
 
@@ -587,7 +587,27 @@ INSERT INTO `syslogs` (`id`, `user_id`, `description`, `section`, `date`) VALUES
 (258, 1, 'User Login to the system', '', '2022-10-25 20:20:25'),
 (259, 1, 'User Login to the system', '', '2022-10-25 20:23:16'),
 (260, 1, 'User sets semester to the system', '', '2022-10-25 20:23:24'),
-(261, 1, 'Created data Primary key:77', 'Sanction Referral', '2022-10-25 20:24:28');
+(261, 1, 'Created data Primary key:77', 'Sanction Referral', '2022-10-25 20:24:28'),
+(262, 1, 'User Login to the system', '', '2022-10-26 09:44:40'),
+(263, 1, 'User Login to the system', '', '2022-10-26 11:18:55'),
+(264, 1, 'User Login to the system', '', '2022-10-26 11:48:30'),
+(265, 1, 'User sets semester to the system', '', '2022-10-26 11:53:31'),
+(266, 1, 'User Login to the system', '', '2022-10-26 19:45:24'),
+(267, 1, 'User sets semester to the system', '', '2022-10-26 19:52:39'),
+(268, 1, 'Deleted data Primary key:77', 'Sanction Referral', '2022-10-26 19:54:58'),
+(269, 1, 'User Login to the system', '', '2022-10-27 18:52:25'),
+(270, 1, 'User Login to the system', '', '2022-11-02 14:29:11'),
+(271, 1, 'User Login to the system', '', '2022-11-02 20:10:23'),
+(272, 1, 'User sets semester to the system', '', '2022-11-02 20:10:32'),
+(273, 1, 'User Logout to the system ', '', '2022-11-02 20:13:45'),
+(274, 1, 'User Login to the system', '', '2022-11-02 20:13:48'),
+(275, 1, 'User sets semester to the system', '', '2022-11-02 20:16:07'),
+(276, 1, 'User Login to the system', '', '2022-11-04 11:45:45'),
+(277, 1, 'User Login to the system', '', '2022-11-04 12:51:45'),
+(278, 1, 'User sets semester to the system', '', '2022-11-04 14:51:25'),
+(279, 1, 'Created data Primary key:78', 'Sanction Referral', '2022-11-04 21:21:05'),
+(280, 1, 'User Login to the system', '', '2022-11-05 10:17:23'),
+(281, 1, 'User sets semester to the system', '', '2022-11-05 10:17:30');
 
 -- --------------------------------------------------------
 
@@ -865,7 +885,7 @@ ALTER TABLE `sanction_disciplinary_action`
 -- AUTO_INCREMENT for table `sanction_referrals`
 --
 ALTER TABLE `sanction_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -883,7 +903,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `syslogs`
 --
 ALTER TABLE `syslogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=262;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=282;
 
 --
 -- AUTO_INCREMENT for table `users`
