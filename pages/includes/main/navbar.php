@@ -35,7 +35,7 @@
                 <div class="iocn-link">
                     <a href="#">
                         <i class="fa-solid fa-person-military-to-person"></i>
-                        <span class="link_name">Sanctioning Reports</span>
+                        <span class="link_name">Sanction Reports</span>
                     </a>
                     <i class="fa-solid fa-angle-down arrow"></i>
                 </div>
@@ -281,7 +281,6 @@
                     <li><a class="link_name" href="#">Disciplinary</a></li>
                     <li><a href="../views/semester.php">Semester</a></li>
                     <li><a href="../views/logs.php">Logs</a></li>
-
                 </ul>
             </li>
             <li>

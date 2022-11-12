@@ -42,12 +42,12 @@ include('../includes/main/navbar.php');
             <div class="card mb-3">
                 <div class="row ">
                     <div class="col-md-4">
-                        <img src="../../assets/images/read_online_96px.png" class="mx-auto d-block pt-4 px-3" alt=" ...">
+                        <img src="../../assets/images/read_online_96px.png" class="mx-auto d-block pt-4 px-4" alt=" ...">
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
-                            <h4 class="card-title">Student</h4>
-                            <p class="card-text">Total Students: <strong id="students" style="font-size:25px"></strong></p>
+                        <div class="card-body pt-4">
+                            <h4 class="card-title ps-4">Student</h4>
+                            <p class="card-text ps-4">Total Students: <strong id="students" style="font-size:26px"></strong></p>
                         </div>
                     </div>
                 </div>
@@ -58,12 +58,28 @@ include('../includes/main/navbar.php');
             <div class="card mb-3">
                 <div class="row ">
                     <div class="col-md-4">
-                        <img src="../../assets/images/he_skin_type_3_96px.png" class="mx-auto d-block pt-4 px-3" alt=" ...">
+                        <img src="../../assets/images/he_skin_type_3_96px.png" class="mx-auto d-block pt-4 px-4" alt=" ...">
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
-                            <h4 class="card-title">Referred</h4>
-                            <p class="card-text">Total Referred: <strong id="referral" style="font-size:25px"></strong></p>
+                        <div class="card-body pt-4">
+                            <h4 class="card-title ps-4">Referred</h4>
+                            <p class="card-text ps-4">Total Referred: <strong id="referral" style="font-size:26px"></strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-auto">
+            <div class="card mb-3">
+                <div class="row ">
+                    <div class="col-md-4">
+                        <img src="../../assets/images/police_fine_96px.png" class="mx-auto d-block pt-4 px-4" alt=" ...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body pt-4">
+                            <h4 class="card-title ps-4">Actioned</h4>
+                            <p class="card-text ps-4">Total Actioned: <strong id="action" style="font-size:26px"></strong></p>
 
                         </div>
                     </div>
@@ -75,12 +91,12 @@ include('../includes/main/navbar.php');
             <div class="card mb-3">
                 <div class="row ">
                     <div class="col-md-4">
-                        <img src="../../assets/images/police_fine_96px.png" class="mx-auto d-block pt-4 px-3" alt=" ...">
+                        <img src="../../assets/images/law_96px.png" class="mx-auto d-block pt-4 px-4" alt=" ...">
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
-                            <h4 class="card-title">Actioned</h4>
-                            <p class="card-text">Total Actioned: <strong id="action" style="font-size:25px"></strong></p>
+                        <div class="card-body pt-4">
+                            <h4 class="card-title ps-4">Case</h4>
+                            <p class="card-text ps-4">Total Case: <strong id="case" style="font-size:26px"></strong></p>
 
                         </div>
                     </div>
@@ -88,26 +104,7 @@ include('../includes/main/navbar.php');
             </div>
         </div>
 
-        <div class="col-auto">
-            <div class="card mb-3">
-                <div class="row ">
-                    <div class="col-md-4">
-                        <img src="../../assets/images/law_96px.png" class="mx-auto d-block pt-4 px-3" alt=" ...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h4 class="card-title">Case</h4>
-                            <p class="card-text">Total Case: <strong id="case" style="font-size:25px"></strong></p>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row pt-2 d-flex justify-content-center">
         <div class=" col-auto">
             <div class="card mb-3 text-center" style="width:46.5rem;">
                 <div class="card-body">
