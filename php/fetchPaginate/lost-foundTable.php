@@ -13,7 +13,7 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT * FROM `properties`
+SELECT * FROM properties
 ";
 
 if ($_POST['query'] != '') {

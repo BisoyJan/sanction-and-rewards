@@ -10,11 +10,7 @@ include('../includes/main/navbar.php');
                 <h3>Offenses Table</h3>
             </div>
         </div>
-        <div class="col-auto">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" ame="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
-            </div>
-        </div>
+
     </div>
 
     <div class="row">
@@ -89,16 +85,25 @@ include('../includes/main/navbar.php');
             </form>
         </div>
         <div class="col-8">
+            <div class="table-responsive">
+                <table id="offenseTable" class="table table-hover" style="text-align: center;">
+                    <thead>
+                        <th>ID</th>
+                        <th>Type of Offense</th>
+                        <th>Code</th>
+                        <th style="width:30%;">Violation</th>
+                        <th>Actions</th>
+                    </thead>
+                    <tbody>
 
-            <div id="dynamicTable">
-                <!-- The contents of  the tables at the ../php/fetchPaginate/offenseTable.php -->
+                    </tbody>
+                </table>
             </div>
-
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="OffenseDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class=" modal fade" id="OffenseDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form id="deleteOffense">
@@ -121,32 +126,26 @@ include('../includes/main/navbar.php');
 <script>
     //To inject the table in fetchPaginate folder
     $(document).ready(function() {
-        load_data(1);
-    });
-
-    function load_data(page = 1, query = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/offenseTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
+        $('#offenseTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/offenseTable.php',
+                'type': 'post',
+            },
+            "lengthMenu": [5, 10, 20, 50, 100],
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [4]
+                },
+
+            ]
         });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
     });
 
     //Bootstrap input validation 5 Validation
@@ -228,7 +227,6 @@ include('../includes/main/navbar.php');
                 }
             }
         });
-
     });
 
     $(document).on('submit', '#Offense', function(e) {
@@ -258,7 +256,8 @@ include('../includes/main/navbar.php');
                     } else if (res.status == 200) {
 
                         $('#Offense')[0].reset();
-                        load_data(1);
+                        mytable = $('#offenseTable').DataTable();
+                        mytable.draw();
                         toastr.success(res.message, res.status);
                         console.log(res.console);
 
@@ -296,7 +295,8 @@ include('../includes/main/navbar.php');
 
                         $('#Offense')[0].reset();
                         btn.innerText = "Add Offense";
-                        load_data(1);
+                        mytable = $('#offenseTable').DataTable();
+                        mytable.draw();
                         toastr.success(res.message, res.status);
                         console.log(res.console);
 
@@ -328,7 +328,8 @@ include('../includes/main/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#offenseTable').DataTable();
+                    mytable.draw();
                     $('#OffenseDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 

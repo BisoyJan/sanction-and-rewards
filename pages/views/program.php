@@ -11,11 +11,7 @@ include('../includes/main/navbar.php');
                 <h3>Programs Table</h3>
             </div>
         </div>
-        <div class="col-auto">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" ame="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
-            </div>
-        </div>
+
 
     </div>
 
@@ -91,12 +87,31 @@ include('../includes/main/navbar.php');
                 </div>
             </form>
         </div>
-        <div class="col-8">
+        <!-- <div class="col-8">
 
             <div id="dynamicTable">
-                <!-- The contents of  the tables at the ../php/fetchPaginate/programTable.php -->
+                The contents of  the tables at the ../php/fetchPaginate/programTable.php
+            </div>
+        </div> -->
+
+        <div class="col-8">
+            <div class="table-responsive">
+                <table id="programTable" class="table table-hover" style="text-align: center;">
+                    <thead>
+                        <th>ID</th>
+                        <th>Abbreviation</th>
+                        <th>Program</th>
+                        <th>College</th>
+                        <th>Actions</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
             </div>
         </div>
+
+
     </div>
 </div>
 
@@ -121,34 +136,26 @@ include('../includes/main/navbar.php');
 </div>
 
 <script>
-    //To inject the table in fetchPaginate folder
     $(document).ready(function() {
-        load_data(1);
-    });
-
-    function load_data(page = 1, query = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/programTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
+        $('#programTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/programTable.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [4]
+                },
+
+            ]
         });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
     });
 
     function buttonIDChange() {
@@ -260,7 +267,8 @@ include('../includes/main/navbar.php');
                     } else if (res.status == 200) {
 
                         $('#Program')[0].reset();
-                        load_data(1);
+                        mytable = $('#programTable').DataTable();
+                        mytable.draw();
                         toastr.success(res.message, res.status);
                         console.log(res.console);
 
@@ -298,7 +306,8 @@ include('../includes/main/navbar.php');
 
                         $('#Program')[0].reset();
                         btn.innerText = "Add Program";
-                        load_data(1);
+                        mytable = $('#programTable').DataTable();
+                        mytable.draw();
                         toastr.success(res.message, res.status);
                         console.log(res.console);
 
@@ -330,7 +339,8 @@ include('../includes/main/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#programTable').DataTable();
+                    mytable.draw();
                     $('#ProgramDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 

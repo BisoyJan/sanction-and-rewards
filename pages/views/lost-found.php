@@ -26,9 +26,23 @@ include('../includes/main/navbar.php');
         </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/studentTable.php -->
+    <div class="table-responsive">
+        <table id="lost-foundTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <th>ID</th>
+                <th>Returnee ID</th>
+                <th>Retrieval ID</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Date Found</th>
+                <th>Date Retrieved</th>
+                <th>Date Surrendered</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
 
+            </tbody>
+        </table>
     </div>
 
 </div>
@@ -79,32 +93,25 @@ include('../includes/main/navbar.php');
 <script>
     //To inject the table in fetchPaginate folder
     $(document).ready(function() {
-        load_data(1);
-    });
-
-    function load_data(page = 1, query = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/lost-foundTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
+        $('#lost-foundTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/lost-found.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [7]
+                },
+
+            ]
         });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
     });
 
     //CRUD Function
@@ -176,7 +183,8 @@ include('../includes/main/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#lost-foundTable').DataTable();
+                    mytable.draw();
                     $('#LostFoundDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 

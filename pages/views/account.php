@@ -12,26 +12,31 @@ include('../includes/main/navbar.php');
         </div>
     </div>
     <div class="row">
-        <div class="col-auto">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
-            </div>
-        </div>
-
-
         <?php
         if ($_SESSION['type'] == "Admin" || $_SESSION['type'] == "MIS") { ?>
             <div class="col">
-                <div class="d-grid gap-2 d-flex justify-content-end">
+                <div class="d-grid mb-3 gap-2 d-flex justify-content-end">
                     <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="accountAddButton" onclick="formIDChangeAdd()" data-bs-target="#AccountModal">Add Account</button>
                 </div>
             </div>
         <?php } ?>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/accountTable.php -->
+    <div class="table-responsive">
+        <table id="accountTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Type</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
 
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -160,32 +165,25 @@ include('../includes/main/navbar.php');
 <script>
     //To inject the table in fetchPaginate folder
     $(document).ready(function() {
-        load_data(1);
-    });
-
-    function load_data(page = 1, query = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/accountTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
+        $('#accountTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/accountTable.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [6]
+                },
+
+            ]
         });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
     });
 
     //PasswordShow
@@ -315,7 +313,8 @@ include('../includes/main/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#accountTable').DataTable();
+                    mytable.draw();
 
                     $('#AccountModal').modal('hide');
                     toastr.success(res.message, res.status);
@@ -355,7 +354,8 @@ include('../includes/main/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#accountTable').DataTable();
+                    mytable.draw();
 
                     $('#AccountModal').modal('hide');
                     toastr.success(res.message, res.status);
@@ -387,7 +387,9 @@ include('../includes/main/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#accountTable').DataTable();
+                    mytable.draw();
+
                     $('#AccountDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 

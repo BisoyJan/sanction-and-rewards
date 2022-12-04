@@ -305,7 +305,7 @@ if (isset($_POST['create_Referral'])) {
             $res = [
                 'status' => 500,
                 'message' => 'Referral Not Created',
-                'console' => $query_run
+                'console' => $response
             ];
             echo json_encode($res);
             return;

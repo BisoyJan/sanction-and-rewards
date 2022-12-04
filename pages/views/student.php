@@ -3,7 +3,7 @@ include('../includes/main/header.php');
 include('../includes/main/navbar.php');
 ?>
 
-<div class="container-fluid pt-3 ps-5 pe-5">
+<div class="container-fluid pt-3 px-4">
     <div class="row">
         <div class="col-auto">
             <div class="input-group mb-3">
@@ -12,22 +12,32 @@ include('../includes/main/navbar.php');
         </div>
     </div>
     <div class="row">
-        <div class="col-auto">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
-            </div>
-        </div>
         <div class="col">
-            <div class="d-grid gap-2 d-flex justify-content-end">
+            <div class="d-grid gap-2 mb-3 d-flex justify-content-end">
                 <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="studentAddButton" onclick="formIDChangeAdd()" data-bs-target="#StudentModal">Add Student</button>
             </div>
         </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/studentTable.php -->
+    <div class="table-responsive">
+        <table id="studentTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <th>ID</th>
+                <th>Student Number</th>
+                <th style="width:15%;">Full Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Section</th>
+                <th style="width:20%;">Program</th>
+                <th>College</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
 
+            </tbody>
+        </table>
     </div>
+
 </div>
 
 <!-- Modal -->
@@ -190,34 +200,26 @@ include('../includes/main/navbar.php');
 </div>
 
 <script>
-    //To inject the table in fetchPaginate folder
     $(document).ready(function() {
-        load_data(1);
-    });
-
-    function load_data(page = 1, query = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/studentTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
+        $('#studentTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/studentTable.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [8]
+                },
+
+            ]
         });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
     });
 
     //Form ID Change click of the button
@@ -338,7 +340,8 @@ include('../includes/main/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#studentTable').DataTable();
+                    mytable.draw();
                     $('#Student')[0].reset();
                     $('#StudentModal').modal('hide');
 
@@ -374,7 +377,8 @@ include('../includes/main/navbar.php');
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#studentTable').DataTable();
+                    mytable.draw();
                     $('#EditStudent')[0].reset();
                     $('#StudentModal').modal('hide');
 
@@ -406,7 +410,8 @@ include('../includes/main/navbar.php');
                 if (res.status == 200) {
 
 
-                    load_data(1);
+                    mytable = $('#studentTable').DataTable();
+                    mytable.draw();
                     $('#StudentDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 

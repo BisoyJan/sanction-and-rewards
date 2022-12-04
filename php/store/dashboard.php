@@ -197,7 +197,7 @@ if (isset($_GET['lineChart'])) {
     JOIN programs ON students.program_id = programs.id
     JOIN colleges ON programs.college_id = colleges.id
     GROUP BY
-        MONTHNAME(sanction_referrals.date);";
+        MONTHNAME(sanction_referrals.date) DESC;";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) != 0) {
@@ -206,7 +206,6 @@ if (isset($_GET['lineChart'])) {
             $numbers[] = $data['total'];
             $labels[] = $data['monthName'];
         }
-
         $res = [
             'status' => 200,
             'message' => 'Line Chart fetched Successfully',

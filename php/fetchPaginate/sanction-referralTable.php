@@ -1,359 +1,123 @@
 <?php
-session_start();
+require '../../database/database.php';
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-$connect = new PDO("mysql:host=localhost; dbname=vpsdasdata", "root", "");
 
-$limit = '10';
-$page = 1;
-if ($_POST['page'] > 1) {
-    $start = (($_POST['page'] - 1) * $limit);
-    $page = $_POST['page'];
+$output = array();
+
+$sql = "SELECT
+    sanction_referrals.id,
+    students.student_no,
+    students.first_name,
+    students.middle_name,
+    students.last_name,
+    students.section,
+    programs.abbreviation,
+    violations.code,
+    offenses.offense,
+    violations.violation,
+    sanction_referrals.complainer_name,
+    sanction_referrals.date,
+    sanction_referrals.remark
+FROM
+    sanction_referrals
+JOIN students ON sanction_referrals.student_id = students.id
+JOIN violations on sanction_referrals.violation_id = violations.id
+JOIN offenses ON violations.offenses_id = offenses.id
+JOIN programs ON students.program_id = programs.id";
+
+$totalQuery = mysqli_query($con, $sql);
+$total_all_rows = mysqli_num_rows($totalQuery);
+
+$columns = array(
+    0 => 'sanction_referrals.id',
+    1 => 'students.student_no',
+    2 => 'violation_id',
+    3 => 'students.first_name',
+    4 => 'students.section',
+    5 => 'semester_id',
+    6 => 'programs.abbreviation',
+    7 => 'violations.code',
+    8 => 'violations.violation',
+    9 => 'sanction_referrals.complainer_name',
+    10 => 'sanction_referrals.date',
+    11 => 'sanction_referrals.remark',
+);
+
+$sql .= " WHERE ";
+
+if (isset($_POST["category"]) != '') {
+    if ($_POST['category'] == 3) {
+    } elseif ($_POST['category'] == 2) {
+        $sql .= "sanction_referrals.remark = 'Actioned' AND ";
+    } else {
+        $sql .= "sanction_referrals.remark IS NULL AND ";
+    }
+}
+
+if (isset($_POST['search']['value'])) {
+    $search_value = $_POST['search']['value'];
+    $sql .= " (students.student_no LIKE '%" . $search_value . "%'";
+    $sql .= " OR students.first_name LIKE '%" . $search_value . "%'";
+    $sql .= " OR students.middle_name LIKE '%" . $search_value . "%'";
+    $sql .= " OR students.last_name LIKE '%" . $search_value . "%'";
+    $sql .= " OR violations.code LIKE '%" . $search_value . "%'";
+    $sql .= " OR sanction_referrals.complainer_name LIKE '%" . $search_value . "%')";
+}
+
+if (isset($_POST['order'])) {
+    $column_name = $_POST['order'][0]['column'];
+    $order = $_POST['order'][0]['dir'];
+    $sql .= " ORDER BY " . $columns[$column_name] . " " . $order . "";
 } else {
-    $start = 0;
+    $sql .= " ORDER BY sanction_referrals.id desc";
 }
 
-if ($_POST['query'] == '') {
-    if ($_POST['category'] == 3) {
-        $query = 'SELECT
-        sanction_referrals.*,
-        students.student_no,
-        students.first_name,
-        students.middle_name,
-        students.last_name,
-        students.section,
-        programs.abbreviation,
-        programs.program_name,
-        offenses.offense,
-        violations.code,
-        violations.violation
-    FROM
-        sanction_referrals
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations on sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id
-  ';
-    } elseif ($_POST['category'] == 2) {
-        $query = 'SELECT
-            sanction_referrals.*,
-            students.student_no,
-            students.first_name,
-            students.middle_name,
-            students.last_name,
-            students.section,
-            programs.abbreviation,
-            programs.program_name,
-            offenses.offense,
-            violations.code,
-            violations.violation
-        FROM
-            sanction_referrals
-        JOIN students ON sanction_referrals.student_id = students.id
-        JOIN violations on sanction_referrals.violation_id = violations.id
-        JOIN offenses ON violations.offenses_id = offenses.id
-        JOIN programs ON students.program_id = programs.id
-        WHERE
-        sanction_referrals.remark = "Actioned"
-  ';
-    } else {
-        $query = 'SELECT
-        sanction_referrals.*,
-        students.student_no,
-        students.first_name,
-        students.middle_name,
-        students.last_name,
-        students.section,
-        programs.abbreviation,
-        programs.program_name,
-        offenses.offense,
-        violations.code,
-        violations.violation
-    FROM
-        sanction_referrals
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations on sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id
-    WHERE
-    sanction_referrals.remark IS NULL
-  ';
-    }
+if ($_POST['length'] != -1) {
+    $start = $_POST['start'];
+    $length = $_POST['length'];
+    $sql .= " LIMIT  " . $start . ", " . $length;
 }
 
-if ($_POST['query'] != '') {
-    if ($_POST['category'] == 3) {
-        $query = '
-        SELECT
-        sanction_referrals.*,
-        students.student_no,
-        students.first_name,
-        students.middle_name,
-        students.last_name,
-        students.section,
-        programs.abbreviation,
-        programs.program_name,
-        offenses.offense,
-        violations.code,
-        violations.violation 
-    FROM
-        sanction_referrals
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations on sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id
-    WHERE students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-  ';
-    } elseif ($_POST['category'] == 2) {
-        $query = '
-        SELECT
-        sanction_referrals.*,
-        students.student_no,
-        students.first_name,
-        students.middle_name,
-        students.last_name,
-        students.section,
-        programs.abbreviation,
-        programs.program_name,
-        offenses.offense,
-        violations.code,
-        violations.violation
-    FROM
-        sanction_referrals
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations on sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id
-    WHERE sanction_referrals.remark = "Actioned" AND(students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%")
-  ';
-    } else {
-        $query = '
-        SELECT
-        sanction_referrals.*,
-        students.student_no,
-        students.first_name,
-        students.middle_name,
-        students.last_name,
-        students.section,
-        programs.abbreviation,
-        programs.program_name,
-        offenses.offense,
-        violations.code,
-        violations.violation
-    FROM
-        sanction_referrals
-    JOIN students ON sanction_referrals.student_id = students.id
-    JOIN violations on sanction_referrals.violation_id = violations.id
-    JOIN offenses ON violations.offenses_id = offenses.id
-    JOIN programs ON students.program_id = programs.id
-    WHERE sanction_referrals.remark IS NULL AND(students.student_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.first_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.middle_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR students.last_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR violations.code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%"
-    OR sanction_referrals.complainer_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%")
-  ';
-    }
-}
+$query = mysqli_query($con, $sql);
+$count_rows = mysqli_num_rows($query);
+$data = array();
+while ($row = mysqli_fetch_assoc($query)) {
+    $sub_array = array();
+    $sub_array[] = $row['id'];
+    $sub_array[] = $row['student_no'];
+    $sub_array[] = $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"];
+    $sub_array[] = $row['section'];
+    $sub_array[] = $row['abbreviation'];
+    $sub_array[] = $row['code'];
+    $sub_array[] = $row['offense'];
+    $sub_array[] = $row['violation'];
+    $sub_array[] = $row['complainer_name'];
+    $sub_array[] = $row['date'];
+    $sub_array[] = $row['remark'];
 
-$query .= 'ORDER BY sanction_referrals.id DESC ';
-
-$filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
-
-$statement = $connect->prepare($query);
-$statement->execute();
-$total_data = $statement->rowCount();
-
-$statement = $connect->prepare($filter_query);
-$statement->execute();
-$result = $statement->fetchAll();
-$total_filter_data = $statement->rowCount();
-
-$output = '
-<div class="table-responsive">
-<table id="programTable" class="table table-hover" style="text-align: center;">
-<thead >
-    <tr>
-        <th>ID</th>
-        <th>Student ID</th>
-        <th>Student Name</th>
-        <th>Section</th>
-        <th>Course</th>
-        <th>Code</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Complainer</th>
-        <th>Date Issued</th>
-        <th>Remarks</th>
-        <th>Actions</th>
-    </tr>
-</thead>
-
-
-   <tbody >';
-if ($total_data > 0) {
-    foreach ($result as $row) {
-        $output .= '
-        <tr>
-            <td>' . $row["id"] . '</td>
-            <td>' . $row["student_no"] . '</td>
-            <td>' . $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"] . '</td>
-            <td>' . $row["section"] . '</td>
-            <td>' . $row["abbreviation"] . '</td>
-            <td>' . $row["code"] . '</td>
-            <td>' . $row["offense"] . '</td>
-            <td style="width:15%;">' . $row["violation"] . '</td>
-            <td>' . $row["complainer_name"] . '</td>
-            <td>' . $row["date"] . '</td>
-            <td>' . $row["remark"] . '</td>
-            <td>
-        
-            <button class="viewPDFButton btn btn-warning m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
-            ';
-        if ($_SESSION['type'] == 'Admin' or $_SESSION['type'] == 'User') {
-            if ($row["remark"] == NULL) {
-                $output .= ' 
-                <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Action</button>
-                ';
-            } else {
-                $output .= '
-                <button class="sanction-actionAddButton btn btn-success disabled m-1" value="' . $row["id"] . '"  type="button">Action</button>
-            ';
-            }
-        }
-
-        $output .= '
+    if ($row['remark'] == NULL) {
+        $sub_array[] = ' <button class="viewPDFButton btn btn-warning m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
+        <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Action</button>
             <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-info m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
-         ';
-
-        if ($row["remark"] == NULL) {
-            $output .= '
             <button class="referralDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
             ';
-        } else {
-            $output .= '
+    } else {
+        $sub_array[] = ' <button class="viewPDFButton btn btn-warning m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
+        <button class="sanction-actionAddButton btn btn-success disabled m-1" value="' . $row["id"] . '"  type="button">Action</button>
+            <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-info m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
             <button class="referralDeleteButton btn btn-danger disabled m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
             ';
-        }
-
-        $output .= '  </td>
-        </tr> ';
     }
 
-    $output .= '
-</tbody>
-</table>
-</div>
-<label class="mb-2 ps-4">Total Records - ' . $total_data . '</label>
-  <ul class="pagination">
-';
-
-    $total_links = ceil($total_data / $limit);
-    $previous_link = '';
-    $next_link = '';
-    $page_link = '';
-
-    //echo $total_links;
-
-    if ($total_links > 4) {
-        if ($page < 5) {
-            for ($count = 1; $count <= 5; $count++) {
-                $page_array[] = $count;
-            }
-            $page_array[] = '...';
-            $page_array[] = $total_links;
-        } else {
-            $end_limit = $total_links - 5;
-            if ($page > $end_limit) {
-                $page_array[] = 1;
-                $page_array[] = '...';
-                for ($count = $end_limit; $count <= $total_links; $count++) {
-                    $page_array[] = $count;
-                }
-            } else {
-                $page_array[] = 1;
-                $page_array[] = '...';
-                for ($count = $page - 1; $count <= $page + 1; $count++) {
-                    $page_array[] = $count;
-                }
-                $page_array[] = '...';
-                $page_array[] = $total_links;
-            }
-        }
-    } else {
-        for ($count = 1; $count <= $total_links; $count++) {
-            $page_array[] = $count;
-        }
-    }
-
-    for ($count = 0; $count < count($page_array); $count++) {
-        if ($page == $page_array[$count]) {
-            $page_link .= '
-    <li class="page-item active">
-      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
-    </li>
-    ';
-
-            $previous_id = $page_array[$count] - 1;
-            if ($previous_id > 0) {
-                $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">Previous</a></li>';
-            } else {
-                $previous_link = '
-      <li class="page-item disabled">
-        <a class="page-link" href="#">Previous</a>
-      </li>
-      ';
-            }
-            $next_id = $page_array[$count] + 1;
-            if ($next_id >= $total_links) {
-                $next_link = '
-      <li class="page-item disabled">
-        <a class="page-link" href="#">Next</a>
-      </li>
-        ';
-            } else {
-                $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">Next</a></li>';
-            }
-        } else {
-            if ($page_array[$count] == '...') {
-                $page_link .= '
-      <li class="page-item disabled">
-          <a class="page-link" href="#">...</a>
-      </li>
-      ';
-            } else {
-                $page_link .= '
-      <li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $page_array[$count] . '">' . $page_array[$count] . '</a></li>
-      ';
-            }
-        }
-    }
-
-    $output .= $previous_link . $page_link . $next_link;
-    $output .= '
-  </ul>
-
-';
-} else {
-    $output .= '
-<tbody>
-    <tr>
-        <td colspan="12" align="center"><h1>No Data Found</h1></td>
-    </tr>
-</tbody>
-</table>
-';
+    $data[] = $sub_array;
 }
 
-
-echo $output;
+$output = array(
+    'draw' => intval($_POST['draw']),
+    'recordsTotal' => $count_rows,
+    'recordsFiltered' =>   $total_all_rows,
+    'data' => $data,
+);
+echo  json_encode($output);

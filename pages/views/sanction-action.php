@@ -4,19 +4,14 @@ include('../includes/main/navbar.php');
 ?>
 
 <div class="container-fluid pt-3 ps-5 pe-5">
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-auto">
-            <div class="input-group mb-3">
+            <div class="input-group ">
                 <h3>Disciplinary Action Table</h3>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-auto">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
-            </div>
-        </div>
+    <div class="row justify-content-end">
         <div class="col-auto">
             <div class="input-group mb-3">
                 <select class="form-select" id="category" name="category">
@@ -26,17 +21,28 @@ include('../includes/main/navbar.php');
                 </select>
             </div>
         </div>
-        <div class="col-auto">
-            <div class="input-group mb-3">
-                <button class="btn btn-success" type="button" onclick="refresh()">Refresh</button>
-            </div>
-        </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/sanction-actionTable.php -->
+    <div class="table-responsive pt-1">
+        <table id="actionTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <th>ID</th>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Section</th>
+                <th>Course</th>
+                <th>Offense Code</th>
+                <th>Committed</th>
+                <th>Counselling</th>
+                <th>Date Issued</th>
+                <th>Complainer</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
 
-
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -65,41 +71,41 @@ include('../includes/main/navbar.php');
 
 <script>
     $(document).ready(function() {
+
         load_data(1);
     });
 
-    function refresh() {
-        var query = $('#search_box').val();
-        var category = $('#category').val();
-        load_data(1, query, category);
-    }
-
-    function load_data(page = 1, query = '', category = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/sanction-actionTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query,
-                category: category
+    function load_data(category) {
+        $('#actionTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/sanction-actionTable.php',
+                'type': 'post',
+                'data': {
+                    category: category
+                }
+            },
+            "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [11]
+            }, ]
         });
     }
 
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        var category = $('#category').val();
-        load_data(page, query, category);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        var category = $('#category').val();
-        load_data(1, query, category);
+    $(document).on('change', '#category', function() {
+        var category = $(this).val();
+        $('#actionTable').DataTable().destroy();
+        if (category != '') {
+            load_data(category);
+        } else {
+            load_data();
+        }
     });
 
     //CRUD Function
@@ -198,6 +204,7 @@ include('../includes/main/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
+                    $('#actionTable').DataTable().destroy();
                     load_data(1);
                     $('#ActionDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);

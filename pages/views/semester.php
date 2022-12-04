@@ -12,12 +12,7 @@ include('../includes/main/navbar.php');
     </div>
 
     <div class="row">
-        <div class="col-auto">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search ex. 2022-2023" aria-describedby="basic-addon2">
-            </div>
-        </div>
-        <div class="col-auto">
+        <div class="col-auto ">
             <div class="input-group mb-3">
                 <button class="btn btn-success" type="button" onclick="refresh()">Refresh</button>
             </div>
@@ -29,9 +24,19 @@ include('../includes/main/navbar.php');
         </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate//sanction-referralTable.php -->
+    <div class="table-responsive">
+        <table id="semesterTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <th>ID</th>
+                <th>1st Semester</th>
+                <th>2nd Semester</th>
+                <th>School Year</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
 
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -134,37 +139,34 @@ include('../includes/main/navbar.php');
 <script>
     //To inject the table in fetchPaginate folder
     $(document).ready(function() {
-        load_data(1);
+        $('#semesterTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
+            },
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/semesterTable.php',
+                'type': 'post',
+            },
+            "language": {
+                searchPlaceholder: "Search ex. 2022-2023"
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [4]
+                },
+
+            ]
+        });
     });
 
     function refresh() {
-        load_data(1);
+        mytable = $('#semesterTable').DataTable();
+        mytable.draw();
     }
-
-    function load_data(page = 1, query = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/semesterTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
-            },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
-        });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
-    });
 
     //Form ID Change click of the button
     function formIDChangeAdd() {
@@ -306,7 +308,8 @@ include('../includes/main/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#semesterTable').DataTable();
+                    mytable.draw();
                     $('#Semester')[0].reset();
                     $('#SemesterModal').modal('hide');
 
@@ -342,7 +345,8 @@ include('../includes/main/navbar.php');
                     toastr.warning(res.message, res.status);
                 } else if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#semesterTable').DataTable();
+                    mytable.draw();
                     $('#EditSemester')[0].reset();
                     $('#SemesterModal').modal('hide');
 
@@ -373,8 +377,8 @@ include('../includes/main/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
-
-                    load_data(1);
+                    mytable = $('#semesterTable').DataTable();
+                    mytable.draw();
                     $('#StudentDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 

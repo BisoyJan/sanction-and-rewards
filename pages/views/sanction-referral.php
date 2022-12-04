@@ -11,14 +11,10 @@ include('../includes/main/navbar.php');
             </div>
         </div>
     </div>
-    <div class="row">
+
+    <div class="row justify-content-end mb-2">
         <div class="col-auto">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
-            </div>
-        </div>
-        <div class="col-auto">
-            <div class="input-group mb-3">
+            <div class="input-group ">
                 <select class="form-select" id="category" name="category">
                     <option selected value="1">Un-actioned</option>
                     <option value="2">Actioned</option>
@@ -27,22 +23,37 @@ include('../includes/main/navbar.php');
             </div>
         </div>
         <div class="col-auto">
-            <div class="input-group mb-3">
-                <button class="btn btn-success" type="button" onclick="refresh()">Refresh</button>
-            </div>
-        </div>
-        <div class="col">
-            <div class="d-grid gap-2 d-flex justify-content-end">
-                <a href="../forms/sanction-referral.php" style="text-decoration: none;">
-                    <button class="btn btn-primary" type="button">Add Report</button>
-                </a>
-            </div>
+            <a href="../forms/sanction-referral.php" style="text-decoration: none;">
+                <button class="btn btn-primary" type="button">Add Report</button>
+            </a>
         </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate//sanction-referralTable.php -->
+    <!-- <div id="dynamicTable">
+        The contents of  the tables at the ../php/fetchPaginate//sanction-referralTable.php
 
+    </div> -->
+
+    <div class="table-responsive pt-1">
+        <table id="referralTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <th>ID</th>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Section</th>
+                <th>Course</th>
+                <th>Code</th>
+                <th>Type</th>
+                <th style="width:15%;">Description</th>
+                <th>Complainer</th>
+                <th>Date Issued</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -72,50 +83,45 @@ include('../includes/main/navbar.php');
 
 <script>
     //To inject the table in fetchPaginate folder
+
     $(document).ready(function() {
         load_data(1);
     });
 
-    function refresh() {
-        var query = $('#search_box').val();
-        var category = $('#category').val();
-        load_data(1, query, category);
-    }
-
-    function load_data(page = 1, query = '', category = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/sanction-referralTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query,
-                category: category
+    function load_data(category) {
+        $('#referralTable').DataTable({
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/sanction-referralTable.php',
+                'type': 'post',
+                'data': {
+                    category: category
+                }
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [11]
+            }, ]
         });
     }
 
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        var category = $('#category').val();
-        load_data(page, query, category);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        var category = $('#category').val();
-        load_data(1, query, category);
+    $(document).on('change', '#category', function() {
+        var category = $(this).val();
+        $('#referralTable').DataTable().destroy();
+        if (category != '') {
+            load_data(category);
+        } else {
+            load_data();
+        }
     });
 
     //CRUD
     $(document).on('click', '.sanction-referralEditButton', function() {
         var referral_id = $(this).val();
-
         sessionStorage.setItem("sanction-referralID", referral_id);
-
     });
 
     $(document).on('click', '.sanction-actionAddButton', function() {
@@ -181,7 +187,6 @@ include('../includes/main/navbar.php');
                 } else if (res.status == 200) {
 
                     console.log(res.data);
-                    //$('#view_pdf')[0].src = location;
 
                     window.open('../../assets/docs/processed/referrals/' + res.data.student_no + '_' + res.data.id + '.pdf', '_blank').focus();
                 }
@@ -206,6 +211,7 @@ include('../includes/main/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
+                    $('#referralTable').DataTable().destroy();
                     load_data(1);
                     $('#ReferralDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);

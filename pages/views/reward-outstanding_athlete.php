@@ -11,12 +11,7 @@ include('../includes/main/navbar.php');
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-auto">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search" aria-describedby="basic-addon2">
-            </div>
-        </div>
+    <div class="row mb-3">
         <div class="col">
             <div class="d-grid gap-2 d-flex justify-content-end">
                 <button class="btn btn-primary" type="button" data-bs-toggle="modal" onclick="formIDChangeAdd()" data-bs-target="#OutstandingAthleteModal">Add Award</button>
@@ -24,10 +19,22 @@ include('../includes/main/navbar.php');
         </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/ -->
+    <div class="table-responsive pt-1">
+        <table id="outstanding_athleteTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <th>ID</th>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Section</th>
+                <th>Course</th>
+                <th>Sports</th>
+                <th>Date Issued</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
 
-
+            </tbody>
+        </table>
     </div>
 
     <!-- modal -->
@@ -166,32 +173,25 @@ include('../includes/main/navbar.php');
 
 <script>
     $(document).ready(function() {
-        load_data(1);
-    });
-
-    function load_data(page = 1, query = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/reward-outstanding_athleteTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
+        $('#outstanding_athleteTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/reward-outstanding_athleteTable.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [7]
+                },
+
+            ]
         });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
     });
 
     $(document).on('click', '.viewPDFButton', function() {
@@ -319,7 +319,8 @@ include('../includes/main/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#outstanding_athleteTable').DataTable();
+                    mytable.draw();
                     $('#Outstanding_athlete')[0].reset();
                     $('#OutstandingAthleteModal').modal('hide');
                     toastr.success(res.message, res.status);
@@ -396,7 +397,8 @@ include('../includes/main/navbar.php');
 
                 } else if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#outstanding_athleteTable').DataTable();
+                    mytable.draw();
                     $('#EditOutstanding_athlete')[0].reset();
                     $('#OutstandingAthleteModal').modal('hide');
                     toastr.success(res.message, res.status);
@@ -451,7 +453,8 @@ include('../includes/main/navbar.php');
                 var res = jQuery.parseJSON(response)
                 if (res.status == 200) {
 
-                    load_data(1);
+                    mytable = $('#outstanding_athleteTable').DataTable();
+                    mytable.draw();
                     $('#OutstandingAthleteDeleteModal').modal('hide');
                     toastr.success(res.message, res.status);
 

@@ -23,6 +23,9 @@ endif;
     <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../../assets/toastr/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/datatables/datatables.min.css" />
+
+
 
     <script src="../../assets/js/jquery.min.js"></script>
     <script src="../../assets/js/chart.min.js"></script>
@@ -30,6 +33,7 @@ endif;
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/moment.min.js"></script>
     <script src="../../assets/toastr/toastr.min.js"></script>
+    <script type="text/javascript" src="../../assets/datatables/datatables.min.js"></script>
 
 </head>
 

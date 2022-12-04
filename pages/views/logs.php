@@ -19,42 +19,45 @@ include('../includes/main/navbar.php');
         </div>
     </div>
 
-    <div id="dynamicTable">
-        <!-- The contents of  the tables at the ../php/fetchPaginate/studentTable.php -->
+    <div class="table-responsive pt-1">
+        <table id="logsTable" class="table table-hover" style="text-align: center;">
+            <thead>
+                <th>ID</th>
+                <th>UserID</th>
+                <th>Full Name</th>
+                <th>Type</th>
+                <th>Section</th>
+                <th>Description</th>
+                <th>Date</th>
+            </thead>
+            <tbody>
 
+            </tbody>
+        </table>
     </div>
 
 </div>
 
-
 <script>
     $(document).ready(function() {
-        load_data(1);
-    });
-
-    function load_data(page = 1, query = '') {
-        $.ajax({
-            url: "../../php/fetchPaginate/logsTable.php",
-            method: "POST",
-            data: {
-                page: page,
-                query: query
+        $('#logsTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/logsTable.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false
+                },
+
+            ]
         });
-    }
-
-    $(document).on('click', '.page-link', function() {
-        var page = $(this).data('page_number');
-        var query = $('#search_box').val();
-        load_data(page, query);
-    });
-
-    $('#search_box').keyup(function() {
-        var query = $('#search_box').val();
-        load_data(1, query);
     });
 </script>
 
