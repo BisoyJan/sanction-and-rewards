@@ -134,9 +134,20 @@ include('../includes/main/navbar.php');
             <div class="card mb-3 text-center" style="width:46.5rem;">
                 <div class="card-body">
                     <h5 class="card-title" id="studentSanctionByCurrentMonth"></h5>
-                    <div id="dynamicTable">
-                        <!-- The contents of  the tables at the ../php/fetchPaginate/.....php -->
+                    <div class="table-responsive">
+                        <table id="studentSanctionByCurrentMonthTable" class="table table-hover" style="text-align: center;">
+                            <thead>
+                                <th>Student Number</th>
+                                <th>Full Name</th>
+                                <th>Gender</th>
+                                <th>Section</th>
+                                <th>Program</th>
+                                <th>Total Count</th>
+                            </thead>
+                            <tbody>
 
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -147,9 +158,17 @@ include('../includes/main/navbar.php');
             <div class="card mb-3 text-center" style="width:46.5rem;">
                 <div class="card-body">
                     <h5 class="card-title">Common Violations Students Commits</h5>
-                    <div id="dynamicTable1">
-                        <!-- The contents of  the tables at the ../php/fetchPaginate/.....php -->
+                    <div class="table-responsive">
+                        <table id="violationCommonToViolateTable" class="table table-hover" style="text-align: center;">
+                            <thead>
+                                <th>Violation Code</th>
+                                <th>Offense Type</th>
+                                <th>Total Students Under this Violation</th>
+                            </thead>
+                            <tbody>
 
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -515,22 +534,25 @@ include('../includes/main/navbar.php');
         });
     }
 
-    function studentSanctionbyMonthTable(page = 1) {
-        $.ajax({
-            url: "../../php/fetchPaginate/dashboard_studentSanctionbyMonthTable.php",
-            method: "POST",
-            data: {
-                page: page,
+    function studentSanctionbyMonthTable() {
+        $('#studentSanctionByCurrentMonthTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/dashboard_studentSanctionbyMonthTable.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                    "bSortable": false,
+                    "aTargets": [3]
+                },
 
-                const date = new Date();
-
-                var label = document.getElementById('studentSanctionByCurrentMonth');
-                label.innerHTML = "List of Student Referred by the Month of " + moment(date).format('MMMM');
-                $('#dynamicTable').html(data);
-
-            }
+            ]
         });
     }
 
@@ -539,16 +561,22 @@ include('../includes/main/navbar.php');
         studentSanctionbyMonthTable(page);
     });
 
-    function violationCommonToViolateTable(page = 1) {
-        $.ajax({
-            url: "../../php/fetchPaginate/dashboard_violationCommonToViolateTable.php",
-            method: "POST",
-            data: {
-                page: page,
+    function violationCommonToViolateTable() {
+        $('#violationCommonToViolateTable').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
             },
-            success: function(data) {
-                $('#dynamicTable1').html(data);
-            }
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': '../../php/fetchPaginate/dashboard_violationCommonToViolateTable.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [{
+                "bSortable": false,
+            }, ]
         });
     }
 
