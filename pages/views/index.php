@@ -556,11 +556,6 @@ include('../includes/main/navbar.php');
         });
     }
 
-    $(document).on('click', '.studentSanctionbyMonth', function() {
-        var page = $(this).data('page_number');
-        studentSanctionbyMonthTable(page);
-    });
-
     function violationCommonToViolateTable() {
         $('#violationCommonToViolateTable').DataTable({
             "fnCreatedRow": function(nRow, aData, iDataIndex) {
@@ -579,11 +574,6 @@ include('../includes/main/navbar.php');
             }, ]
         });
     }
-
-    $(document).on('click', '.violationCommonToViolate', function() {
-        var page = $(this).data('page_number');
-        violationCommonToViolateTable(page);
-    });
 </script>
 
 <?php
