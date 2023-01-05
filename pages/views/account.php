@@ -201,6 +201,7 @@ include('../includes/main/navbar.php');
     //Form ID Change click of the button
     function formIDChangeAdd() {
         $("form").attr('id', 'Account')
+        $('#Account')[0].reset();
         var label = document.getElementById('ModalLabel');
         label.innerHTML = "Add Account";
     };

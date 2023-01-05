@@ -25,12 +25,24 @@ $columns = array(
 );
 
 if (isset($_POST['search']['value'])) {
-    $search_value = $_POST['search']['value'];
-    $sql .= " WHERE username LIKE '%" . $search_value . "%'";
-    $sql .= " OR type LIKE '%" . $search_value . "%'";
-    $sql .= " OR first_name LIKE '%" . $search_value . "%'";
-    $sql .= " OR middle_name LIKE '%" . $search_value . "%'";
-    $sql .= " OR last_name LIKE '%" . $search_value . "%'";
+
+    if ($_SESSION['type'] == "Admin" or $_SESSION['type'] == "MIS") {
+
+        $search_value = $_POST['search']['value'];
+        $sql .= " WHERE username LIKE '%" . $search_value . "%'";
+        $sql .= " OR type LIKE '%" . $search_value . "%'";
+        $sql .= " OR first_name LIKE '%" . $search_value . "%'";
+        $sql .= " OR middle_name LIKE '%" . $search_value . "%'";
+        $sql .= " OR last_name LIKE '%" . $search_value . "%'";
+    } else {
+
+        $search_value = $_POST['search']['value'];
+        $sql .= " AND (username LIKE '%" . $search_value . "%'";
+        $sql .= " OR type LIKE '%" . $search_value . "%'";
+        $sql .= " OR first_name LIKE '%" . $search_value . "%'";
+        $sql .= " OR middle_name LIKE '%" . $search_value . "%'";
+        $sql .= " OR last_name LIKE '%" . $search_value . "%')";
+    }
 }
 
 if (isset($_POST['order'])) {

@@ -127,7 +127,7 @@ include('../includes/main/navbar.php');
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please provide Age.
+                                    Please provide Email.
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@ include('../includes/main/navbar.php');
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please provide Age.
+                                    Please provide Section.
                                 </div>
                             </div>
                             <div class="col">

@@ -270,7 +270,7 @@
                 </a>
             </li>
             <li>
-                <div class="iocn-link">
+                <div class="iocn-link ">
                     <a href="#">
                         <i class="fa-solid fa-gear"></i>
                         <span class="link_name">Settings</span>

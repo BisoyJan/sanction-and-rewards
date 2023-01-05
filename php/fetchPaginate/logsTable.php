@@ -62,7 +62,7 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row["type"];
     $sub_array[] = $row["section"];
     $sub_array[] = $row["description"];
-    $sub_array[] = date("M/d/Y", strtotime($row["date"]));
+    $sub_array[] = date("M/d/Y H:i A", strtotime($row["date"]));
     $data[] = $sub_array;
 }
 

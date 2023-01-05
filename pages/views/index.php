@@ -253,6 +253,7 @@ include('../includes/main/navbar.php');
         refreshTime();
         studentSanctionbyMonthTable(1);
         violationCommonToViolateTable(1);
+        currentMonth();
     }
 
     function refreshTime() {
@@ -535,6 +536,7 @@ include('../includes/main/navbar.php');
     }
 
     function studentSanctionbyMonthTable() {
+
         $('#studentSanctionByCurrentMonthTable').DataTable({
             "fnCreatedRow": function(nRow, aData, iDataIndex) {
                 $(nRow).attr('id', aData[0]);
@@ -554,6 +556,13 @@ include('../includes/main/navbar.php');
 
             ]
         });
+    }
+
+    function currentMonth() {
+        const date = new Date();
+
+        var label = document.getElementById('studentSanctionByCurrentMonth');
+        label.innerHTML = "List of Student Referred by the Month of " + moment(date).format('MMMM');
     }
 
     function violationCommonToViolateTable() {
