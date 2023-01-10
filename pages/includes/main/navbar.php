@@ -40,10 +40,9 @@
                     <i class="fa-solid fa-angle-down arrow"></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Disciplinary</a></li>
-                    <li><a href="../views/sanction-counselling.php">Counselling Reports</a></li>
-                    <li><a href="../views/sanction-action.php">Action Reports</a></li>
-                    <li><a href="../views/sanction-referral.php">Referral Reports</a></li>
+                    <li><a href="../views/sanction-referral.php">Referral</a></li>
+                    <li><a href="../views/sanction-action.php">Disciplinary Action</a></li>
+                    <li><a href="../views/sanction-counselling.php">Disciplinary</a></li>
                 </ul>
             </li>
             <!-- <li>
@@ -169,7 +168,6 @@
                 <ul class="sub-menu">
                     <li><a href="../views/sanction-referral.php">Referral</a></li>
                     <li><a href="../views/sanction-action.php">Disciplinary Action</a></li>
-                    <li><a class="link_name" href="#">Disciplinary</a></li>
                 </ul>
             </li>
             <!-- <li>
