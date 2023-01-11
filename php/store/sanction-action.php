@@ -388,10 +388,10 @@ if (isset($_POST['update_Action'])) {
         if ($response && $query_run) {
 
             //NOTE i disabled the auto email function because of new student datas
-            // $email = new sendEmail;
-            // $response = $email->actionEmail($emailData);
+            $email = new sendEmail;
+            $response = $email->actionEmail($emailData);
 
-            $response = true;
+            //$response = true;
 
             if ($response) {
 
