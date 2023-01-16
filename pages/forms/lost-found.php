@@ -143,7 +143,7 @@ include('../includes/forms/header.php');
                             <label for="itemImage" class="form-label">Select Item Image</label>
                             <div class="input-group">
                                 <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#viewImage">View</button>
-                                <input type="file" class="form-control" id="itemImage" name="itemImage" accept=".jpg,.jpeg,.png" onChange="img_pathUrl(this);" required>
+                                <input type="file" class="form-control" id="itemImage" name="itemImage" accept=".jpg,.jpeg,.png" onChange="img_pathUrl(this);">
                                 <input type="hidden" name="oldImage" id="oldImage">
                                 <div class="valid-feedback">
                                     Looks good!

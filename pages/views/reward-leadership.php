@@ -345,9 +345,12 @@ include('../includes/main/navbar.php');
                     $('#LeadershipModal').modal('hide');
                     toastr.success(res.message, res.status);
 
+                    console.log(res.console);
+
                 } else if (res.status == 500) {
 
                     toastr.error(res.message, res.status);
+                    console.log(res.console);
 
                 }
             }
