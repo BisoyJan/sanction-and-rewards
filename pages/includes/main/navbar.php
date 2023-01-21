@@ -52,6 +52,12 @@
                 </a>
             </li> -->
             <li>
+                <a href="#">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="link_name">Analytics</span>
+                </a>
+            </li>
+            <li>
                 <a href="../views/lost-found.php">
                     <i class="fa-solid fa-person"></i>
                     <span class="link_name">Lost and Found</span>
@@ -176,6 +182,12 @@
                     <span class="link_name">Student Status</span>
                 </a>
             </li> -->
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="link_name">Analytics</span>
+                </a>
+            </li>
             <li>
                 <a href="../views/lost-found.php">
                     <i class="fa-solid fa-person"></i>

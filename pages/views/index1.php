@@ -30,8 +30,6 @@ include('../includes/main/navbar.php');
                 <?php } else { ?>
                     <div class="p-2 bd-highlight h5"><?= $_SESSION['semester']; ?> | <?= $_SESSION['school_year']; ?> </div>
                 <?php } ?>
-
-
             </div>
 
         </div>
@@ -104,24 +102,29 @@ include('../includes/main/navbar.php');
             </div>
         </div>
 
-        <div class="card mb-3 m-2">
-            <div class="table-responsive py-2 px-2">
-                <table id="studentSanctionsTable" class="table table-hover" style="text-align: center;">
-                    <thead>
-                        <th>ID</th>
-                        <th>Student ID</th>
-                        <th>Student Name</th>
-                        <th>Course</th>
-                        <th>Code</th>
-                        <th>Type</th>
-                        <th style="width:15%;">Description</th>
-                        <th>Complainant</th>
-                        <th>Date Issued</th>
-                    </thead>
-                    <tbody>
 
-                    </tbody>
-                </table>
+        <div class=" col-auto">
+            <div class="card mb-3 text-center" style="width:46.5rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Number of Sanctions by Category</h5>
+                    <canvas id="barChart" width="250" height="111"></canvas>
+                </div>
+            </div>
+
+            <div class="card mb-3 text-center" style="width:46.5rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Number of Sanctioned Students by Month</h5>
+                    <canvas id="lineChart" width="250" height="111"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-auto">
+            <div class="card mb-3 text-center" style="width:46.5rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Number of Sanctions by Colleges</h5>
+                    <canvas id="pieChart"></canvas>
+                </div>
             </div>
         </div>
 
@@ -165,31 +168,6 @@ include('../includes/main/navbar.php');
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class=" col-auto">
-            <div class="card mb-3 text-center" style="width:46.5rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Number of Sanctions by Category</h5>
-                    <canvas id="barChart" width="250" height="111"></canvas>
-                </div>
-            </div>
-
-            <div class="card mb-3 text-center" style="width:46.5rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Total Number of Sanctioned Students by Month</h5>
-                    <canvas id="lineChart" width="250" height="111"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-auto">
-            <div class="card mb-3 text-center" style="width:46.5rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Total Number of Sanctions by Colleges</h5>
-                    <canvas id="pieChart"></canvas>
                 </div>
             </div>
         </div>
@@ -274,7 +252,6 @@ include('../includes/main/navbar.php');
         studentSanctionbyMonthTable(1);
         violationCommonToViolateTable(1);
         currentMonth();
-        studentSanctionTable(1);
     }
 
     function refreshTime() {
@@ -553,27 +530,6 @@ include('../includes/main/navbar.php');
                     console.log(res.data);
                 }
             }
-        });
-    }
-
-    function studentSanctionTable() {
-        $('#studentSanctionsTable').DataTable({
-            "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                $(nRow).attr('id', aData[0]);
-            },
-            'serverSide': 'true',
-            'processing': 'true',
-            'paging': 'true',
-            'order': [],
-            'ajax': {
-                'url': '../../php/fetchPaginate/dashboard_studentSanctionsTable.php',
-                'type': 'post'
-            },
-            lengthMenu: [5, 10, 20],
-            "aoColumnDefs": [{
-                "bSortable": false,
-                "aTargets": [1]
-            }, ]
         });
     }
 

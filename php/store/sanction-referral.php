@@ -196,6 +196,7 @@ if (isset($_POST['create_Referral'])) {
 
     $violation_id = mysqli_real_escape_string($con, $_POST['violation_id']);
     $violation = mysqli_real_escape_string($con, $_POST['violationDescription']);
+    $violationType = mysqli_real_escape_string($con, $_POST['offenseType']);
 
     $complainerName = mysqli_real_escape_string($con, $_POST['complainerName']);
     $referredTo = mysqli_real_escape_string($con, $_POST['referredTo']);
@@ -236,6 +237,16 @@ if (isset($_POST['create_Referral'])) {
             return;
         }
 
+
+        //$tempDate = DateTime::createFromFormat('j-M-Y', $dateIssued);
+        //$addedDate = date_add($tempDate, date_interval_create_from_date_string("15 days"));
+
+        if ($violationType == "Serious Offense" or $violationType == "Very Serious Offense") {
+            $addedDate =  date('Y-m-d', strtotime($dateIssued . ' + 15 days'));
+        } else {
+            $addedDate = NULL;
+        }
+
         //This query will insert data to database if conditions are meet.
         $query = "INSERT INTO `sanction_referrals`(
                     `student_id`,
@@ -246,7 +257,8 @@ if (isset($_POST['create_Referral'])) {
                     `remark`,
                     `semester_id`,
                     `user_id`,
-                    `date_time`
+                    `date_time`,
+                    `date_validation`
                 )
                 VALUES(
                     '$student_id',
@@ -257,7 +269,8 @@ if (isset($_POST['create_Referral'])) {
                     NUll,
                     '$semester_id',
                     '$user_id',
-                    '$date'
+                    '$date',
+                    '$addedDate'
                 );";
 
         $query_run = mysqli_query($con, $query);

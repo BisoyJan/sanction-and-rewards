@@ -42,20 +42,10 @@ $columns = array(
     7 => 'violations.code',
     8 => 'violations.violation',
     9 => 'sanction_referrals.complainer_name',
-    10 => 'sanction_referrals.date',
-    11 => 'sanction_referrals.remark',
+    10 => 'sanction_referrals.date'
 );
 
-$sql .= " WHERE ";
-
-if (isset($_POST["category"]) != '') {
-    if ($_POST['category'] == 3) {
-    } elseif ($_POST['category'] == 2) {
-        $sql .= "sanction_referrals.remark = 'Actioned' AND ";
-    } else {
-        $sql .= "sanction_referrals.remark IS NULL AND ";
-    }
-}
+$sql .= " WHERE sanction_referrals.remark IS NULL AND ";
 
 if (isset($_POST['search']['value'])) {
     $search_value = $_POST['search']['value'];
@@ -72,7 +62,7 @@ if (isset($_POST['order'])) {
     $order = $_POST['order'][0]['dir'];
     $sql .= " ORDER BY " . $columns[$column_name] . " " . $order . "";
 } else {
-    $sql .= " ORDER BY sanction_referrals.id desc";
+    $sql .= " ORDER BY offenses.offense desc";
 }
 
 if ($_POST['length'] != -1) {
@@ -107,7 +97,6 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['id'];
     $sub_array[] = $row['student_no'];
     $sub_array[] = $row["first_name"]  . '  ' . $row["middle_name"] . '  ' .  $row["last_name"];
-    $sub_array[] = $row['section'];
     $sub_array[] = $row['abbreviation'];
     $sub_array[] = $row['code'];
 
@@ -126,21 +115,6 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['violation'];
     $sub_array[] = $row['complainer_name'];
     $sub_array[] = $row['date'];
-    $sub_array[] = $row['remark'];
-
-    if ($row['remark'] == NULL) {
-        $sub_array[] = ' <button class="viewPDFButton btn btn-warning m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
-        <button class="sanction-actionAddButton btn btn-success m-1" value="' . $row["id"] . '"  type="button">Action</button>
-            <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-info m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
-            <button class="referralDeleteButton btn btn-danger m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
-            ';
-    } else {
-        $sub_array[] = ' <button class="viewPDFButton btn btn-warning m-1" value="' . $row["id"] . '"  type="button" >View PDF</button>
-        <button class="sanction-actionAddButton btn btn-success disabled m-1" value="' . $row["id"] . '"  type="button">Action</button>
-            <a href="../forms/sanction-referral.php" style="text-decoration: none;"> <button class="sanction-referralEditButton btn btn-info m-1" value="' . $row["id"] . '"  type="button">Update</button> </a>
-            <button class="referralDeleteButton btn btn-danger disabled m-1" value="' . $row["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#ReferralDeleteModal">Delete</button>
-            ';
-    }
 
     $data[] = $sub_array;
 }

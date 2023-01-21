@@ -55,7 +55,14 @@ $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['code'];
-    $sub_array[] = $row['offense'];
+
+    if ($row['offense'] == "Light Offense") {
+        $sub_array[] = ' <h5><span class=" badge bg-info rounded-pill">' . $row['offense'] . '</span></h5>';
+    } elseif ($row['offense'] == "Serious Offense") {
+        $sub_array[] = ' <h5><span  class=" badge bg-warning rounded-pill">' . $row['offense'] . '</span></h5>';
+    } else {
+        $sub_array[] = ' <h5><span class=" badge bg-danger rounded-pill">' . $row['offense'] . '</span></h5>';
+    }
     $sub_array[] = '<span class="badge bg-primary rounded-pill">' . $row["total"] . '</span>';
     $data[] = $sub_array;
 }

@@ -136,7 +136,11 @@ include('../includes/forms/header.php');
                     </div>
 
                     <div class="pt-2 d-flex justify-content-center">
-                        <h5>Violation Information</h5>
+                        <h5>Violation Information <br> </h5>
+                    </div>
+
+                    <div class="pt-1 pb-1 d-flex justify-content-center">
+                        <h5><span id="violation_alert" class=" badge bg-danger rounded-pill"></span></h5>
                     </div>
 
                     <div class="row justify-content-center">
@@ -167,14 +171,14 @@ include('../includes/forms/header.php');
 
                     <div class="row pt-3 d-flex justify-content-center">
                         <div class="col-lg-3">
-                            <label class="form-label">Complainer Name</label>
+                            <label class="form-label">Complainant Name</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="complainerName" name="complainerName" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please provide Complainer Name
+                                    Please provide Complainant Name
                                 </div>
                             </div>
                         </div>
@@ -185,7 +189,7 @@ include('../includes/forms/header.php');
                                 Looks good!
                             </div>
                             <div class="invalid-feedback">
-                                Please provide Item Type.
+                                Please provide Referred Person Name.
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -359,6 +363,15 @@ include('../includes/forms/header.php');
                         $('#offenseType').val(res.data.offense);
                         $('#violationDescription').val(res.data.violation);
 
+                        if (res.data.offense == "Very Serious Offense" || res.data.offense == "Serious Offense") {
+
+                            var violation_alert = document.getElementById('violation_alert')
+                            violation_alert.innerHTML = "SERIOUS and VERY SERIOUS OFFENSE the Dean of College has a 15 days to render this Complain"
+
+                        } else {
+                            var violation_alert = document.getElementById('violation_alert')
+                            violation_alert.innerHTML = ""
+                        }
                     }
                 }
             });
@@ -457,8 +470,8 @@ include('../includes/forms/header.php');
                         $('#dateIssued').val(res.data.date);
 
                         //NOTE this two lines of code below will determine who manupulated the data
-                        var label = document.getElementById('updated_by')
-                        label.innerHTML = "Last interaction by: " + res.data.user_firstName + " " + res.data.user_lastName + " on " + moment(res.data.date_time).format('llll')
+                        var updated_by = document.getElementById('updated_by')
+                        updated_by.innerHTML = "Last interaction by: " + res.data.user_firstName + " " + res.data.user_lastName + " on " + moment(res.data.date_time).format('llll')
 
                         $("form").attr('id', 'Edit-referral')
                     }
