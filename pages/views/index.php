@@ -169,31 +169,6 @@ include('../includes/main/navbar.php');
             </div>
         </div>
 
-        <div class=" col-auto">
-            <div class="card mb-3 text-center" style="width:46.5rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Number of Sanctions by Category</h5>
-                    <canvas id="barChart" width="250" height="111"></canvas>
-                </div>
-            </div>
-
-            <div class="card mb-3 text-center" style="width:46.5rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Total Number of Sanctioned Students by Month</h5>
-                    <canvas id="lineChart" width="250" height="111"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-auto">
-            <div class="card mb-3 text-center" style="width:46.5rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Total Number of Sanctions by Colleges</h5>
-                    <canvas id="pieChart"></canvas>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 </div>
@@ -250,31 +225,43 @@ include('../includes/main/navbar.php');
     </div>
 </div>
 
+<div class="modal fade" id="warningModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Notice!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5><span class=" badge bg-warning rounded-pill" id="warningSanctionNotificationSerious"></span></h5>
+                <h5><span class=" badge bg-danger rounded-pill" id="warningSanctionNotificationVerySerious"></span></h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     setInterval(refreshTime, 1000);
 
     $(document).ready(function() {
         all_functions();
-
-
     });
-
-
 
     function all_functions() {
         student();
         referral();
         action();
         disciplinary();
-        SanctionCategoryBarChart();
-        CollegesCategoryPieChart();
-        MonthSanctionsLineChart();
         refreshTime();
         studentSanctionbyMonthTable(1);
         violationCommonToViolateTable(1);
         currentMonth();
         studentSanctionTable(1);
+        warningNotification();
     }
 
     function refreshTime() {
@@ -409,153 +396,6 @@ include('../includes/main/navbar.php');
         });
     }
 
-    function SanctionCategoryBarChart() {
-        $.ajax({
-            type: "GET",
-            url: "../../php/store/dashboard.php?barChart",
-            success: function(response) {
-
-                var res = jQuery.parseJSON(response)
-                if (res.status == 200) {
-
-                    const barChartID = document.getElementById('barChart').getContext('2d');
-                    const barChart = new Chart(barChartID, {
-                        type: 'bar',
-                        data: {
-                            labels: res.labels,
-                            datasets: [{
-                                label: '# of Sanctioned',
-                                data: res.numbers,
-                                backgroundColor: [
-                                    'rgba(255, 99, 132)',
-                                    'rgba(54, 162, 235)',
-                                    'rgba(255, 206, 86)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            plugins: {
-                                legend: {
-                                    display: false,
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            },
-                        }
-                    });
-
-                } else if (res.status == 404) {
-
-                    console.log(res.data);
-                }
-            }
-        });
-    }
-
-    function CollegesCategoryPieChart() {
-
-        $.ajax({
-            type: "GET",
-            url: "../../php/store/dashboard.php?pieChart",
-            success: function(response) {
-
-                var res = jQuery.parseJSON(response)
-                if (res.status == 200) {
-
-                    const pieChartID = document.getElementById('pieChart').getContext('2d');
-                    const pieChart = new Chart(pieChartID, {
-                        type: 'pie',
-                        data: {
-                            labels: res.labels,
-                            datasets: [{
-                                data: res.numbers,
-                                backgroundColor: [
-                                    'rgba(255, 99, 132)',
-                                    'rgba(54, 162, 235)',
-                                    'rgba(255, 206, 86)',
-                                    'rgba(75, 192, 192)'
-                                ],
-
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            },
-                        }
-                    });
-
-                } else if (res.status == 404) {
-
-                    console.log(res.data);
-                }
-            }
-        });
-    }
-
-    function MonthSanctionsLineChart() {
-        $.ajax({
-            type: "GET",
-            url: "../../php/store/dashboard.php?lineChart",
-            success: function(response) {
-
-                var res = jQuery.parseJSON(response)
-                if (res.status == 200) {
-
-                    const lineChartID = document.getElementById('lineChart').getContext('2d');
-                    const lineChart = new Chart(lineChartID, {
-                        type: 'line',
-                        data: {
-                            labels: res.labels,
-                            datasets: [{
-                                label: "Months",
-                                data: res.numbers,
-                                backgroundColor: [
-                                    'rgba(255, 99, 132)',
-                                    'rgba(54, 162, 235)',
-                                    'rgba(255, 206, 86)',
-                                    'rgba(75, 192, 192)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)'
-                                ],
-                                borderWidth: 2
-                            }]
-                        },
-                        options: {
-                            plugins: {
-                                legend: {
-                                    display: false,
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            },
-                        }
-                    });
-
-                } else if (res.status == 404) {
-
-                    console.log(res.data);
-                }
-            }
-        });
-    }
-
     function studentSanctionTable() {
         $('#studentSanctionsTable').DataTable({
             "fnCreatedRow": function(nRow, aData, iDataIndex) {
@@ -599,6 +439,35 @@ include('../includes/main/navbar.php');
             ]
         });
     }
+
+    function warningNotification() {
+
+        $.ajax({
+            type: "GET",
+            url: "../../php/store/dashboard.php?sanction_NotificationWarning",
+
+            success: function(response) {
+
+                var res = jQuery.parseJSON(response)
+                if (res.status == 404) {
+
+                    toastr.error(res.message, res.status);
+
+                } else if (res.status == 200) {
+
+                    var warningSanctionNotificationSerious = document.getElementById('warningSanctionNotificationSerious')
+                    warningSanctionNotificationSerious.innerHTML = res.labels[0] + " has " + res.numbers[0] + " pending "
+
+                    var warningSanctionNotificationVerySerious = document.getElementById('warningSanctionNotificationVerySerious')
+                    warningSanctionNotificationVerySerious.innerHTML = res.labels[1] + " has " + res.numbers[1] + " pending "
+
+                    $("#warningModal").modal("show")
+                    console.log(res.data);
+                }
+            }
+        });
+    }
+
 
     function currentMonth() {
         const date = new Date();

@@ -104,7 +104,6 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row["complainer_name"];
     $sub_array[] = $row["remarks"];
 
-
     if ($_SESSION['type'] == 'Admin') {
         if ($row['remarks'] == NULL) {
             $sub_array[] = ' 

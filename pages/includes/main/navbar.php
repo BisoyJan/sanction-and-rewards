@@ -52,7 +52,7 @@
                 </a>
             </li> -->
             <li>
-                <a href="#">
+                <a href="../views/analytics.php">
                     <i class="fa-solid fa-chart-pie"></i>
                     <span class="link_name">Analytics</span>
                 </a>
@@ -183,7 +183,7 @@
                 </a>
             </li> -->
             <li>
-                <a href="#">
+                <a href="../views/analytics.php">
                     <i class="fa-solid fa-chart-pie"></i>
                     <span class="link_name">Analytics</span>
                 </a>

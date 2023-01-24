@@ -72,12 +72,12 @@ if ($_POST['length'] != -1) {
 }
 
 // To check if the due date processing VSO and SO already pass the 15 days rule
-function dateDiffInDays($date1, $date2, $remarks)
+function dateDiffInDays($date2, $remarks)
 {
     if ($remarks != "Counselled") {
-        if ($date1 <= $date2) {
+        if ($date2 <= date("Y/m/d")) {
             // Calculating the difference in timestamps
-            $diff = strtotime($date2) - strtotime($date1);
+            $diff = strtotime(date("Y/m/d")) - strtotime($date2);
 
             // 1 day = 24 hours
             // 24 * 60 * 60 = 86400 seconds
@@ -100,7 +100,7 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['abbreviation'];
     $sub_array[] = $row['code'];
 
-    $dateDiff = dateDiffInDays($row['date'], $row['date_validation'], $row['remark']);
+    $dateDiff = dateDiffInDays($row['date_validation'], $row['remark']);
 
     if ($row['offense'] == "Light Offense") {
         $sub_array[] = ' <h6><span class=" badge bg-info rounded-pill">' . $row['offense'] . '</span></h6>';
@@ -114,7 +114,7 @@ while ($row = mysqli_fetch_assoc($query)) {
 
     $sub_array[] = $row['violation'];
     $sub_array[] = $row['complainer_name'];
-    $sub_array[] = $row['date'];
+    $sub_array[] =  date("M/d/Y", strtotime($row['date']));
 
     $data[] = $sub_array;
 }

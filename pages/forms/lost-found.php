@@ -275,7 +275,7 @@ include('../includes/forms/header.php');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h4>You need to select again an image if you edit the data for security purposes.</h4>
+                <h5>You need to select again an image if you edit the data for security purposes.</h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">Confirm</button>
