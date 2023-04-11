@@ -42,7 +42,7 @@
                 <ul class="sub-menu">
                     <li><a href="../views/sanction-referral.php">Referral</a></li>
                     <li><a href="../views/sanction-action.php">Disciplinary Action</a></li>
-                    <li><a href="../views/sanction-counselling.php">Disciplinary</a></li>
+                    <li><a href="../views/sanction-counselling.php">Counseling</a></li>
                 </ul>
             </li>
             <!-- <li>
